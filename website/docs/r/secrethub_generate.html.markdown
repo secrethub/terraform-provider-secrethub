@@ -30,5 +30,5 @@ The following arguments are supported:
 
 In addition to all arguments above, the following attributes are exported:
 
-* `data` - The ARN of the certificate
-* `version` - The ARN of the certificate
+* `data` - The secret generated
+* `version` - The current version of the secret generated
