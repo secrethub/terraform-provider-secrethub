@@ -24,7 +24,8 @@ The following arguments are supported:
 
 * `path` - (Required) The path used for storing the secret
 * `length` - (Optional) How many characters long the secret should be
-* `symbols` - (Required) Specifies if symbols can be used to generate the secret
+* `symbols` - (Optional) Specifies if symbols can be used to generate the secret
+* `force_new` - (Optional) Force a new secret generation at every run
 
 ## Attributes Reference
 
