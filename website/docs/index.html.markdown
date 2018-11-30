@@ -39,8 +39,8 @@ resource "secrethub_write" "api_key" {
 The following arguments are supported:
 
 * `version` - (Optional) The provider version. Default value: `latest`.
-* `organization` - (Required) The organization to use.
-* `repository` - (Required) The repository to use.
-* `config_dir` - (Optional) The directory where to find the SecretHub client configuration. Conflicts with `credential`. Default value: `~/.secrethub`
+* `organization` - (Optional) The organization to use.
+* `repository` - (Optional) The repository to use. If you specify a repository then you need to set also `organization`.
+* `config_dir` - (Optional) The directory where to find the SecretHub client configuration. Conflicts with `credential`. Default value: `~/.secrethub`.
 * `credential` - (Optional) Specify the encrypted credentials to use for authentication. Conflicts with `config_dir`.
 * `credential_passphrase` - (Optional) Passphrase required to unlock the authentication passed in `credential`.

@@ -22,14 +22,14 @@ resource "secrethub_generate" "db_password" {
 
 The following arguments are supported:
 
-* `path` - (Required) The path used for storing the secret
-* `length` - (Optional) How many characters long the secret should be
-* `symbols` - (Optional) Specifies if symbols can be used to generate the secret
-* `force_new` - (Optional) Force a new secret generation at every run
+* `path` - (Required) The path used for storing the secret.
+* `length` - (Optional) How many characters long the secret should be.
+* `symbols` - (Optional) Specifies if symbols can be used to generate the secret.
+* `force_new` - (Optional) Force a new secret generation at every run.
 
 ## Attributes Reference
 
 In addition to all arguments above, the following attributes are exported:
 
-* `data` - The secret generated
-* `version` - The current version of the secret generated
+* `data` - The secret generated.
+* `version` - The current version of the secret generated.

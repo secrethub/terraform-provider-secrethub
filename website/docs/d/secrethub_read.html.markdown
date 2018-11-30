@@ -20,10 +20,10 @@ data "secrethub_read" "db_password" {
 
 ## Argument Reference
 
-* `path` - (Required) The path where the secret is stored
-* `version` - (Optional) The current secret version
+* `path` - (Required) The path where the secret is stored.
+* `version` - (Optional) The current secret version.
 
 ## Attributes Reference
 
-* `data` - The secret retrieved
-* `version` - The version of the secret read
+* `data` - The secret retrieved.
+* `version` - The version of the secret read.
