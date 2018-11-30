@@ -32,11 +32,6 @@ resource "secrethub_generate" "db_password" {
 resource "secrethub_write" "api_key" {
   # ...
 }
-
-# Read a secret
-resource "secrethub_read" "auth_token" {
-  # ...
-}
 ```
 
 ## Argument Reference
