@@ -23,7 +23,7 @@ provider "secrethub" {
 }
 
 resource "secrethub_generate" "db_password" {
-  path    = "/db/${var.environment}"
+  path    = "/${var.environment}/db"
   length  = 22
   symbols = false
 }
