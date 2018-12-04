@@ -23,9 +23,14 @@ provider "secrethub" {
 }
 
 resource "secrethub_generate" "db_password" {
-  path    = "/${var.environment}/db"
+  path    = "/${var.environment}/db/password"
   length  = 22
   symbols = false
+}
+
+resource "secrethub_write" "db_username" {
+  path    = "/${var.environment}/db/username"
+  data    = "dbUser"
 }
 
 resource "aws_db_instance" "default" {
@@ -35,7 +40,7 @@ resource "aws_db_instance" "default" {
   engine_version       = "5.7"
   instance_class       = "db.t2.micro"
   name                 = "mydb"
-  username             = "foo"
+  username             = "${secrethub_write.db_username.data}"
   password             = "${secrethub_generate.db_password.data}"
   parameter_group_name = "default.mysql5.7"
 }
