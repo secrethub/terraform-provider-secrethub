@@ -19,7 +19,7 @@ Use the navigation to the left to read about the available resources.
 # Configure the SecretHub provider
 provider "secrethub" {
   version = "latest"
-  organization = "myOrg"
+  namespace = "myOrg"
   repository = "myRepo"
 }
 
@@ -39,8 +39,8 @@ resource "secrethub_write" "api_key" {
 The following arguments are supported:
 
 * `version` - (Optional) The provider version. Default value: `latest`.
-* `organization` - (Optional) The organization to use.
-* `repository` - (Optional) The repository to use. If you specify a repository then you need to set also `organization`.
+* `namespace` - (Optional) The namespace to use.
+* `repository` - (Optional) The repository to use. If you specify a repository then you need to set also `namespace`.
 * `config_dir` - (Optional) The directory where to find the SecretHub client configuration. Conflicts with `credential`. Default value: `~/.secrethub`.
 * `credential` - (Optional) Specify the encrypted credentials to use for authentication. Conflicts with `config_dir`.
 * `credential_passphrase` - (Optional) Passphrase required to unlock the authentication passed in `credential`.

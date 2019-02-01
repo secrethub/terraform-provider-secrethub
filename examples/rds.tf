@@ -18,7 +18,7 @@ provider "aws" {
 
 provider "secrethub" {
   version      = "latest"
-  organization = "myOrg"
+  namespace = "myOrg"
   repository   = "myRepo"
 }
 
