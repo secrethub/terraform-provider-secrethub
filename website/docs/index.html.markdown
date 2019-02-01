@@ -23,13 +23,7 @@ provider "secrethub" {
   repository = "myRepo"
 }
 
-# Generate random secret
-resource "secrethub_generate" "db_password" {
-  # ...
-}
-
-# Write a new secret
-resource "secrethub_write" "api_key" {
+resource "secrethub_secret" "db_password" {
   # ...
 }
 ```
