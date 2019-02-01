@@ -20,7 +20,7 @@ data "secrethub_read" "db_password" {
 
 ## Argument Reference
 
-* `path` - (Required) The path where the secret is stored, optionally including a version tag.
+* `path` - (Required) The path where the secret is stored, optionally including a version number.
 
 ## Attributes Reference
 
