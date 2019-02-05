@@ -1,7 +1,7 @@
 ---
 layout: "secrethub"
-page_title: "SecretHub: secrethub_read"
-sidebar_current: "docs-secrethub-datasource-read"
+page_title: "Data Source: secrethub_secret"
+sidebar_current: "docs-secrethub-datasource-secret"
 description: |-
   Read a secret
 ---
@@ -13,7 +13,7 @@ Use this data source to read secrets already in SecretHub
 ## Example Usage
 
 ```hcl
-data "secrethub_read" "db_password" {
+data "secrethub_secret" "db_password" {
   path = "/db"
 }
 ```
