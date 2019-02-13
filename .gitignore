@@ -1,0 +1,20 @@
+# Go
+terraform-provider-secrethub
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Terraform
+terraform.tfplan
+terraform.tfstate
+*.backup
+./*.tfstate
+.terraform/
+*.log
+*.bak
+
+# IDE
+.vscode
+.idea
