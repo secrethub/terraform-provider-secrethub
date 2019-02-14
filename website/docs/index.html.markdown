@@ -33,4 +33,4 @@ The following arguments are supported:
 
 * `credential` - (Required) Credential to use for SecretHub authentication.
 * `credential_passphrase` - (Optional) Passphrase to unlock the authentication passed in `credential`.
-* `path_prefix` - (Optional) The default path prefix of the secret resources and data sources. If left blank, every secret requires the path to be absolute (namespace/repository[/dir]/secret_name).
+* `path_prefix` - (Optional) The default path prefix of the secret resources and data sources. Specifying it will reduce redundancy in the secret resources as it enables the use of relative paths.

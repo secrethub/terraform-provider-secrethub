@@ -23,7 +23,7 @@ func Provider() terraform.ResourceProvider {
 			"path_prefix": {
 				Type:        schema.TypeString,
 				Optional:    true,
-				Description: "The default path prefix of the secret resources and data sources. If left blank, every secret requires the path to be absolute (namespace/repository[/dir]/secret_name).",
+				Description: "The default path prefix of the secret resources and data sources. Specifying it will reduce redundancy in the secret resources as it enables the use of relative paths.",
 			},
 		},
 		ConfigureFunc: configureProvider,

@@ -134,7 +134,7 @@ func resourceSecretRead(d *schema.ResourceData, m interface{}) error {
 
 	prev := d.Get("version")
 	if prev != remote.LatestVersion {
-		// someone updated the secret outside of the current terraform scope, so the new secret has to be fetched
+		// The secret is updated outside of the current terraform scope, so the new secret version has to be fetched
 		updated, err := client.Secrets().Versions().GetWithData(path)
 		if err != nil {
 			return err
