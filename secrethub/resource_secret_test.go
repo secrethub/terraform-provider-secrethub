@@ -55,7 +55,7 @@ func testAccPreCheck(t *testing.T) func() {
 	return func() {
 		err := testAcc.validate()
 		if err != nil {
-			t.Error(err)
+			t.Fatal(err)
 		}
 	}
 }
