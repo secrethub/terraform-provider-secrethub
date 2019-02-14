@@ -2,11 +2,11 @@ package secrethub
 
 import (
 	"fmt"
-	"github.com/keylockerbv/secrethub-go/pkg/randstr"
 	"strings"
 
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/keylockerbv/secrethub-go/pkg/api"
+	"github.com/keylockerbv/secrethub-go/pkg/randstr"
 )
 
 func resourceSecret() *schema.Resource {
@@ -134,7 +134,7 @@ func resourceSecretRead(d *schema.ResourceData, m interface{}) error {
 
 	prev := d.Get("version")
 	if prev != remote.LatestVersion {
-		// The secret is updated outside of the current terraform scope, so the new secret version has to be fetched
+		// The secret has been updated outside of the current terraform scope, so the new secret version has to be fetched
 		updated, err := client.Secrets().Versions().GetWithData(path)
 		if err != nil {
 			return err
