@@ -2,11 +2,11 @@ package secrethub
 
 import (
 	"fmt"
+	"github.com/keylockerbv/secrethub-go/pkg/randstr"
 	"strings"
 
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/keylockerbv/secrethub-go/pkg/api"
-	"github.com/keylockerbv/secrethub/core/random"
 )
 
 func resourceSecret() *schema.Resource {
@@ -84,7 +84,7 @@ func resourceSecretCreate(d *schema.ResourceData, m interface{}) error {
 		symbols := settings["symbols"].(bool)
 		length := settings["length"].(int)
 		var err error
-		data, err = random.NewGenerator(symbols).Generate(length)
+		data, err = randstr.NewGenerator(symbols).Generate(length)
 		if err != nil {
 			return err
 		}

@@ -15,9 +15,7 @@ require (
 	github.com/hashicorp/hil v0.0.0-20190129155652-59d7c1fee952 // indirect
 	github.com/hashicorp/logutils v1.0.0 // indirect
 	github.com/hashicorp/terraform v0.11.11
-	github.com/keylockerbv/secrethub v0.17.0
 	github.com/keylockerbv/secrethub-go v0.0.0-20190213150736-839e23269a25
-	github.com/kr/pty v1.1.3 // indirect
 	github.com/mitchellh/cli v1.0.0 // indirect
 	github.com/mitchellh/copystructure v1.0.0 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
