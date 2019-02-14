@@ -1,4 +1,4 @@
-TEST?=$$(go list ./... | grep -v 'vendor')
+TEST?=$$(go list ./...)
 
 build:
 	go build
