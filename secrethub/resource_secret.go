@@ -65,8 +65,8 @@ func resourceSecret() *schema.Resource {
 }
 
 func resourceSecretCreate(d *schema.ResourceData, m interface{}) error {
-	prov := m.(providerMeta)
-	client := *prov.client
+	provider := m.(providerMeta)
+	client := *provider.client
 
 	dataStr := d.Get("data").(string)
 	generateList := d.Get("generate").([]interface{})
@@ -92,7 +92,8 @@ func resourceSecretCreate(d *schema.ResourceData, m interface{}) error {
 
 	prefix := d.Get("path_prefix").(string)
 	if prefix == "" {
-		prefix = prov.pathPrefix
+		// Fall back to the provider prefix
+		prefix = provider.pathPrefix
 	}
 	pathStr := d.Get("path").(string)
 	path, err := newCompoundSecretPath(prefix, pathStr)
@@ -117,8 +118,8 @@ func resourceSecretCreate(d *schema.ResourceData, m interface{}) error {
 }
 
 func resourceSecretRead(d *schema.ResourceData, m interface{}) error {
-	prov := m.(providerMeta)
-	client := *prov.client
+	provider := m.(providerMeta)
+	client := *provider.client
 
 	pathStr := d.Id()
 	path, err := api.NewSecretPath(pathStr)
@@ -150,8 +151,8 @@ func resourceSecretUpdate(d *schema.ResourceData, m interface{}) error {
 }
 
 func resourceSecretDelete(d *schema.ResourceData, m interface{}) error {
-	prov := m.(providerMeta)
-	client := *prov.client
+	provider := m.(providerMeta)
+	client := *provider.client
 
 	pathStr := d.Id()
 	path, err := api.NewSecretPath(pathStr)
@@ -166,7 +167,7 @@ func resourceSecretDelete(d *schema.ResourceData, m interface{}) error {
 
 const pathSeparator = "/"
 
-// newCompoundSecretPath returns SecretPath that combines multiple path components into a single secret path
+// newCompoundSecretPath returns a SecretPath that combines multiple path components into a single secret path
 func newCompoundSecretPath(components ...string) (api.SecretPath, error) {
 	var processed []string
 	for _, c := range components {
