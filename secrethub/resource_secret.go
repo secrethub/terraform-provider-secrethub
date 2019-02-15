@@ -112,7 +112,6 @@ func resourceSecretCreate(d *schema.ResourceData, m interface{}) error {
 	d.SetId(string(path))
 	d.Set("data", string(data))
 	d.Set("version", res.Version)
-	d.Set("created", res.CreatedAt)
 
 	return resourceSecretRead(d, m)
 }
