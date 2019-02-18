@@ -35,13 +35,9 @@ func Provider() terraform.ResourceProvider {
 
 func configureProvider(d *schema.ResourceData) (interface{}, error) {
 	credRaw := d.Get("credential").(string)
-	parser := secrethub.NewCredentialParser(secrethub.DefaultCredentialDecoders)
-	parsed, err := parser.Parse(credRaw)
-	if err != nil {
-		return nil, err
-	}
+	passphrase := d.Get("credential_passphrase").(string)
 
-	cred, err := parsed.Decode()
+	cred, err := secrethub.NewCredential(credRaw, passphrase)
 	if err != nil {
 		return nil, err
 	}
