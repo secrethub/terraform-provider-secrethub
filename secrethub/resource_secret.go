@@ -90,19 +90,9 @@ func resourceSecretCreate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	prefix := d.Get("path_prefix").(string)
-	if prefix == "" {
-		// Fall back to the provider prefix
-		prefix = provider.pathPrefix
-	}
-	pathStr := d.Get("path").(string)
-	path, err := newCompoundSecretPath(prefix, pathStr)
+	path, err := getSecretPath(d, &provider)
 	if err != nil {
 		return err
-	}
-
-	if path.HasVersion() {
-		return fmt.Errorf("path '%v' should not have a version number", path)
 	}
 
 	res, err := client.Secrets().Write(path, data)
@@ -163,6 +153,26 @@ func resourceSecretDelete(d *schema.ResourceData, m interface{}) error {
 	client.Secrets().Delete(path)
 
 	return nil
+}
+
+// getSecretPath finds the full path of a secret, combining the specified path with the provider's path prefix
+func getSecretPath(d *schema.ResourceData, provider *providerMeta) (api.SecretPath, error) {
+	prefix := d.Get("path_prefix").(string)
+	if prefix == "" {
+		// Fall back to the provider prefix
+		prefix = provider.pathPrefix
+	}
+	pathStr := d.Get("path").(string)
+	path, err := newCompoundSecretPath(prefix, pathStr)
+	if err != nil {
+		return path, err
+	}
+
+	if path.HasVersion() {
+		return path, fmt.Errorf("path '%v' should not have a version number", path)
+	}
+
+	return path, nil
 }
 
 const pathSeparator = "/"

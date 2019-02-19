@@ -2,65 +2,14 @@ package secrethub
 
 import (
 	"fmt"
-	"os"
 	"reflect"
 	"testing"
 
 	"github.com/hashicorp/terraform/helper/resource"
-	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/hashicorp/terraform/terraform"
-	"github.com/keylockerbv/secrethub-go/pkg/api"
 )
 
-const (
-	envNamespace = "SECRETHUB_TF_ACC_NAMESPACE"
-	envRepo      = "SECRETHUB_TF_ACC_REPOSITORY"
-)
-
-var testAccProviders map[string]terraform.ResourceProvider
-var testAccProvider *schema.Provider
-var testAcc *testAccValues
-
-type testAccValues struct {
-	namespace  string
-	repository string
-	secretName string
-	path       api.SecretPath
-	pathErr    error
-}
-
-func (testAccValues) validate() error {
-	if testAcc.namespace == "" || testAcc.repository == "" {
-		return fmt.Errorf("the following environment variables need to be set: %v, %v", envNamespace, envRepo)
-	}
-	return testAcc.pathErr
-}
-
-func init() {
-	testAccProvider = Provider().(*schema.Provider)
-	testAccProviders = map[string]terraform.ResourceProvider{
-		"secrethub": testAccProvider,
-	}
-
-	testAcc = &testAccValues{
-		namespace:  os.Getenv(envNamespace),
-		repository: os.Getenv(envRepo),
-		secretName: "test_acc_secret",
-	}
-
-	testAcc.path, testAcc.pathErr = newCompoundSecretPath(testAcc.namespace, testAcc.repository, testAcc.secretName)
-}
-
-func testAccPreCheck(t *testing.T) func() {
-	return func() {
-		err := testAcc.validate()
-		if err != nil {
-			t.Fatal(err)
-		}
-	}
-}
-
-func TestAccSecret_writeAbsPath(t *testing.T) {
+func TestAccResourceSecret_writeAbsPath(t *testing.T) {
 	config := fmt.Sprintf(`
 		provider "secrethub" {
 			credential = "${file("~/.secrethub/credential")}"
@@ -218,10 +167,6 @@ func getSecretResourceState(s *terraform.State, values *testAccValues) (*terrafo
 
 func checkSecretExistsRemotely(values *testAccValues) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
-		if _, err := getSecretResourceState(s, values); err != nil {
-			return err
-		}
-
 		client := *testAccProvider.Meta().(providerMeta).client
 
 		_, err := client.Secrets().Get(values.path)
@@ -235,10 +180,16 @@ func checkSecretExistsRemotely(values *testAccValues) resource.TestCheckFunc {
 
 func checkSecretResourceState(values *testAccValues, check func(s *terraform.InstanceState) error) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
-		state, err := getSecretResourceState(s, values)
-		if err != nil {
-			return err
+		resourceState := s.RootModule().Resources[fmt.Sprintf("secrethub_secret.%v", values.secretName)]
+		if resourceState == nil {
+			return fmt.Errorf("resource '%v' not in tf state", values.secretName)
 		}
+
+		state := resourceState.Primary
+		if state == nil {
+			return fmt.Errorf("resource has no primary instance")
+		}
+
 		return check(state)
 	}
 }

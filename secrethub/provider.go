@@ -30,6 +30,9 @@ func Provider() terraform.ResourceProvider {
 		ResourcesMap: map[string]*schema.Resource{
 			"secrethub_secret": resourceSecret(),
 		},
+		DataSourcesMap: map[string]*schema.Resource{
+			"secrethub_secret": dataSourceSecret(),
+		},
 	}
 }
 
