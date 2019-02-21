@@ -20,12 +20,12 @@ data "secrethub_secret" "db_password" {
 
 ## Argument Reference
 
-* `path` - (Required) The path where the secret is stored.
+* `path` - (Required) "The path where the secret is stored. To use a specific version, append the version number to the path, separated by a colon (path:version). Defaults to the latest version.
 * `path_prefix` - (Optional) Overrides the `path_prefix` defined in the provider.
-* `version` - (Optional) The version of the secret read. Defaults to the latest.
 
 ## Attributes Reference
 
 In addition to all arguments above, the following attributes are exported:
 
 * `data` - The secret contents.
+* `version` - The version of the secret.

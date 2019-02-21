@@ -11,7 +11,7 @@ func dataSourceSecret() *schema.Resource {
 			"path": {
 				Type:        schema.TypeString,
 				Required:    true,
-				Description: "The path where the secret is stored.",
+				Description: "The path where the secret is stored. To use a specific version, append the version number to the path, separated by a colon (path:version). Defaults to the latest version.",
 			},
 			"path_prefix": {
 				Type:        schema.TypeString,
@@ -20,9 +20,8 @@ func dataSourceSecret() *schema.Resource {
 			},
 			"version": {
 				Type:        schema.TypeInt,
-				Optional:    true,
 				Computed:    true,
-				Description: "The version of the secret. Defaults to the latest.",
+				Description: "The version of the secret.",
 			},
 			"data": {
 				Type:        schema.TypeString,
@@ -43,25 +42,13 @@ func dataSourceSecretRead(d *schema.ResourceData, m interface{}) error {
 		return err
 	}
 
-	remote, err := client.Secrets().Get(path)
+	secret, err := client.Secrets().Versions().GetWithData(path)
 	if err != nil {
 		return err
 	}
 
-	version := d.Get("version").(int)
-	if version == 0 {
-		d.Set("version", remote.LatestVersion)
-	}
-
-	if d.Get("data") == "" || d.Get("version") != remote.LatestVersion {
-		// Only fetch the secret contents if it hasn't been fetched before or if the version is out of sync
-		updated, err := client.Secrets().Versions().GetWithData(path)
-		if err != nil {
-			return err
-		}
-		d.Set("data", string(updated.Data))
-		d.Set("version", updated.Version)
-	}
+	d.Set("data", string(secret.Data))
+	d.Set("version", secret.Version)
 
 	d.SetId(string(path))
 

@@ -95,6 +95,10 @@ func resourceSecretCreate(d *schema.ResourceData, m interface{}) error {
 		return err
 	}
 
+	if path.HasVersion() {
+		return fmt.Errorf("path '%v' should not have a version number", path)
+	}
+
 	res, err := client.Secrets().Write(path, data)
 	if err != nil {
 		return err
@@ -166,10 +170,6 @@ func getSecretPath(d *schema.ResourceData, provider *providerMeta) (api.SecretPa
 	path, err := newCompoundSecretPath(prefix, pathStr)
 	if err != nil {
 		return path, err
-	}
-
-	if path.HasVersion() {
-		return path, fmt.Errorf("path '%v' should not have a version number", path)
 	}
 
 	return path, nil
