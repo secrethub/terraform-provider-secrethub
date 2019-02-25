@@ -37,10 +37,7 @@ func dataSourceSecretRead(d *schema.ResourceData, m interface{}) error {
 	provider := m.(providerMeta)
 	client := *provider.client
 
-	path, err := getSecretPath(d, &provider)
-	if err != nil {
-		return err
-	}
+	path := getSecretPath(d, &provider)
 
 	secret, err := client.Secrets().Versions().GetWithData(path)
 	if err != nil {
