@@ -87,6 +87,9 @@ github.com/jmespath/go-jmespath v0.0.0-20160202185014-0b12d6b521d8 h1:12VvqtR6Ao
 github.com/jmespath/go-jmespath v0.0.0-20160202185014-0b12d6b521d8/go.mod h1:Nht3zPeWKUH0NzdCt2Blrr5ys8VGpn0CEB0cQHVjt7k=
 github.com/keylockerbv/secrethub-go v0.0.0-20190215145344-c5428f8d99f3 h1:RtvtlNoLBemFQLa2HAKkP0LpsaQETkYW5VbfrJRrFZ0=
 github.com/keylockerbv/secrethub-go v0.0.0-20190215145344-c5428f8d99f3/go.mod h1:U086plZMagUfy92G4DgCsRAns20Q5j+Rf8bYDXiDxMw=
+github.com/keylockerbv/secrethub-go v0.0.0-20190221141042-e25baae6094c h1:GiIe35ZSCwJZh87M7D/ke2nE92fwEMYMuIeaAj6AMBc=
+github.com/keylockerbv/secrethub-go v0.0.0-20190225122246-8861c3dd7542 h1:1nFBWN0N/RWtnlnoxfdIXmBy6wT2jnPq8ZONxBHd8lk=
+github.com/keylockerbv/secrethub-go v0.0.0-20190225122246-8861c3dd7542/go.mod h1:U086plZMagUfy92G4DgCsRAns20Q5j+Rf8bYDXiDxMw=
 github.com/kr/pretty v0.1.0 h1:L/CwN0zerZDmRFUapSPitk6f+Q3+0za1rQkzVuMiMFI=
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=
 github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=

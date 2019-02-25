@@ -5,7 +5,6 @@ import (
 	"strings"
 
 	"github.com/hashicorp/terraform/helper/schema"
-	"github.com/keylockerbv/secrethub-go/pkg/api"
 	"github.com/keylockerbv/secrethub-go/pkg/randchar"
 )
 
@@ -90,10 +89,7 @@ func resourceSecretCreate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	path, err := getSecretPath(d, &provider)
-	if err != nil {
-		return err
-	}
+	path := getSecretPath(d, &provider)
 
 	res, err := client.Secrets().Write(path, data)
 	if err != nil {
@@ -111,11 +107,7 @@ func resourceSecretRead(d *schema.ResourceData, m interface{}) error {
 	provider := m.(providerMeta)
 	client := *provider.client
 
-	pathStr := d.Id()
-	path, err := api.NewSecretPath(pathStr)
-	if err != nil {
-		return err
-	}
+	path := d.Id()
 
 	remote, err := client.Secrets().Get(path)
 	if err != nil {
@@ -144,11 +136,7 @@ func resourceSecretDelete(d *schema.ResourceData, m interface{}) error {
 	provider := m.(providerMeta)
 	client := *provider.client
 
-	pathStr := d.Id()
-	path, err := api.NewSecretPath(pathStr)
-	if err != nil {
-		return err
-	}
+	path := d.Id()
 
 	client.Secrets().Delete(path)
 
@@ -156,25 +144,20 @@ func resourceSecretDelete(d *schema.ResourceData, m interface{}) error {
 }
 
 // getSecretPath finds the full path of a secret, combining the specified path with the provider's path prefix
-func getSecretPath(d *schema.ResourceData, provider *providerMeta) (api.SecretPath, error) {
+func getSecretPath(d *schema.ResourceData, provider *providerMeta) string {
 	prefix := d.Get("path_prefix").(string)
 	if prefix == "" {
 		// Fall back to the provider prefix
 		prefix = provider.pathPrefix
 	}
 	pathStr := d.Get("path").(string)
-	path, err := newCompoundSecretPath(prefix, pathStr)
-	if err != nil {
-		return path, err
-	}
-
-	return path, nil
+	return newCompoundSecretPath(prefix, pathStr)
 }
 
 const pathSeparator = "/"
 
 // newCompoundSecretPath returns a SecretPath that combines multiple path components into a single secret path
-func newCompoundSecretPath(components ...string) (api.SecretPath, error) {
+func newCompoundSecretPath(components ...string) string {
 	var processed []string
 	for _, c := range components {
 		trimmed := strings.Trim(c, pathSeparator)
@@ -182,6 +165,5 @@ func newCompoundSecretPath(components ...string) (api.SecretPath, error) {
 			processed = append(processed, trimmed)
 		}
 	}
-	joined := strings.Join(processed, pathSeparator)
-	return api.NewSecretPath(joined)
+	return strings.Join(processed, pathSeparator)
 }
