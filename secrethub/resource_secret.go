@@ -95,10 +95,6 @@ func resourceSecretCreate(d *schema.ResourceData, m interface{}) error {
 		return err
 	}
 
-	if path.HasVersion() {
-		return fmt.Errorf("path '%v' should not have a version number", path)
-	}
-
 	res, err := client.Secrets().Write(path, data)
 	if err != nil {
 		return err
