@@ -5,6 +5,7 @@ terraform-provider-secrethub
 *.dll
 *.so
 *.dylib
+dist/
 
 # Terraform
 terraform.tfplan
