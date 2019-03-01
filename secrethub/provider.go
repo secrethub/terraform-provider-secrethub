@@ -3,7 +3,7 @@ package secrethub
 import (
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/hashicorp/terraform/terraform"
-	"github.com/keylockerbv/secrethub-go/pkg/secrethub"
+	"github.com/secrethub/secrethub-go/pkg/secrethub"
 )
 
 // Provider returns the ScretHub Terraform provider

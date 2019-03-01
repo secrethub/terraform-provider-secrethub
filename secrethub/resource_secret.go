@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/hashicorp/terraform/helper/schema"
-	"github.com/keylockerbv/secrethub-go/pkg/randchar"
+	"github.com/secrethub/secrethub-go/pkg/randchar"
 )
 
 func resourceSecret() *schema.Resource {
