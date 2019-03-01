@@ -7,7 +7,6 @@ import (
 
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/hashicorp/terraform/terraform"
-	"github.com/keylockerbv/secrethub-go/pkg/api"
 )
 
 const (
@@ -23,7 +22,7 @@ type testAccValues struct {
 	namespace  string
 	repository string
 	secretName string
-	path       api.SecretPath
+	path       string
 	pathErr    error
 }
 
@@ -46,7 +45,7 @@ func init() {
 		secretName: "test_acc_secret",
 	}
 
-	testAcc.path, testAcc.pathErr = newCompoundSecretPath(testAcc.namespace, testAcc.repository, testAcc.secretName)
+	testAcc.path = newCompoundSecretPath(testAcc.namespace, testAcc.repository, testAcc.secretName)
 }
 
 func testAccPreCheck(t *testing.T) func() {

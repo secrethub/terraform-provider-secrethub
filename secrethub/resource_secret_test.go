@@ -200,38 +200,29 @@ func TestMergeSecretPath(t *testing.T) {
 		path   string
 	}
 	cases := []struct {
-		name    string
-		args    args
-		want    string
-		wantErr bool
+		name string
+		args args
+		want string
 	}{
 		{
 			"prefixed path",
 			args{"myorg/db_passwords", "postgres"},
 			"myorg/db_passwords/postgres",
-			false,
 		},
 		{
 			"abs path",
 			args{"", "myorg2/database/postgres"},
 			"myorg2/database/postgres",
-			false,
 		},
 		{
 			"path with redundant slashes",
 			args{"myorg/db_passwords/", "/postgres"},
 			"myorg/db_passwords/postgres",
-			false,
 		},
 	}
 	for _, c := range cases {
 		t.Run(c.name, func(t *testing.T) {
-			path, err := newCompoundSecretPath(c.args.prefix, c.args.path)
-			got := string(path)
-			if (err != nil) != c.wantErr {
-				t.Errorf("newCompoundSecretPath() error = %v, wantErr %v", err, c.wantErr)
-				return
-			}
+			got := newCompoundSecretPath(c.args.prefix, c.args.path)
 			if !reflect.DeepEqual(got, c.want) {
 				t.Errorf("newCompoundSecretPath() = %v, want %v", got, c.want)
 			}
