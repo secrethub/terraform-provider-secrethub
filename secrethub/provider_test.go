@@ -10,8 +10,9 @@ import (
 )
 
 const (
-	envNamespace = "SECRETHUB_TF_ACC_NAMESPACE"
-	envRepo      = "SECRETHUB_TF_ACC_REPOSITORY"
+	envCredential = "SECRETHUB_CREDENTIAL"
+	envNamespace  = "SECRETHUB_TF_ACC_NAMESPACE"
+	envRepo       = "SECRETHUB_TF_ACC_REPOSITORY"
 )
 
 var testAccProviders map[string]terraform.ResourceProvider
@@ -28,7 +29,7 @@ type testAccValues struct {
 
 func (testAccValues) validate() error {
 	if testAcc.namespace == "" || testAcc.repository == "" {
-		return fmt.Errorf("the following environment variables need to be set: %v, %v", envNamespace, envRepo)
+		return fmt.Errorf("the following environment variables need to be set: %v, %v, %v", envCredential, envNamespace, envRepo)
 	}
 	return testAcc.pathErr
 }
