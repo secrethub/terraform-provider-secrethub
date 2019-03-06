@@ -31,6 +31,6 @@ resource "secrethub_secret" "db_password" {
 
 The following arguments are supported:
 
-* `credential` - (Required) Credential to use for SecretHub authentication.
+* `credential` - (Required) Credential to use for SecretHub authentication. Can also be sourced from SECRETHUB_CREDENTIAL.
 * `credential_passphrase` - (Optional) Passphrase to unlock the authentication passed in `credential`.
 * `path_prefix` - (Optional) The default value to prefix path values with. If set, paths for resources and data sources will be prefixed with the given prefix, allowing you to use relative paths instead. If left blank, every path must be absolute (namespace/repository/[dir/]secret_name).

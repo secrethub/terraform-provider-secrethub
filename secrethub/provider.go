@@ -14,7 +14,7 @@ func Provider() terraform.ResourceProvider {
 				Type:        schema.TypeString,
 				Required:    true,
 				DefaultFunc: schema.EnvDefaultFunc("SECRETHUB_CREDENTIAL", nil),
-				Description: "Credential to use for SecretHub authentication.",
+				Description: "Credential to use for SecretHub authentication. Can also be sourced from SECRETHUB_CREDENTIAL.",
 			},
 			"credential_passphrase": {
 				Type:        schema.TypeString,
