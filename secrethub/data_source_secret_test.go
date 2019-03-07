@@ -9,10 +9,6 @@ import (
 
 func TestAccDataSourceSecret_absPath(t *testing.T) {
 	config := fmt.Sprintf(`
-		provider "secrethub" {
-			credential = "${file("~/.secrethub/credential")}"
-		}
-
 		resource "secrethub_secret" "%v" {
 			path = "%v"
 			data = "secretpassword"
@@ -48,10 +44,6 @@ func TestAccDataSourceSecret_absPath(t *testing.T) {
 
 func TestAccDataSourceSecret_absPathVersioned(t *testing.T) {
 	configInit := fmt.Sprintf(`
-		provider "secrethub" {
-			credential = "${file("~/.secrethub/credential")}"
-		}
-
 		resource "secrethub_secret" "%v" {
 			path = "%v"
 			data = "secretpasswordv1"
@@ -63,10 +55,6 @@ func TestAccDataSourceSecret_absPathVersioned(t *testing.T) {
 	`, testAcc.secretName, testAcc.path, testAcc.secretName, testAcc.secretName)
 
 	configVersioned := fmt.Sprintf(`
-		provider "secrethub" {
-			credential = "${file("~/.secrethub/credential")}"
-		}
-
 		resource "secrethub_secret" "%v" {
 			path = "%v"
 			data = "secretpasswordv2"
@@ -108,7 +96,6 @@ func TestAccDataSourceSecret_absPathVersioned(t *testing.T) {
 func TestAccDataSourceSecret_prefPath(t *testing.T) {
 	config := fmt.Sprintf(`
 		provider "secrethub" {
-			credential = "${file("~/.secrethub/credential")}"
 			path_prefix = "%v/%v"
 		}
 

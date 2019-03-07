@@ -11,10 +11,6 @@ import (
 
 func TestAccResourceSecret_writeAbsPath(t *testing.T) {
 	config := fmt.Sprintf(`
-		provider "secrethub" {
-			credential = "${file("~/.secrethub/credential")}"
-		}
-
 		resource "secrethub_secret" "%v" {
 			path = "%v"
 			data = "secretpassword"
@@ -38,7 +34,6 @@ func TestAccResourceSecret_writeAbsPath(t *testing.T) {
 func TestAccResourceSecret_writePrefPath(t *testing.T) {
 	config := fmt.Sprintf(`
 		provider "secrethub" {
-			credential = "${file("~/.secrethub/credential")}"
 			path_prefix = "%v"
 		}
 
@@ -65,7 +60,6 @@ func TestAccResourceSecret_writePrefPath(t *testing.T) {
 func TestAccResourceSecret_writePrefPathOverride(t *testing.T) {
 	config := fmt.Sprintf(`
 		provider "secrethub" {
-			credential = "${file("~/.secrethub/credential")}"
 			path_prefix = "override_me"
 		}
 		
@@ -92,10 +86,6 @@ func TestAccResourceSecret_writePrefPathOverride(t *testing.T) {
 
 func TestAccResourceSecret_generate(t *testing.T) {
 	configInit := fmt.Sprintf(`
-		provider "secrethub" {
-			credential = "${file("~/.secrethub/credential")}"
-		}
-		
 		resource "secrethub_secret" "%v" {
 			path = "%v"
 			generate {
@@ -106,10 +96,6 @@ func TestAccResourceSecret_generate(t *testing.T) {
 	`, testAcc.secretName, testAcc.path)
 
 	configLengthUpdate := fmt.Sprintf(`
-		provider "secrethub" {
-			credential = "${file("~/.secrethub/credential")}"
-		}
-		
 		resource "secrethub_secret" "%v" {
 			path = "%v"
 			generate {
