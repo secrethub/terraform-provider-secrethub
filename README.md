@@ -37,7 +37,7 @@ resource "secrethub_secret" "db_password" {
 }
 
 resource "secrethub_secret" "db_username" {
-  path = "db/username"
+  path = "my-org/my-repo/db/username"
   data = "db-user"
 }
 
