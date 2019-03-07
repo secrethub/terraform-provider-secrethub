@@ -24,12 +24,11 @@ Afterwards, you can use `terraform init` as you would normally.
 ```hcl
 provider "secrethub" {
   # pass in credential or set SECRETHUB_CREDENTIAL enviroment variable
-  credential  = "${file("~/.secrethub/credential")}" 
-  path_prefix = "my-org/my-repo"
+  credential = "${file("~/.secrethub/credential")}" 
 }
 
 resource "secrethub_secret" "db_password" {
-  path = "db/password"
+  path = "my-org/my-repo/db/password"
 
   generate {
     length  = 22
