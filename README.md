@@ -77,11 +77,11 @@ make build
 
 ### Testing
 
-To run the [acceptance tests](https://www.terraform.io/docs/extend/testing/acceptance-tests/index.html), the following environment variables need to be setup.
+To run the [acceptance tests](https://www.terraform.io/docs/extend/testing/acceptance-tests/index.html), the following environment variables need to be set up.
 
-* `SECRETHUB_CREDENTIAL` - 
+* `SECRETHUB_CREDENTIAL` - a SecretHub credential.
 * `SECRETHUB_TF_ACC_NAMESPACE` - a namespace registered on SecretHub. Make sure `SECRETHUB_CREDENTIAL` has admin access.
-* `SECRETHUB_TF_ACC_REPOSITORY` - a repository within `SECRETHUB_TF_ACC_NAMESPACE` to be used by the acceptance tests. Make sure `SECRETHUB_CREDENTIAL` has admin access.
+* `SECRETHUB_TF_ACC_REPOSITORY` - a repository within `SECRETHUB_TF_ACC_NAMESPACE` to be used in the acceptance tests. Make sure `SECRETHUB_CREDENTIAL` has admin access.
 
 With the environment variables properly set up, run:
 
