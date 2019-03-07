@@ -16,8 +16,8 @@ To write a secret:
 
 ```hcl
 resource "secrethub_secret" "ssh_key" {
-  path = "/ssh_key"
-  data = "${file("/path/to/ssh/key")}."
+  path = "my_org/my_repo/ssh_key"
+  data = "${file("/path/to/ssh/key")}"
 }
 ```
 
@@ -25,7 +25,7 @@ To generate a new secret:
 
 ```hcl
 resource "secrethub_secret" "db_password" {
-  path = "/db_password"
+  path = "my_org/my_repo/db_password"
   generate {
     length = 20
     symbols = true
@@ -37,19 +37,18 @@ resource "secrethub_secret" "db_password" {
 
 The following arguments are supported:
 
-* `path` - (Required) The path used for storing
- the secret.
-* `data` - (Optional) The secret to store. Either `data` or `generate` must be specified.
-* `generate` - (Optional) The settings block for autogenerating a secret. Either `data` or `generate` must be specified.
+* `path` - (Required) The path where the secret will be stored.
+* `path_prefix` - (Optional) Overrides the `path_prefix` defined in the provider.
+* `data` - (Optional) The secret contents. Either `data` or `generate` must be defined.
+* `generate` - (Optional) Settings for autogenerating a secret. Either `data` or `generate` must be defined.
 
-### Generate block
+Nested `generate` blocks have the following structure:
 
-* `length` - (Optional) How many characters long the secret should be.
-* `symbols` - (Optional) Specifies if symbols can be used to generate the secret.
-* `force_new` - (Optional) Force a new secret generation at every run.
+* `length` - (Required) The length of the secret to generate.
+* `symbols` - (Optional) Whether the secret should contain symbols.
 
 ## Attributes Reference
 
 In addition to all arguments above, the following attributes are exported:
 
-* `version` - The current version of the secret.
+* `version` - The version of the secret.

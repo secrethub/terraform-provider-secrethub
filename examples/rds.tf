@@ -17,22 +17,22 @@ provider "aws" {
 }
 
 provider "secrethub" {
-  version      = "latest"
-  namespace = "myOrg"
-  repository   = "myRepo"
+  credential  = "${file("~/.secrethub/credential")}"
+  path_prefix = "my-org/my-repo/${var.environment}"
 }
 
 resource "secrethub_secret" "db_password" {
-  path    = "/${var.environment}/db/password"
+  path = "db/password"
+
   generate {
     length  = 22
-    symbols = false
+    symbols = true
   }
 }
 
 resource "secrethub_secret" "db_username" {
-  path    = "/${var.environment}/db/username"
-  data    = "dbUser"
+  path = "db/username"
+  data = "db-user"
 }
 
 resource "aws_db_instance" "default" {

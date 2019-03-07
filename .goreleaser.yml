@@ -1,0 +1,21 @@
+project_name: terraform-provider-secrethub
+
+builds:
+  - binary: "{{ .ProjectName }}"
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+
+archive:
+  name_template: "{{ .ProjectName }}-{{ .Os }}-{{ .Arch }}"
+  replacements:
+    amd64: 64-bit
+    darwin: macOS
+  files:
+    # Only archive the binary
+    - none* 

@@ -16,15 +16,14 @@ Use the navigation to the left to read about the available resources.
 ## Example Usage
 
 ```hcl
-# Configure the SecretHub provider
 provider "secrethub" {
-  version = "latest"
-  namespace = "myOrg"
-  repository = "myRepo"
+  credential = "${file("~/.secrethub/credential")}"
+  path_prefix = "my_org/my_repo"
 }
 
 resource "secrethub_secret" "db_password" {
-  # ...
+  path = "db_password"
+  data = "mypassword"
 }
 ```
 
@@ -32,9 +31,6 @@ resource "secrethub_secret" "db_password" {
 
 The following arguments are supported:
 
-* `version` - (Optional) The provider version. Default value: `latest`.
-* `namespace` - (Optional) The namespace to use.
-* `repository` - (Optional) The repository to use. If you specify a repository then you need to set also `namespace`.
-* `config_dir` - (Optional) The directory where to find the SecretHub client configuration. Conflicts with `credential`. Default value: `~/.secrethub`.
-* `credential` - (Optional) Specify the encrypted credentials to use for authentication. Conflicts with `config_dir`.
-* `credential_passphrase` - (Optional) Passphrase required to unlock the authentication passed in `credential`.
+* `credential` - (Required) Credential to use for SecretHub authentication. Can also be sourced from SECRETHUB_CREDENTIAL.
+* `credential_passphrase` - (Optional) Passphrase to unlock the authentication passed in `credential`.
+* `path_prefix` - (Optional) The default value to prefix path values with. If set, paths for resources and data sources will be prefixed with the given prefix, allowing you to use relative paths instead. If left blank, every path must be absolute (namespace/repository/[dir/]secret_name).
