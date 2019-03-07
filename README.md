@@ -1,5 +1,4 @@
 # Terraform SecretHub Provider
-======
 
 > [SecretHub](https://secrethub.io) is a developer tool to help you keep database passwords, API tokens, and other secrets out of IT automation scripts.
 
@@ -8,9 +7,9 @@ The Terraform SecretHub Provider lets you manage your secrets using Terraform.
 <br>
 
 <p align="center">
-  <img src="https://cdn.rawgit.com/hashicorp/terraform-website/master/content/source/assets/images/logo-hashicorp.svg" alt="Terraform" width="250px">
+  <img src="https://cdn.rawgit.com/hashicorp/terraform-website/master/content/source/assets/images/logo-hashicorp.svg" alt="Terraform" width="330px">
   <img width="50px"/>
-  <img src="https://secrethub.io/img/secrethub-logo.png" alt="SecretHub" width="280px">
+  <img src="https://secrethub.io/img/secrethub-logo.png" alt="SecretHub" width="360px">
 </p>
 
 
