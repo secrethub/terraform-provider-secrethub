@@ -62,10 +62,12 @@ Have a look at the [examples](/examples) for more practical use-cases.
 
 ### Building
 
-Go get the source code:
+Get the source code:
 
 ```
-go get -u https://github.com/keylockerbv/terraform-provider-secrethub
+mkdir -p $GOPATH/src/github.com/keylockerbv
+cd $GOPATH/src/github.com/keylockerbv
+git clone https://github.com/keylockerbv/terraform-provider-secrethub
 ```
 
 Build it using:
