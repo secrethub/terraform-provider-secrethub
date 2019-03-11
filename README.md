@@ -58,6 +58,10 @@ Have a look at the [reference docs](/website/docs) for more information on the s
 
 Have a look at the [examples](/examples) for more practical use-cases.
 
+## BETA
+
+This project is currently in beta. [Issues](https://github.com/keylockerbv/terraform-provider-secrethub/issues) are very much appreciated.
+
 ## Development
 
 ### Building
