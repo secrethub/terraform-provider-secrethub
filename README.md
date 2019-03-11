@@ -1,5 +1,7 @@
 # Terraform SecretHub Provider
 
+[![](https://img.shields.io/badge/discord-SecretHub-blue.svg)](https://discord.gg/wcxV5RD)
+
 > [SecretHub](https://secrethub.io) is a developer tool to help you keep database passwords, API tokens, and other secrets out of IT automation scripts.
 
 The Terraform SecretHub Provider lets you manage your secrets using Terraform.
