@@ -62,7 +62,7 @@ Have a look at the [examples](/examples) for more practical use-cases.
 
 ## BETA
 
-This project is currently in beta. [Issues](https://github.com/keylockerbv/terraform-provider-secrethub/issues) are very much appreciated.
+This project is currently in beta. [Issues](https://github.com/keylockerbv/terraform-provider-secrethub/issues) are very much appreciated. For more high level discussions about the Terraform SecretHub integration as a whole, check out our [Discord](https://discord.gg/wcxV5RD).
 
 ## Development
 
