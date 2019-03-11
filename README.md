@@ -1,6 +1,6 @@
 # Terraform SecretHub Provider
 
-[![](https://img.shields.io/badge/discord-SecretHub-blue.svg)](https://discord.gg/wcxV5RD)
+[![](https://img.shields.io/badge/discord-SecretHub-7289da.svg?logo=discord)](https://discord.gg/wcxV5RD)
 
 > [SecretHub](https://secrethub.io) is a developer tool to help you keep database passwords, API tokens, and other secrets out of IT automation scripts.
 
@@ -62,7 +62,7 @@ Have a look at the [examples](/examples) for more practical use-cases.
 
 ## BETA
 
-This project is currently in beta. [Issues](https://github.com/keylockerbv/terraform-provider-secrethub/issues) are very much appreciated. For more high level discussions about the Terraform SecretHub integration as a whole, check out our [Discord](https://discord.gg/wcxV5RD).
+This project is currently in beta. [Issues](https://github.com/keylockerbv/terraform-provider-secrethub/issues) are very much appreciated. For more high level discussions about the Terraform SecretHub integration as a whole, check out our [<img src="https://discordapp.com/assets/2c21aeda16de354ba5334551a883b481.png" alt="Discord" width="20px"> Discord](https://discord.gg/wcxV5RD).
 
 ## Development
 
