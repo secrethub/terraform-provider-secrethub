@@ -64,6 +64,8 @@ Have a look at the [examples](/examples) for more practical use-cases.
 
 This project is currently in beta and we'd love your feedback! Check out the [issues](https://github.com/keylockerbv/terraform-provider-secrethub/issues) and feel free suggest cool ideas, use cases, or improvements. 
 
+Because it's still in beta, you can expect to see some changes introduced. Pull requests are very welcome.
+
 For support, send us a message on the `#terraform` channel on [<img src="https://discordapp.com/assets/2c21aeda16de354ba5334551a883b481.png" alt="Discord" width="20px"> Discord](https://discord.gg/wcxV5RD) or send an email to [terraform@secrethub.io](mailto:terraform@secrethub.io)
 
 ## Development
