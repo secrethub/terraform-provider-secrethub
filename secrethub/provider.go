@@ -19,7 +19,8 @@ func Provider() terraform.ResourceProvider {
 			"credential_passphrase": {
 				Type:        schema.TypeString,
 				Optional:    true,
-				Description: "Passphrase to unlock the authentication passed in `credential`.",
+				DefaultFunc: schema.EnvDefaultFunc("SECRETHUB_CREDENTIAL_PASSPHRASE", nil),
+				Description: "Passphrase to unlock the authentication passed in `credential`. Can also be sourced from SECRETHUB_CREDENTIAL_PASSPHRASE.",
 			},
 			"path_prefix": {
 				Type:        schema.TypeString,
