@@ -137,6 +137,30 @@ func TestAccResourceSecret_generate(t *testing.T) {
 	})
 }
 
+func TestAccResourceSecret_import(t *testing.T) {
+	config := fmt.Sprintf(`
+		resource "secrethub_secret" "%v" {
+			path = "%v"
+			data = "secretpassword"
+		}
+	`, testAcc.secretName, testAcc.path)
+
+	resource.Test(t, resource.TestCase{
+		PreCheck:  testAccPreCheck(t),
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: config,
+			},
+			{
+				ResourceName:      fmt.Sprintf("secrethub_secret.%v", testAcc.secretName),
+				ImportState:       true,
+				ImportStateVerify: true,
+			},
+		},
+	})
+}
+
 func getSecretResourceState(s *terraform.State, values *testAccValues) (*terraform.InstanceState, error) {
 	resourceState := s.Modules[0].Resources[fmt.Sprintf("secrethub_secret.%v", values.secretName)]
 	if resourceState == nil {
