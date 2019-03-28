@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/secrethub/secrethub-go/internals/api"
 	"github.com/secrethub/secrethub-go/pkg/randchar"
 )
 
