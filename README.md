@@ -1,10 +1,21 @@
-# Terraform SecretHub Provider <sup>[BETA](#beta)</sup>
+<p align="center">
+  <a href="https://terraform.io">
+    <img src="https://cdn.rawgit.com/hashicorp/terraform-website/master/content/source/assets/images/logo-hashicorp.svg" alt="Terraform" width="330px">
+  </a>
+  <img width="30px"/>
+  <a href="https://secrethub.io">
+    <img src="https://secrethub.io/img/secrethub-logo.svg" alt="SecretHub" width="360px">
+  </a>
+</p>
+<h1 align="center">
+  <i>Provider<sup><a href="#beta">BETA</a></sup></i>
+</h1>
 
 [![](https://img.shields.io/badge/chat-on%20discord-7289da.svg?logo=discord)](https://discord.gg/wcxV5RD)
 
-> [SecretHub](https://secrethub.io) is a developer tool to help you keep database passwords, API tokens, and other secrets out of IT automation scripts.
-
 The Terraform SecretHub Provider lets you manage your secrets using Terraform.
+
+> [SecretHub](https://secrethub.io) is a developer tool to help you keep database passwords, API tokens, and other secrets out of IT automation scripts.
 
 <br>
 
