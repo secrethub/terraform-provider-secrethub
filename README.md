@@ -17,15 +17,6 @@ The Terraform SecretHub Provider lets you manage your secrets using Terraform.
 
 > [SecretHub](https://secrethub.io) is a developer tool to help you keep database passwords, API tokens, and other secrets out of IT automation scripts.
 
-<br>
-
-<p align="center">
-  <img src="https://cdn.rawgit.com/hashicorp/terraform-website/master/content/source/assets/images/logo-hashicorp.svg" alt="Terraform" width="330px">
-  <img width="50px"/>
-  <img src="https://secrethub.io/img/secrethub-logo.svg" alt="SecretHub" width="360px">
-</p>
-
-
 ## Installation
 
 Download and extract the [latest release](https://github.com/keylockerbv/terraform-provider-secrethub/releases/latest) of the Terraform SecretHub Provider and move it to your [Terraform plugin directory](https://www.terraform.io/docs/configuration/providers.html#third-party-plugins) (`~/.terraform.d/plugins/`, or `%APPDATA%\terraform.d\plugins` on Windows).
