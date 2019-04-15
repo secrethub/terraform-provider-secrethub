@@ -137,6 +137,34 @@ func TestAccResourceSecret_generate(t *testing.T) {
 	})
 }
 
+func TestAccResourceSecret_deleteDetection(t *testing.T) {
+	config := fmt.Sprintf(`
+		resource "secrethub_secret" "%v" {
+			path = "%v"
+			data = "secretpassword"
+		}
+	`, testAcc.secretName, testAcc.path)
+
+	resource.Test(t, resource.TestCase{
+		Providers: testAccProviders,
+		PreCheck:  testAccPreCheck(t),
+		Steps: []resource.TestStep{
+			{
+				Config: config,
+			},
+			{
+				PreConfig: func() {
+					// Delete secret outside of Terraform workspace
+					client().Secrets().Delete(testAcc.path)
+				},
+				Config:             config,
+				PlanOnly:           true,
+				ExpectNonEmptyPlan: true, // The externally deleted secrethub_secret should be planned in for recreation
+			},
+		},
+	})
+}
+
 func getSecretResourceState(s *terraform.State, values *testAccValues) (*terraform.InstanceState, error) {
 	resourceState := s.Modules[0].Resources[fmt.Sprintf("secrethub_secret.%v", values.secretName)]
 	if resourceState == nil {
