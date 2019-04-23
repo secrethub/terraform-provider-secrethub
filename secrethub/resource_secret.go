@@ -114,13 +114,18 @@ func resourceSecretRead(d *schema.ResourceData, m interface{}) error {
 	path := d.Id()
 
 	remote, err := client.Secrets().Get(path)
+	if err == api.ErrSecretNotFound {
+		// The secret was deleted outside of the current Terraform workspace, so invalidate this resource
+		d.SetId("")
+		return nil
+	}
 	if err != nil {
 		return err
 	}
 
 	prev := d.Get("version")
 	if prev != remote.LatestVersion {
-		// The secret has been updated outside of the current terraform scope, so the new secret version has to be fetched
+		// The secret has been updated outside of the current Terraform workspace, so the new secret version has to be fetched
 		updated, err := client.Secrets().Versions().GetWithData(path)
 		if err != nil {
 			return err
