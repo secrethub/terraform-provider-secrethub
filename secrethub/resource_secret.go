@@ -15,6 +15,9 @@ func resourceSecret() *schema.Resource {
 		Read:   resourceSecretRead,
 		Update: resourceSecretUpdate,
 		Delete: resourceSecretDelete,
+		Importer: &schema.ResourceImporter{
+			State: resourceSecretImport,
+		},
 		Schema: map[string]*schema.Schema{
 			"path": {
 				Type:        schema.TypeString,
@@ -149,6 +152,29 @@ func resourceSecretDelete(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
+func resourceSecretImport(d *schema.ResourceData, m interface{}) ([]*schema.ResourceData, error) {
+	path := d.Id()
+
+	provider := m.(providerMeta)
+	if provider.pathPrefix != "" && !strings.HasPrefix(path, provider.pathPrefix) {
+		return nil, fmt.Errorf("secret import path must be absolute")
+	}
+
+	err := api.ValidateSecretPath(path)
+	if err != nil {
+		return nil, err
+	}
+
+	if provider.pathPrefix != "" {
+		relativePath := strings.TrimPrefix(path, provider.pathPrefix)
+		path = trimPathComponent(relativePath)
+	}
+
+	d.Set("path", path)
+
+	return []*schema.ResourceData{d}, nil
+}
+
 // getSecretPath finds the full path of a secret, combining the specified path with the provider's path prefix
 func getSecretPath(d *schema.ResourceData, provider *providerMeta) string {
 	prefix := d.Get("path_prefix").(string)
@@ -166,10 +192,14 @@ const pathSeparator = "/"
 func newCompoundSecretPath(components ...string) string {
 	var processed []string
 	for _, c := range components {
-		trimmed := strings.Trim(c, pathSeparator)
+		trimmed := trimPathComponent(c)
 		if trimmed != "" {
 			processed = append(processed, trimmed)
 		}
 	}
 	return strings.Join(processed, pathSeparator)
+}
+
+func trimPathComponent(c string) string {
+	return strings.Trim(c, pathSeparator)
 }
