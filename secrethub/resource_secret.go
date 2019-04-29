@@ -34,20 +34,20 @@ func resourceSecret() *schema.Resource {
 				Computed:    true,
 				Description: "The version of the secret.",
 			},
-			"data": {
+			"value": {
 				Type:          schema.TypeString,
 				Computed:      true,
 				Optional:      true,
 				Sensitive:     true,
 				ConflictsWith: []string{"generate"},
-				Description:   "The secret contents. Either `data` or `generate` must be defined.",
+				Description:   "The secret contents. Either `value` or `generate` must be defined.",
 			},
 			"generate": {
 				Type:          schema.TypeList,
 				Optional:      true,
 				MaxItems:      1,
-				Description:   "Settings for autogenerating a secret. Either `data` or `generate` must be defined.",
-				ConflictsWith: []string{"data"},
+				Description:   "Settings for autogenerating a secret. Either `value` or `generate` must be defined.",
+				ConflictsWith: []string{"value"},
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"length": {
@@ -71,15 +71,15 @@ func resourceSecretCreate(d *schema.ResourceData, m interface{}) error {
 	provider := m.(providerMeta)
 	client := *provider.client
 
-	dataStr := d.Get("data").(string)
+	valueStr := d.Get("value").(string)
 	generateList := d.Get("generate").([]interface{})
-	if dataStr == "" && len(generateList) == 0 {
-		return fmt.Errorf("either 'data' or 'generate' must be specified")
+	if valueStr == "" && len(generateList) == 0 {
+		return fmt.Errorf("either 'value' or 'generate' must be specified")
 	}
 
-	var data []byte
-	if dataStr != "" {
-		data = []byte(dataStr)
+	var value []byte
+	if valueStr != "" {
+		value = []byte(valueStr)
 	}
 
 	if len(generateList) > 0 {
@@ -87,7 +87,7 @@ func resourceSecretCreate(d *schema.ResourceData, m interface{}) error {
 		useSymbols := settings["use_symbols"].(bool)
 		length := settings["length"].(int)
 		var err error
-		data, err = randchar.NewGenerator(useSymbols).Generate(length)
+		value, err = randchar.NewGenerator(useSymbols).Generate(length)
 		if err != nil {
 			return err
 		}
@@ -95,13 +95,13 @@ func resourceSecretCreate(d *schema.ResourceData, m interface{}) error {
 
 	path := getSecretPath(d, &provider)
 
-	res, err := client.Secrets().Write(path, data)
+	res, err := client.Secrets().Write(path, value)
 	if err != nil {
 		return err
 	}
 
 	d.SetId(string(path))
-	d.Set("data", string(data))
+	d.Set("value", string(value))
 	d.Set("version", res.Version)
 
 	return resourceSecretRead(d, m)
@@ -130,7 +130,7 @@ func resourceSecretRead(d *schema.ResourceData, m interface{}) error {
 		if err != nil {
 			return err
 		}
-		d.Set("data", string(updated.Data))
+		d.Set("value", string(updated.Data))
 		d.Set("version", updated.Version)
 	}
 

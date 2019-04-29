@@ -27,5 +27,5 @@ data "secrethub_secret" "db_password" {
 
 In addition to all arguments above, the following attributes are exported:
 
-* `data` - The secret contents.
+* `value` - The secret contents.
 * `version` - The version of the secret.

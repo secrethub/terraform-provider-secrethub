@@ -13,7 +13,7 @@ func TestAccResourceSecret_writeAbsPath(t *testing.T) {
 	config := fmt.Sprintf(`
 		resource "secrethub_secret" "%v" {
 			path = "%v"
-			data = "secretpassword"
+			value = "secretpassword"
 		}
 	`, testAcc.secretName, testAcc.path)
 
@@ -39,7 +39,7 @@ func TestAccResourceSecret_writePrefPath(t *testing.T) {
 
 		resource "secrethub_secret" "%v" {
 			path = "%v/%v"
-			data = "secretpassword"
+			value = "secretpassword"
 		}
 	`, testAcc.namespace, testAcc.secretName, testAcc.repository, testAcc.secretName)
 
@@ -66,7 +66,7 @@ func TestAccResourceSecret_writePrefPathOverride(t *testing.T) {
 		resource "secrethub_secret" "%v" {
 			path_prefix = "%v"
 			path = "%v/%v"
-			data = "secretpassword"
+			value = "secretpassword"
 		}
 	`, testAcc.secretName, testAcc.namespace, testAcc.repository, testAcc.secretName)
 
@@ -113,8 +113,8 @@ func TestAccResourceSecret_generate(t *testing.T) {
 				Config: configInit,
 				Check: resource.ComposeTestCheckFunc(
 					checkSecretResourceState(testAcc, func(s *terraform.InstanceState) error {
-						if len(s.Attributes["data"]) != 16 {
-							return fmt.Errorf("expected 'data' to contain a 16 char secret")
+						if len(s.Attributes["value"]) != 16 {
+							return fmt.Errorf("expected 'value' to contain a 16 char secret")
 						}
 						return nil
 					}),
@@ -125,8 +125,8 @@ func TestAccResourceSecret_generate(t *testing.T) {
 				Config: configLengthUpdate,
 				Check: resource.ComposeTestCheckFunc(
 					checkSecretResourceState(testAcc, func(s *terraform.InstanceState) error {
-						if len(s.Attributes["data"]) != 32 {
-							return fmt.Errorf("expected 'data' to contain newly generated 32 char secret")
+						if len(s.Attributes["value"]) != 32 {
+							return fmt.Errorf("expected 'value' to contain newly generated 32 char secret")
 						}
 						return nil
 					}),
@@ -141,7 +141,7 @@ func TestAccResourceSecret_deleteDetection(t *testing.T) {
 	config := fmt.Sprintf(`
 		resource "secrethub_secret" "%v" {
 			path = "%v"
-			data = "secretpassword"
+			value = "secretpassword"
 		}
 	`, testAcc.secretName, testAcc.path)
 
@@ -169,7 +169,7 @@ func TestAccResourceSecret_import(t *testing.T) {
 	config := fmt.Sprintf(`
 		resource "secrethub_secret" "%v" {
 			path = "%v"
-			data = "secretpassword"
+			value = "secretpassword"
 		}
 	`, testAcc.secretName, testAcc.path)
 

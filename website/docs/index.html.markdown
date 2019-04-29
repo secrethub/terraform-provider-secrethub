@@ -23,7 +23,7 @@ provider "secrethub" {
 
 resource "secrethub_secret" "db_password" {
   path = "db_password"
-  data = "mypassword"
+  value = "mypassword"
 }
 ```
 

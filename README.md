@@ -42,7 +42,7 @@ resource "secrethub_secret" "db_password" {
 
 resource "secrethub_secret" "db_username" {
   path = "my-org/my-repo/db/username"
-  data = "db-user"
+  value = "db-user"
 }
 
 resource "aws_db_instance" "default" {
@@ -52,8 +52,8 @@ resource "aws_db_instance" "default" {
   engine_version       = "5.7"
   instance_class       = "db.t2.micro"
   name                 = "mydb"
-  username             = "${secrethub_secret.db_username.data}"
-  password             = "${secrethub_secret.db_password.data}"
+  username             = "${secrethub_secret.db_username.value}"
+  password             = "${secrethub_secret.db_password.value}"
   parameter_group_name = "default.mysql5.7"
 }
 ```

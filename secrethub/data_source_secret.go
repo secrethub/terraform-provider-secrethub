@@ -23,7 +23,7 @@ func dataSourceSecret() *schema.Resource {
 				Computed:    true,
 				Description: "The version of the secret.",
 			},
-			"data": {
+			"value": {
 				Type:        schema.TypeString,
 				Computed:    true,
 				Sensitive:   true,
@@ -44,7 +44,7 @@ func dataSourceSecretRead(d *schema.ResourceData, m interface{}) error {
 		return err
 	}
 
-	d.Set("data", string(secret.Data))
+	d.Set("value", string(secret.Data))
 	d.Set("version", secret.Version)
 
 	d.SetId(string(path))
