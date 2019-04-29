@@ -16,6 +16,9 @@ archive:
   replacements:
     amd64: 64-bit
     darwin: macOS
+  format_overrides:
+    - goos: windows
+      format: zip
   files:
     # Only archive the binary
     - none* 
