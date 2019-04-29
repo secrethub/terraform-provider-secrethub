@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/hashicorp/terraform/plugin"
 	"github.com/hashicorp/terraform/terraform"
-	"github.com/keylockerbv/terraform-provider-secrethub/secrethub"
+	"github.com/secrethub/terraform-provider-secrethub/secrethub"
 )
 
 func main() {

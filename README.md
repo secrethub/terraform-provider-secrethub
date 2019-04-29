@@ -19,7 +19,7 @@ The Terraform SecretHub Provider lets you manage your secrets using Terraform.
 
 ## Installation
 
-Download and extract the [latest release](https://github.com/keylockerbv/terraform-provider-secrethub/releases/latest) of the Terraform SecretHub Provider and move it to your [Terraform plugin directory](https://www.terraform.io/docs/configuration/providers.html#third-party-plugins) (`~/.terraform.d/plugins/`, or `%APPDATA%\terraform.d\plugins` on Windows).
+Download and extract the [latest release](https://github.com/secrethub/terraform-provider-secrethub/releases/latest) of the Terraform SecretHub Provider and move it to your [Terraform plugin directory](https://www.terraform.io/docs/configuration/providers.html#third-party-plugins) (`~/.terraform.d/plugins/`, or `%APPDATA%\terraform.d\plugins` on Windows).
 
 Afterwards, you can use `terraform init` as you would normally.
 
@@ -64,7 +64,7 @@ Have a look at the [examples](/examples) for more practical use-cases.
 
 ## BETA
 
-This project is currently in beta and we'd love your feedback! Check out the [issues](https://github.com/keylockerbv/terraform-provider-secrethub/issues) and feel free suggest cool ideas, use cases, or improvements. 
+This project is currently in beta and we'd love your feedback! Check out the [issues](https://github.com/secrethub/terraform-provider-secrethub/issues) and feel free suggest cool ideas, use cases, or improvements.
 
 Because it's still in beta, you can expect to see some changes introduced. Pull requests are very welcome.
 
@@ -79,7 +79,7 @@ Get the source code:
 ```
 mkdir -p $GOPATH/src/github.com/keylockerbv
 cd $GOPATH/src/github.com/keylockerbv
-git clone https://github.com/keylockerbv/terraform-provider-secrethub
+git clone https://github.com/secrethub/terraform-provider-secrethub
 ```
 
 Build it using:

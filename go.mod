@@ -1,4 +1,4 @@
-module github.com/keylockerbv/terraform-provider-secrethub
+module github.com/secrethub/terraform-provider-secrethub
 
 require (
 	github.com/apparentlymart/go-cidr v1.0.0 // indirect
