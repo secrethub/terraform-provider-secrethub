@@ -28,7 +28,7 @@ resource "secrethub_secret" "db_password" {
   path = "my_org/my_repo/db_password"
   generate {
     length = 20
-    symbols = true
+    use_symbols = true
   }
 }
 ```
@@ -45,7 +45,7 @@ The following arguments are supported:
 Nested `generate` blocks have the following structure:
 
 * `length` - (Required) The length of the secret to generate.
-* `symbols` - (Optional) Whether the secret should contain symbols.
+* `use_symbols` - (Optional) Whether the secret should contain symbols.
 
 ## Attributes Reference
 

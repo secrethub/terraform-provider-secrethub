@@ -90,7 +90,7 @@ func TestAccResourceSecret_generate(t *testing.T) {
 			path = "%v"
 			generate {
 				length = 16
-				symbols = true
+				use_symbols = true
 			}
 		}
 	`, testAcc.secretName, testAcc.path)
@@ -100,7 +100,7 @@ func TestAccResourceSecret_generate(t *testing.T) {
 			path = "%v"
 			generate {
 				length = 32
-				symbols = true
+				use_symbols = true
 			}
 		}
 	`, testAcc.secretName, testAcc.path)

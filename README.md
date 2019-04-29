@@ -36,7 +36,7 @@ resource "secrethub_secret" "db_password" {
 
   generate {
     length  = 22
-    symbols = true
+    use_symbols = true
   }
 }
 

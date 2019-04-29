@@ -55,7 +55,7 @@ func resourceSecret() *schema.Resource {
 							Required:    true,
 							Description: "The length of the secret to generate.",
 						},
-						"symbols": {
+						"use_symbols": {
 							Type:        schema.TypeBool,
 							Optional:    true,
 							Description: "Whether the secret should contain symbols.",
@@ -84,10 +84,10 @@ func resourceSecretCreate(d *schema.ResourceData, m interface{}) error {
 
 	if len(generateList) > 0 {
 		settings := generateList[0].(map[string]interface{})
-		symbols := settings["symbols"].(bool)
+		useSymbols := settings["use_symbols"].(bool)
 		length := settings["length"].(int)
 		var err error
-		data, err = randchar.NewGenerator(symbols).Generate(length)
+		data, err = randchar.NewGenerator(useSymbols).Generate(length)
 		if err != nil {
 			return err
 		}
