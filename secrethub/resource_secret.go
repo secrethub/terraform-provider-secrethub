@@ -22,11 +22,14 @@ func resourceSecret() *schema.Resource {
 			"path": {
 				Type:        schema.TypeString,
 				Required:    true,
+				ForceNew:    true,
 				Description: "The path where the secret will be stored.",
 			},
 			"path_prefix": {
 				Type:        schema.TypeString,
 				Optional:    true,
+				Computed:    true,
+				ForceNew:    true,
 				Description: "Overrides the `path_prefix` defined in the provider.",
 			},
 			"version": {
@@ -93,7 +96,8 @@ func resourceSecretCreate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	path := getSecretPath(d, &provider)
+	synchronizePathPrefix(d, &provider)
+	path := getSecretPath(d)
 
 	res, err := client.Secrets().Write(path, data)
 	if err != nil {
@@ -111,8 +115,9 @@ func resourceSecretRead(d *schema.ResourceData, m interface{}) error {
 	provider := m.(providerMeta)
 	client := *provider.client
 
-	path := d.Id()
+	synchronizePathPrefix(d, &provider)
 
+	path := d.Id()
 	remote, err := client.Secrets().Get(path)
 	if err == api.ErrSecretNotFound {
 		// The secret was deleted outside of the current Terraform workspace, so invalidate this resource
@@ -175,15 +180,17 @@ func resourceSecretImport(d *schema.ResourceData, m interface{}) ([]*schema.Reso
 	return []*schema.ResourceData{d}, nil
 }
 
-// getSecretPath finds the full path of a secret, combining the specified path with the provider's path prefix
-func getSecretPath(d *schema.ResourceData, provider *providerMeta) string {
-	prefix := d.Get("path_prefix").(string)
-	if prefix == "" {
+// getSecretPath finds the full path of a secret, combining the (relative) path with path prefix
+func getSecretPath(d *schema.ResourceData) string {
+	return newCompoundSecretPath(d.Get("path_prefix").(string), d.Get("path").(string))
+}
+
+// synchronizeSecretPath synchronizes the path prefix state of the resource with the fallback path prefix set on the provider
+func synchronizePathPrefix(d *schema.ResourceData, provider *providerMeta) {
+	if _, ok := d.GetOk("path_prefix"); !ok {
 		// Fall back to the provider prefix
-		prefix = provider.pathPrefix
+		d.Set("path_prefix", provider.pathPrefix)
 	}
-	pathStr := d.Get("path").(string)
-	return newCompoundSecretPath(prefix, pathStr)
 }
 
 const pathSeparator = "/"
