@@ -159,9 +159,7 @@ func resourceSecretDelete(d *schema.ResourceData, m interface{}) error {
 
 	path := d.Id()
 
-	client.Secrets().Delete(path)
-
-	return nil
+	return client.Secrets().Delete(path)
 }
 
 func resourceSecretImport(d *schema.ResourceData, m interface{}) ([]*schema.ResourceData, error) {

@@ -5,6 +5,8 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/secrethub/secrethub-go/internals/assert"
+
 	"github.com/hashicorp/terraform/helper/resource"
 	"github.com/hashicorp/terraform/terraform"
 )
@@ -155,7 +157,8 @@ func TestAccResourceSecret_deleteDetection(t *testing.T) {
 			{
 				PreConfig: func() {
 					// Delete secret outside of Terraform workspace
-					client().Secrets().Delete(testAcc.path)
+					err := client().Secrets().Delete(testAcc.path)
+					assert.OK(t, err)
 				},
 				Config:             config,
 				PlanOnly:           true,
