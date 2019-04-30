@@ -101,8 +101,14 @@ func resourceSecretCreate(d *schema.ResourceData, m interface{}) error {
 	}
 
 	d.SetId(string(path))
-	d.Set("value", string(value))
-	d.Set("version", res.Version)
+	err = d.Set("value", string(value))
+	if err != nil {
+		return err
+	}
+	err = d.Set("version", res.Version)
+	if err != nil {
+		return err
+	}
 
 	return resourceSecretRead(d, m)
 }
@@ -130,8 +136,14 @@ func resourceSecretRead(d *schema.ResourceData, m interface{}) error {
 		if err != nil {
 			return err
 		}
-		d.Set("value", string(updated.Data))
-		d.Set("version", updated.Version)
+		err = d.Set("value", string(updated.Data))
+		if err != nil {
+			return err
+		}
+		err = d.Set("version", updated.Version)
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil
@@ -170,7 +182,10 @@ func resourceSecretImport(d *schema.ResourceData, m interface{}) ([]*schema.Reso
 		path = trimPathComponent(relativePath)
 	}
 
-	d.Set("path", path)
+	err = d.Set("path", path)
+	if err != nil {
+		return nil, err
+	}
 
 	return []*schema.ResourceData{d}, nil
 }

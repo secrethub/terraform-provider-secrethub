@@ -44,8 +44,14 @@ func dataSourceSecretRead(d *schema.ResourceData, m interface{}) error {
 		return err
 	}
 
-	d.Set("value", string(secret.Data))
-	d.Set("version", secret.Version)
+	err = d.Set("value", string(secret.Data))
+	if err != nil {
+		return err
+	}
+	err = d.Set("version", secret.Version)
+	if err != nil {
+		return err
+	}
 
 	d.SetId(string(path))
 
