@@ -11,6 +11,7 @@
   <i>Provider<sup><a href="#beta">BETA</a></sup></i>
 </h1>
 
+[![GoDoc](https://godoc.org/github.com/secrethub/terraform-provider-secrethub?status.svg)][godoc]
 [![CircleCI](https://circleci.com/gh/secrethub/terraform-provider-secrethub.svg)][circleci]
 [![Go Report Card](https://goreportcard.com/badge/github.com/secrethub/terraform-provider-secrethub)][goreportcard]
 [![Version]( https://img.shields.io/github/release/secrethub/terraform-provider-secrethub.svg)][latest-version]
@@ -103,6 +104,7 @@ With the environment variables properly set up, run:
 make testacc
 ```
 
+[godoc]: https://godoc.org/github.com/secrethub/terraform-provider-secrethub
 [circleci]: https://circleci.com/gh/secrethub/terraform-provider-secrethub
 [discord]: https://discord.gg/wcxV5RD
 [latest-version]: https://github.com/secrethub/terraform-provider-secrethub/releases/latest
