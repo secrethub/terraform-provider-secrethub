@@ -17,7 +17,7 @@ To write a secret:
 ```hcl
 resource "secrethub_secret" "ssh_key" {
   path = "my_org/my_repo/ssh_key"
-  data = "${file("/path/to/ssh/key")}"
+  value = "${file("/path/to/ssh/key")}"
 }
 ```
 
@@ -28,7 +28,7 @@ resource "secrethub_secret" "db_password" {
   path = "my_org/my_repo/db_password"
   generate {
     length = 20
-    symbols = true
+    use_symbols = true
   }
 }
 ```
@@ -39,13 +39,13 @@ The following arguments are supported:
 
 * `path` - (Required) The path where the secret will be stored.
 * `path_prefix` - (Optional) Overrides the `path_prefix` defined in the provider.
-* `data` - (Optional) The secret contents. Either `data` or `generate` must be defined.
-* `generate` - (Optional) Settings for autogenerating a secret. Either `data` or `generate` must be defined.
+* `value` - (Optional) The secret contents. Either `value` or `generate` must be defined.
+* `generate` - (Optional) Settings for autogenerating a secret. Either `value` or `generate` must be defined.
 
 Nested `generate` blocks have the following structure:
 
 * `length` - (Required) The length of the secret to generate.
-* `symbols` - (Optional) Whether the secret should contain symbols.
+* `use_symbols` - (Optional) Whether the secret should contain symbols.
 
 ## Attributes Reference
 

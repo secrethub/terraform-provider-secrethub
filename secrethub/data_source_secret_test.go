@@ -11,7 +11,7 @@ func TestAccDataSourceSecret_absPath(t *testing.T) {
 	config := fmt.Sprintf(`
 		resource "secrethub_secret" "%v" {
 			path = "%v"
-			data = "secretpassword"
+			value = "secretpassword"
 		}
 
 		data "secrethub_secret" "%v" {
@@ -33,7 +33,7 @@ func TestAccDataSourceSecret_absPath(t *testing.T) {
 					),
 					resource.TestCheckResourceAttr(
 						fmt.Sprintf("data.secrethub_secret.%v", testAcc.secretName),
-						"data",
+						"value",
 						"secretpassword",
 					),
 				),
@@ -46,7 +46,7 @@ func TestAccDataSourceSecret_absPathVersioned(t *testing.T) {
 	configInit := fmt.Sprintf(`
 		resource "secrethub_secret" "%v" {
 			path = "%v"
-			data = "secretpasswordv1"
+			value = "secretpasswordv1"
 		}
 
 		data "secrethub_secret" "%v" {
@@ -57,7 +57,7 @@ func TestAccDataSourceSecret_absPathVersioned(t *testing.T) {
 	configVersioned := fmt.Sprintf(`
 		resource "secrethub_secret" "%v" {
 			path = "%v"
-			data = "secretpasswordv2"
+			value = "secretpasswordv2"
 		}
 
 		data "secrethub_secret" "%v" {
@@ -74,7 +74,7 @@ func TestAccDataSourceSecret_absPathVersioned(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(
 						fmt.Sprintf("data.secrethub_secret.%v", testAcc.secretName),
-						"data",
+						"value",
 						"secretpasswordv1",
 					),
 				),
@@ -84,7 +84,7 @@ func TestAccDataSourceSecret_absPathVersioned(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(
 						fmt.Sprintf("data.secrethub_secret.%v", testAcc.secretName),
-						"data",
+						"value",
 						"secretpasswordv1",
 					),
 				),
@@ -101,7 +101,7 @@ func TestAccDataSourceSecret_prefPath(t *testing.T) {
 
 		resource "secrethub_secret" "%v" {
 			path = "%v"
-			data = "secretpassword"
+			value = "secretpassword"
 		}
 
 		data "secrethub_secret" "%v" {
@@ -118,7 +118,7 @@ func TestAccDataSourceSecret_prefPath(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(
 						fmt.Sprintf("data.secrethub_secret.%v", testAcc.secretName),
-						"data",
+						"value",
 						"secretpassword",
 					),
 				),
