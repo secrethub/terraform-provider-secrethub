@@ -21,12 +21,6 @@ The Terraform SecretHub Provider lets you manage your secrets using Terraform.
 
 > [SecretHub](https://secrethub.io) is a developer tool to help you keep database passwords, API tokens, and other secrets out of IT automation scripts.
 
-## Installation
-
-Download and extract the [latest release](https://github.com/secrethub/terraform-provider-secrethub/releases/latest) of the Terraform SecretHub Provider and move it to your [Terraform plugin directory](https://www.terraform.io/docs/configuration/providers.html#third-party-plugins) (`~/.terraform.d/plugins/`, or `%APPDATA%\terraform.d\plugins` on Windows).
-
-Afterwards, you can use `terraform init` as you would normally.
-
 ## Usage
 
 ```hcl
@@ -64,11 +58,16 @@ resource "aws_db_instance" "default" {
 
 Have a look at the [reference docs](/website/docs) for more information on the supported resources and data sources.
 
-Have a look at the [examples](/examples) for more practical use-cases.
+## [Get Started]((https://secrethub.io/docs/terraform/))
+
+Check out the [step-by-step integration guide](https://secrethub.io/docs/terraform/) to get started.
+
+A detailed use case is described in the [beta announcement](https://secrethub.io/blog/secret-management-for-terraform/).
+There are also some [examples](/examples) in this repo.
 
 ## BETA
 
-This project is currently in beta and we'd love your feedback! Check out the [issues](https://github.com/secrethub/terraform-provider-secrethub/issues) and feel free suggest cool ideas, use cases, or improvements.
+This project is [currently in beta](https://secrethub.io/blog/secret-management-for-terraform/) and we'd love your feedback! Check out the [issues](https://github.com/secrethub/terraform-provider-secrethub/issues) and feel free suggest cool ideas, use cases, or improvements.
 
 Because it's still in beta, you can expect to see some changes introduced. Pull requests are very welcome.
 
