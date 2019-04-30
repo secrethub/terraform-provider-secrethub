@@ -77,8 +77,6 @@ For support, send us a message on the `#terraform` channel on [<img src="https:/
 Get the source code:
 
 ```
-mkdir -p $GOPATH/src/github.com/keylockerbv
-cd $GOPATH/src/github.com/keylockerbv
 git clone https://github.com/secrethub/terraform-provider-secrethub
 ```
 
