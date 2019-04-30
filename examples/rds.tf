@@ -17,22 +17,22 @@ provider "aws" {
 }
 
 provider "secrethub" {
-  version      = "latest"
-  namespace = "myOrg"
-  repository   = "myRepo"
+  credential  = "${file("~/.secrethub/credential")}"
+  path_prefix = "my-org/my-repo/${var.environment}"
 }
 
 resource "secrethub_secret" "db_password" {
-  path    = "/${var.environment}/db/password"
+  path = "db/password"
+
   generate {
     length  = 22
-    symbols = false
+    use_symbols = true
   }
 }
 
 resource "secrethub_secret" "db_username" {
-  path    = "/${var.environment}/db/username"
-  data    = "dbUser"
+  path = "db/username"
+  value = "db-user"
 }
 
 resource "aws_db_instance" "default" {
@@ -42,7 +42,7 @@ resource "aws_db_instance" "default" {
   engine_version       = "5.7"
   instance_class       = "db.t2.micro"
   name                 = "mydb"
-  username             = "${secrethub_secret.db_username.data}"
-  password             = "${secrethub_secret.db_password.data}"
+  username             = "${secrethub_secret.db_username.value}"
+  password             = "${secrethub_secret.db_password.value}"
   parameter_group_name = "default.mysql5.7"
 }
