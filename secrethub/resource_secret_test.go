@@ -189,20 +189,6 @@ func TestAccResourceSecret_import(t *testing.T) {
 	})
 }
 
-func getSecretResourceState(s *terraform.State, values *testAccValues) (*terraform.InstanceState, error) {
-	resourceState := s.Modules[0].Resources[fmt.Sprintf("secrethub_secret.%v", values.secretName)]
-	if resourceState == nil {
-		return nil, fmt.Errorf("resource '%v' not in tf state", values.secretName)
-	}
-
-	state := resourceState.Primary
-	if state == nil {
-		return nil, fmt.Errorf("resource has no primary instance")
-	}
-
-	return state, nil
-}
-
 func checkSecretExistsRemotely(values *testAccValues) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		client := *testAccProvider.Meta().(providerMeta).client
