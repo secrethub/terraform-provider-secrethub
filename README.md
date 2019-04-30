@@ -11,7 +11,10 @@
   <i>Provider<sup><a href="#beta">BETA</a></sup></i>
 </h1>
 
-[![](https://img.shields.io/badge/chat-on%20discord-7289da.svg?logo=discord)](https://discord.gg/wcxV5RD)
+[![CircleCI](https://circleci.com/gh/secrethub/terraform-provider-secrethub.svg)][circleci]
+[![Go Report Card](https://goreportcard.com/badge/github.com/secrethub/terraform-provider-secrethub)][goreportcard]
+[![Version]( https://img.shields.io/github/release/secrethub/terraform-provider-secrethub.svg)][latest-version]
+[![Discord](https://img.shields.io/badge/chat-on%20discord-7289da.svg?logo=discord)][discord]
 
 The Terraform SecretHub Provider lets you manage your secrets using Terraform.
 
@@ -99,3 +102,8 @@ With the environment variables properly set up, run:
 ```
 make testacc
 ```
+
+[circleci]: https://circleci.com/gh/secrethub/terraform-provider-secrethub
+[discord]: https://discord.gg/wcxV5RD
+[latest-version]: https://github.com/secrethub/terraform-provider-secrethub/releases/latest
+[goreportcard]: https://goreportcard.com/report/github.com/secrethub/terraform-provider-secrethub
