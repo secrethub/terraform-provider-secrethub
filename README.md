@@ -12,7 +12,7 @@
 </h1>
 
 [![GoDoc](https://godoc.org/github.com/secrethub/terraform-provider-secrethub?status.svg)][godoc]
-[![CircleCI](https://circleci.com/gh/secrethub/terraform-provider-secrethub.svg)][circleci]
+[![CircleCI](https://circleci.com/gh/secrethub/terraform-provider-secrethub.svg?style=shield)][circleci]
 [![Go Report Card](https://goreportcard.com/badge/github.com/secrethub/terraform-provider-secrethub)][goreportcard]
 [![Version]( https://img.shields.io/github/release/secrethub/terraform-provider-secrethub.svg)][latest-version]
 [![Discord](https://img.shields.io/badge/chat-on%20discord-7289da.svg?logo=discord)][discord]
