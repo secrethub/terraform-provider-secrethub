@@ -11,9 +11,10 @@ import (
 )
 
 const (
-	envCredential = "SECRETHUB_CREDENTIAL"
-	envNamespace  = "SECRETHUB_TF_ACC_NAMESPACE"
-	envRepo       = "SECRETHUB_TF_ACC_REPOSITORY"
+	envCredential        = "SECRETHUB_CREDENTIAL"
+	envNamespace         = "SECRETHUB_TF_ACC_NAMESPACE"
+	envRepo              = "SECRETHUB_TF_ACC_REPOSITORY"
+	envSecondAccountName = "SECRETHUB_TF_ACC_SECOND_ACCOUNT_NAME"
 )
 
 var testAccProviders map[string]terraform.ResourceProvider
@@ -21,16 +22,17 @@ var testAccProvider *schema.Provider
 var testAcc *testAccValues
 
 type testAccValues struct {
-	namespace  string
-	repository string
-	secretName string
-	path       string
-	pathErr    error
+	namespace         string
+	repository        string
+	secretName        string
+	secondAccountName string
+	path              string
+	pathErr           error
 }
 
 func (testAccValues) validate() error {
-	if testAcc.namespace == "" || testAcc.repository == "" {
-		return fmt.Errorf("the following environment variables need to be set: %v, %v, %v", envCredential, envNamespace, envRepo)
+	if testAcc.namespace == "" || testAcc.repository == "" || testAcc.secondAccountName == "" {
+		return fmt.Errorf("the following environment variables need to be set: %s, %s, %s, %s", envCredential, envNamespace, envRepo, envSecondAccountName)
 	}
 	return testAcc.pathErr
 }
@@ -42,9 +44,10 @@ func init() {
 	}
 
 	testAcc = &testAccValues{
-		namespace:  os.Getenv(envNamespace),
-		repository: os.Getenv(envRepo),
-		secretName: "test_acc_secret",
+		namespace:         os.Getenv(envNamespace),
+		repository:        os.Getenv(envRepo),
+		secondAccountName: os.Getenv(envSecondAccountName),
+		secretName:        "test_acc_secret",
 	}
 
 	testAcc.path = newCompoundSecretPath(testAcc.namespace, testAcc.repository, testAcc.secretName)
