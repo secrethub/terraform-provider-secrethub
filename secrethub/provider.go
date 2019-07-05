@@ -3,6 +3,7 @@ package secrethub
 import (
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/hashicorp/terraform/terraform"
+	"github.com/secrethub/secrethub-go/internals/auth"
 	"github.com/secrethub/secrethub-go/pkg/secrethub"
 )
 
@@ -48,7 +49,7 @@ func configureProvider(d *schema.ResourceData) (interface{}, error) {
 		return nil, err
 	}
 
-	client := secrethub.NewClient(cred, nil)
+	client := secrethub.NewClient(cred, auth.NewHTTPSigner(cred), nil)
 	pathPrefix := d.Get("path_prefix").(string)
 	return providerMeta{&client, pathPrefix}, nil
 }
