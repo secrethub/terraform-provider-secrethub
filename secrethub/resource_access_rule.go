@@ -1,7 +1,9 @@
 package secrethub
 
 import (
+	"fmt"
 	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/secrethub/secrethub-go/internals/api"
 )
 
 func resourceAccessRule() *schema.Resource {
@@ -41,6 +43,9 @@ func resourceAccessRuleSet(d *schema.ResourceData, m interface{}) error {
 	account := d.Get("account_name").(string)
 
 	_, err := client.AccessRules().Set(path, permission, account)
+
+	d.SetId(fmt.Sprintf("path: %s, account_name: %s", path, account))
+
 	return err
 }
 
@@ -52,6 +57,11 @@ func resourceAccessRuleRead(d *schema.ResourceData, m interface{}) error {
 	account := d.Get("account_name").(string)
 
 	accessRule, err := client.AccessRules().Get(path, account)
+	if err == api.ErrAccessRuleNotFound {
+		// The secret was deleted outside of the current Terraform workspace, so invalidate this resource
+		d.SetId("")
+		return nil
+	}
 	if err != nil {
 		return err
 	}
