@@ -4,6 +4,7 @@ import (
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/hashicorp/terraform/terraform"
 	"github.com/secrethub/secrethub-go/pkg/secrethub"
+	"github.com/secrethub/secrethub-go/pkg/secrethub/credentials"
 )
 
 // Provider returns the ScretHub Terraform provider
@@ -42,14 +43,19 @@ func configureProvider(d *schema.ResourceData) (interface{}, error) {
 	credRaw := d.Get("credential").(string)
 	passphrase := d.Get("credential_passphrase").(string)
 
-	cred, err := secrethub.NewCredential(credRaw, passphrase)
+	options := []secrethub.ClientOption{}
+
+	if credRaw != "" {
+		options = append(options, secrethub.WithCredentials(credentials.UseKey(credentials.FromString(credRaw)).Passphrase(credentials.FromString(passphrase))))
+	}
+
+	client, err := secrethub.NewClient(options...)
 	if err != nil {
 		return nil, err
 	}
 
-	client := secrethub.NewClient(cred, nil)
 	pathPrefix := d.Get("path_prefix").(string)
-	return providerMeta{&client, pathPrefix}, nil
+	return providerMeta{client, pathPrefix}, nil
 }
 
 type providerMeta struct {
