@@ -7,6 +7,8 @@ import (
 	"github.com/secrethub/secrethub-go/pkg/secrethub/credentials"
 )
 
+var version string
+
 // Provider returns the ScretHub Terraform provider
 func Provider() terraform.ResourceProvider {
 	return &schema.Provider{
@@ -43,7 +45,12 @@ func configureProvider(d *schema.ResourceData) (interface{}, error) {
 	credRaw := d.Get("credential").(string)
 	passphrase := d.Get("credential_passphrase").(string)
 
-	options := []secrethub.ClientOption{}
+	options := []secrethub.ClientOption{
+		secrethub.WithAppInfo(&secrethub.AppInfo{
+			Name:    "terraform-provider-secrethub",
+			Version: version,
+		}),
+	}
 
 	if credRaw != "" {
 		options = append(options, secrethub.WithCredentials(credentials.UseKey(credentials.FromString(credRaw)).Passphrase(credentials.FromString(passphrase))))
