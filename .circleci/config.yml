@@ -6,3 +6,5 @@ jobs:
     steps:
       - checkout
       - run: make testacc
+    environment:
+      GOPROXY: "https://proxy.golang.org"
