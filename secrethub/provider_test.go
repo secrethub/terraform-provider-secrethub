@@ -5,9 +5,10 @@ import (
 	"os"
 	"testing"
 
+	"github.com/secrethub/secrethub-go/pkg/secrethub"
+
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/hashicorp/terraform/terraform"
-	"github.com/secrethub/secrethub-go/pkg/secrethub"
 )
 
 const (
@@ -53,8 +54,8 @@ func init() {
 	testAcc.path = newCompoundSecretPath(testAcc.namespace, testAcc.repository, testAcc.secretName)
 }
 
-func client() secrethub.Client {
-	return *testAccProvider.Meta().(providerMeta).client
+func client() *secrethub.Client {
+	return testAccProvider.Meta().(providerMeta).client
 }
 
 func testAccPreCheck(t *testing.T) func() {

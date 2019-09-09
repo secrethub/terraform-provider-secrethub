@@ -15,7 +15,7 @@ func TestAccDataSourceSecret_absPath(t *testing.T) {
 		}
 
 		data "secrethub_secret" "%v" {
-			path = "${secrethub_secret.%v.path}"
+			path = secrethub_secret.%v.path
 		}
 	`, testAcc.secretName, testAcc.path, testAcc.secretName, testAcc.secretName)
 
@@ -105,7 +105,7 @@ func TestAccDataSourceSecret_prefPath(t *testing.T) {
 		}
 
 		data "secrethub_secret" "%v" {
-			path = "${secrethub_secret.%v.path}"
+			path = secrethub_secret.%v.path
 		}
 	`, testAcc.namespace, testAcc.repository, testAcc.secretName, testAcc.secretName, testAcc.secretName, testAcc.secretName)
 
