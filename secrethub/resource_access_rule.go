@@ -23,7 +23,7 @@ func resourceAccessRule() *schema.Resource {
 				Type:        schema.TypeString,
 				Required:    true,
 				ForceNew:    true,
-				Description: "The name of the account for which the permission holds.",
+				Description: "The name of the account (username or service ID) for which the permission holds.",
 			},
 			"permission": {
 				Type:        schema.TypeString,
