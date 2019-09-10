@@ -1,7 +1,6 @@
 package secrethub
 
 import (
-	"fmt"
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/secrethub/secrethub-go/internals/api"
 )
@@ -44,7 +43,7 @@ func resourceAccessRuleSet(d *schema.ResourceData, m interface{}) error {
 
 	_, err := client.AccessRules().Set(path, permission, account)
 
-	d.SetId(fmt.Sprintf("path: %s, account_name: %s", path, account))
+	d.SetId(path + ":" + account)
 
 	return err
 }
