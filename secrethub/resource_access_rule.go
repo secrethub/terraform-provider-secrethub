@@ -1,6 +1,9 @@
 package secrethub
 
 import (
+	"fmt"
+	"strings"
+
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/secrethub/secrethub-go/internals/api"
 )
@@ -52,8 +55,12 @@ func resourceAccessRuleRead(d *schema.ResourceData, m interface{}) error {
 	provider := m.(providerMeta)
 	client := *provider.client
 
-	path := d.Get("dir_path").(string)
-	account := d.Get("account_name").(string)
+	parts := strings.Split(d.Id(), ":")
+	if len(parts) != 2 {
+		return fmt.Errorf("malformed ID: %s is not a valid access rule ID, expected <path>:<account_name>", d.Id())
+	}
+	path := parts[0]
+	account := parts[1]
 
 	accessRule, err := client.AccessRules().Get(path, account)
 	if err == api.ErrAccessRuleNotFound {
