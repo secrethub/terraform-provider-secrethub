@@ -31,11 +31,6 @@ func resourceService() *schema.Resource {
 				Sensitive:   true,
 				Description: "The credential of the service account.",
 			},
-			"id": {
-				Type: schema.TypeString,
-				Computed: true,
-				Description: "A unique identifier for the service.",
-			},
 		},
 	}
 }
@@ -65,8 +60,6 @@ func resourceServiceCreate(d *schema.ResourceData, m interface{}) error {
 	if err != nil {
 		return err
 	}
-
-	err = d.Set("id", service.ServiceID)
 
 	return nil
 }
