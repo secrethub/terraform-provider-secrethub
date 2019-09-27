@@ -35,6 +35,39 @@ func TestAccResourceAccessRule_create(t *testing.T) {
 	})
 }
 
+func TestAccessRuleForService(t *testing.T) {
+	repoPath := testAcc.namespace + "/" + testAcc.repository
+	serviceDescription := "test access rule for service"
+	permission := "read"
+
+	config := fmt.Sprintf(`
+		resource "secrethub_service" "test" {
+			repo = "%s"
+			description = "%s"
+		}
+
+		resource "secrethub_access_rule" "test" {
+			dir_path = "%s"
+			account_name = "${secrethub_service.test.id}"
+			permission = "%s"
+		}
+		`,
+		repoPath, serviceDescription, repoPath, permission)
+
+	resource.Test(t, resource.TestCase{
+		Providers: testAccProviders,
+		PreCheck:  testAccPreCheck(t),
+		Steps: []resource.TestStep{
+			{
+				Config: config,
+				Check: resource.ComposeTestCheckFunc(
+					checkAccessRuleForServiceExistsRemotely(repoPath, serviceDescription, permission),
+				),
+			},
+		},
+	})
+}
+
 func checkAccessRuleExistsRemotely(path string, account string, permission string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		client := *testAccProvider.Meta().(providerMeta).client
@@ -52,3 +85,23 @@ func checkAccessRuleExistsRemotely(path string, account string, permission strin
 		return nil
 	}
 }
+
+func checkAccessRuleForServiceExistsRemotely(repoPath string, serviceDescription string, permission string) resource.TestCheckFunc {
+	return func(s *terraform.State) error {
+		client := *testAccProvider.Meta().(providerMeta).client
+
+		services, err := client.Services().List(repoPath)
+		if err != nil {
+			return fmt.Errorf("cannot list services: %s", err)
+		}
+
+		for _, service := range services {
+			if service.Description == serviceDescription {
+				return checkAccessRuleExistsRemotely(repoPath, service.ServiceID, permission)(s)
+			}
+		}
+
+		return fmt.Errorf("cannot find service in repo %s with description %s", repoPath, serviceDescription)
+	}
+}
+
