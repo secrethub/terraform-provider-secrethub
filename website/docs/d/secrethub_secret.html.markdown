@@ -14,14 +14,13 @@ Use this data source to read secrets already in SecretHub
 
 ```hcl
 data "secrethub_secret" "db_password" {
-  path = "db-password"
+  path = "company/repo/db/password"
 }
 ```
 
 ## Argument Reference
 
-* `path` - (Required) "The path where the secret is stored. To use a specific version, append the version number to the path, separated by a colon (path:version). Defaults to the latest version.
-* `path_prefix` - (Optional) Overrides the `path_prefix` defined in the provider.
+* `path` - (Required) The path where the secret is stored. To use a specific version, append the version number to the path, separated by a colon (path:version). Defaults to the latest version.
 
 ## Attributes Reference
 
