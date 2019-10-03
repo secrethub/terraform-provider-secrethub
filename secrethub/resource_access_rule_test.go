@@ -74,7 +74,7 @@ func checkAccessRuleExistsRemotely(path string, account string, permission strin
 
 		accessRule, err := client.AccessRules().Get(path, account)
 		if err != nil {
-			return fmt.Errorf("cannot get created error: %s", err)
+			return fmt.Errorf("cannot get created access rule: %s", err)
 		}
 
 		actual := accessRule.Permission.String()
