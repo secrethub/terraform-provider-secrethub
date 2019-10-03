@@ -10,12 +10,14 @@ import (
 
 func TestAccResourceService_create(t *testing.T) {
 	repoPath := testAcc.namespace + "/" + testAcc.repository
+	serviceDescription := ""
 
 	config := fmt.Sprintf(`
 		resource "secrethub_service" "test" {
 			repo = "%s"
+			description = "%s"
 		}
-	`, repoPath)
+	`, repoPath, serviceDescription)
 
 	resource.Test(t, resource.TestCase{
 		Providers: testAccProviders,
@@ -24,7 +26,7 @@ func TestAccResourceService_create(t *testing.T) {
 			{
 				Config: config,
 				Check: resource.ComposeTestCheckFunc(
-					checkServiceExistsRemotely(repoPath, ""),
+					checkServiceExistsRemotely(repoPath, serviceDescription),
 				),
 			},
 		},
