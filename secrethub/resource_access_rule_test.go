@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/hashicorp/terraform/helper/acctest"
 	"github.com/hashicorp/terraform/helper/resource"
 	"github.com/hashicorp/terraform/terraform"
 )
@@ -37,7 +38,7 @@ func TestAccResourceAccessRule_create(t *testing.T) {
 
 func TestAccessRuleForService(t *testing.T) {
 	repoPath := testAcc.namespace + "/" + testAcc.repository
-	serviceDescription := "test access rule for service"
+	serviceDescription := "TestAccessRuleForService " + acctest.RandString(30)
 	permission := "read"
 
 	config := fmt.Sprintf(`

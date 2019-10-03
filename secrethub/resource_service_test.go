@@ -4,13 +4,14 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/hashicorp/terraform/helper/acctest"
 	"github.com/hashicorp/terraform/helper/resource"
 	"github.com/hashicorp/terraform/terraform"
 )
 
 func TestAccResourceService_create(t *testing.T) {
 	repoPath := testAcc.namespace + "/" + testAcc.repository
-	serviceDescription := ""
+	serviceDescription := "TestAccResourceService_create " + acctest.RandString(30)
 
 	config := fmt.Sprintf(`
 		resource "secrethub_service" "test" {
