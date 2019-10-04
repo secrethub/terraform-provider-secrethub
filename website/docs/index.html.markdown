@@ -11,7 +11,7 @@ description: |-
 The [SecretHub](https://www.secrethub.io) provider is used to interact with the
 resources supported by SecretHub. The provider needs to be configured with a SecretHub credential before it can be used.
 
-You can set environment variable `SECRETHUB_CREDENTIAL` or use read it from disk using the `file()` function.
+You can set environment variable `SECRETHUB_CREDENTIAL` or read it from disk using the `file()` function.
 
 Use the navigation to the left to read about the available resources.
 
