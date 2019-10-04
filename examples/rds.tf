@@ -10,6 +10,10 @@ variable "environment" {
   default = "dev"
 }
 
+locals {
+  secrethub_dir = "company/repo/${var.environment}"
+}
+
 provider "aws" {
   access_key = "${var.aws_access_key}"
   secret_key = "${var.aws_secret_key}"
@@ -17,22 +21,21 @@ provider "aws" {
 }
 
 provider "secrethub" {
-  credential  = "${file("~/.secrethub/credential")}"
-  path_prefix = "my-org/my-repo/${var.environment}"
+  credential = "${file("~/.secrethub/credential")}"
 }
 
 resource "secrethub_secret" "db_password" {
-  path = "db/password"
+  path = "${local.secrethub_dir}/db/password"
 
   generate {
-    length  = 22
+    length      = 22
     use_symbols = true
   }
 }
 
 resource "secrethub_secret" "db_username" {
-  path = "db/username"
-  value = "db-user"
+  path  = "${local.secrethub_dir}/db/username"
+  value = "mysqluser"
 }
 
 resource "aws_db_instance" "default" {

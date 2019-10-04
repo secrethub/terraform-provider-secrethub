@@ -27,6 +27,7 @@ func resourceSecret() *schema.Resource {
 			"path_prefix": {
 				Type:        schema.TypeString,
 				Optional:    true,
+				Deprecated:  "Deprecated in favor of Terraform's native variables",
 				Description: "Overrides the `path_prefix` defined in the provider.",
 			},
 			"version": {
