@@ -16,6 +16,8 @@ const (
 	envNamespace         = "SECRETHUB_TF_ACC_NAMESPACE"
 	envRepo              = "SECRETHUB_TF_ACC_REPOSITORY"
 	envSecondAccountName = "SECRETHUB_TF_ACC_SECOND_ACCOUNT_NAME"
+	envAWSKMSKey         = "SECRETHUB_TF_ACC_AWS_KMS_KEY"
+	envAWSRole           = "SECRETHUB_TF_ACC_AWS_ROLE"
 )
 
 var testAccProviders map[string]terraform.ResourceProvider
@@ -29,11 +31,13 @@ type testAccValues struct {
 	secondAccountName string
 	path              string
 	pathErr           error
+	awsKmsKey         string
+	awsRole           string
 }
 
 func (testAccValues) validate() error {
-	if testAcc.namespace == "" || testAcc.repository == "" || testAcc.secondAccountName == "" {
-		return fmt.Errorf("the following environment variables need to be set: %s, %s, %s, %s", envCredential, envNamespace, envRepo, envSecondAccountName)
+	if testAcc.namespace == "" || testAcc.repository == "" || testAcc.secondAccountName == "" || testAcc.awsKmsKey == "" || testAcc.awsRole == "" {
+		return fmt.Errorf("the following environment variables need to be set: %s, %s, %s, %s, %s, %s", envCredential, envNamespace, envRepo, envSecondAccountName, envAWSKMSKey, envAWSRole)
 	}
 	return testAcc.pathErr
 }
@@ -49,6 +53,8 @@ func init() {
 		repository:        os.Getenv(envRepo),
 		secondAccountName: os.Getenv(envSecondAccountName),
 		secretName:        "test_acc_secret",
+		awsKmsKey:         os.Getenv(envAWSKMSKey),
+		awsRole:           os.Getenv(envAWSRole),
 	}
 
 	testAcc.path = newCompoundSecretPath(testAcc.namespace, testAcc.repository, testAcc.secretName)
