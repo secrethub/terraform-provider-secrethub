@@ -9,7 +9,7 @@ import (
 	"github.com/hashicorp/terraform/terraform"
 )
 
-func TestAccResourceService_create(t *testing.T) {
+func TestAccResourceService(t *testing.T) {
 	repoPath := testAcc.namespace + "/" + testAcc.repository
 	serviceDescription := "TestAccResourceService_create " + acctest.RandString(30)
 

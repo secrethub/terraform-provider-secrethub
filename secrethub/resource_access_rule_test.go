@@ -9,7 +9,7 @@ import (
 	"github.com/hashicorp/terraform/terraform"
 )
 
-func TestAccResourceAccessRule_create(t *testing.T) {
+func TestAccResourceAccessRule(t *testing.T) {
 	repoPath := testAcc.namespace + "/" + testAcc.repository
 	accountName := testAcc.secondAccountName
 	permission := "read"
@@ -36,7 +36,7 @@ func TestAccResourceAccessRule_create(t *testing.T) {
 	})
 }
 
-func TestAccessRuleForService(t *testing.T) {
+func TestAccAccessRuleForService(t *testing.T) {
 	repoPath := testAcc.namespace + "/" + testAcc.repository
 	serviceDescription := "TestAccessRuleForService " + acctest.RandString(30)
 	permission := "read"
