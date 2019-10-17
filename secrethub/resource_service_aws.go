@@ -28,7 +28,7 @@ func resourceServiceAWS() *schema.Resource {
 				ForceNew:    true,
 				Description: "A description of the service so others will recognize it.",
 			},
-			"kms_key": {
+			"kms_key_arn": {
 				Type:        schema.TypeString,
 				Required:    true,
 				ForceNew:    true,
