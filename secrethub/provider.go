@@ -29,6 +29,7 @@ func Provider() terraform.ResourceProvider {
 				Type:        schema.TypeString,
 				Optional:    true,
 				Description: "The default value to prefix path values with. If set, paths for resources and data sources will be prefixed with the given prefix, allowing you to use relative paths instead. If left blank, every path must be absolute (namespace/repository/[dir/]secret_name).",
+				Deprecated:  "Deprecated in favor of Terraform's native variables",
 			},
 		},
 		ConfigureFunc: configureProvider,
