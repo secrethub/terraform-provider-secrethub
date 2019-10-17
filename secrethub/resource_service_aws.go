@@ -50,7 +50,7 @@ func resourceServiceAWSCreate(d *schema.ResourceData, m interface{}) error {
 
 	repo := d.Get("repo").(string)
 	description := d.Get("description").(string)
-	kmsKey := d.Get("kms_key").(string)
+	kmsKey := d.Get("kms_key_arn").(string)
 	role := d.Get("role").(string)
 
 	cfg := aws.NewConfig()
