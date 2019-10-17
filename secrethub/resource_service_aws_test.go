@@ -16,10 +16,10 @@ func TestAccResourceServiceAWS(t *testing.T) {
 
 	config := fmt.Sprintf(`
 		resource "secrethub_service_aws" "test" {
-			repo        = "%s"
-			kms_key_arn = "%s"
-			role        = "%s"
-			description = "%s"
+			repo    	= "%s"
+			kms_key_arn	= "%s"
+			role    	= "%s"
+			description	= "%s"
 		}
 	`, repoPath, kmsKey, role, description)
 
