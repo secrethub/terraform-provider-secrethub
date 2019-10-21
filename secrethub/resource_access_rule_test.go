@@ -16,7 +16,7 @@ func TestAccResourceAccessRule(t *testing.T) {
 
 	config := fmt.Sprintf(`
 		resource "secrethub_access_rule" "test" {
-			dir_path = "%s"
+			dir = "%s"
 			account_name = "%s"
 			permission = "%s"
 		}
@@ -48,7 +48,7 @@ func TestAccAccessRuleForService(t *testing.T) {
 		}
 
 		resource "secrethub_access_rule" "test" {
-			dir_path = "%s"
+			dir = "%s"
 			account_name = "${secrethub_service.test.id}"
 			permission = "%s"
 		}

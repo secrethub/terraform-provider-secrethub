@@ -15,7 +15,7 @@ func resourceAccessRule() *schema.Resource {
 		Update: resourceAccessRuleSet,
 		Delete: resourceAccessRuleDelete,
 		Schema: map[string]*schema.Schema{
-			"dir_path": {
+			"dir": {
 				Type:        schema.TypeString,
 				Required:    true,
 				ForceNew:    true,
@@ -40,7 +40,7 @@ func resourceAccessRuleSet(d *schema.ResourceData, m interface{}) error {
 	provider := m.(providerMeta)
 	client := *provider.client
 
-	path := d.Get("dir_path").(string)
+	path := d.Get("dir").(string)
 	permission := d.Get("permission").(string)
 	account := d.Get("account_name").(string)
 
@@ -83,7 +83,7 @@ func resourceAccessRuleDelete(d *schema.ResourceData, m interface{}) error {
 	provider := m.(providerMeta)
 	client := *provider.client
 
-	path := d.Get("dir_path").(string)
+	path := d.Get("dir").(string)
 	account := d.Get("account_name").(string)
 
 	return client.AccessRules().Delete(path, account)
