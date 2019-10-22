@@ -15,5 +15,5 @@ This resource allows you to create and manage access rules, to give users and/or
 The following arguments are supported:
 
 * `account_name` - (Required) The name of the account (username or service ID) for which the permission holds.
-* `dir_path` - (Required) The path of the directory on which the permission holds.
+* `dir` - (Required) The path of the directory on which the permission holds.
 * `permission` - (Required) The permission that the account has on the given directory: read, write or admin
