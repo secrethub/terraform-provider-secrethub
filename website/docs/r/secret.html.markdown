@@ -6,7 +6,7 @@ description: |-
   Writes a secret at a given path.
 ---
 
-# secrethub_secret
+# Resource: secrethub_secret
 
 This resource allows to write secrets at a given path, if the path is exists already then the resource will write a new version of it.
 
