@@ -14,7 +14,7 @@ This resource allows to write secrets at a given path, if the path is exists alr
 
 To write a secret:
 
-```hcl
+```terraform
 resource "secrethub_secret" "ssh_key" {
   path = "company/repo/ssh_key"
   value = "${file("/path/to/ssh/key")}"
@@ -23,7 +23,7 @@ resource "secrethub_secret" "ssh_key" {
 
 To generate a new secret:
 
-```hcl
+```terraform
 resource "secrethub_secret" "db_password" {
   path = "company/repo/db_password"
 
