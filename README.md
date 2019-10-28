@@ -25,7 +25,7 @@ The Terraform SecretHub Provider lets you manage your secrets using Terraform.
 
 ```hcl
 provider "secrethub" {
-  # pass in credential or set SECRETHUB_CREDENTIAL enviroment variable
+  # pass in credential or set SECRETHUB_CREDENTIAL environment variable
   credential = "${file("~/.secrethub/credential")}" 
 }
 
@@ -33,7 +33,7 @@ resource "secrethub_secret" "db_password" {
   path = "my-org/my-repo/db/password"
 
   generate {
-    length  = 22
+    length      = 22
     use_symbols = true
   }
 }
@@ -105,7 +105,7 @@ With the environment variables properly set up, run:
 ```
 make testacc
 ```
-
+[secrethub]: https://secrethub.io
 [godoc]: https://godoc.org/github.com/secrethub/terraform-provider-secrethub
 [circleci]: https://circleci.com/gh/secrethub/terraform-provider-secrethub
 [discord]: https://discord.gg/wcxV5RD
