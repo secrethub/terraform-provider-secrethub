@@ -12,7 +12,7 @@ Use this data source to read secrets already in SecretHub
 
 ## Example Usage
 
-```hcl
+```terraform
 data "secrethub_secret" "db_password" {
   path = "company/repo/db/password"
 }
