@@ -6,7 +6,7 @@ description: |-
   Read a secret
 ---
 
-# Data Source: secrethub_read
+# Data Source: secrethub_secret
 
 Use this data source to read secrets already in SecretHub
 
