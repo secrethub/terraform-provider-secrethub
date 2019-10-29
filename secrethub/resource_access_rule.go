@@ -10,9 +10,9 @@ import (
 
 func resourceAccessRule() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceAccessRuleSet,
+		Create: resourceAccessRuleCreate,
 		Read:   resourceAccessRuleRead,
-		Update: resourceAccessRuleSet,
+		Update: resourceAccessRuleUpdate,
 		Delete: resourceAccessRuleDelete,
 		Schema: map[string]*schema.Schema{
 			"dir_path": {
@@ -36,7 +36,29 @@ func resourceAccessRule() *schema.Resource {
 	}
 }
 
-func resourceAccessRuleSet(d *schema.ResourceData, m interface{}) error {
+func resourceAccessRuleCreate(d *schema.ResourceData, m interface{}) error {
+	provider := m.(providerMeta)
+	client := *provider.client
+
+	path := d.Get("dir_path").(string)
+	permission := d.Get("permission").(string)
+	account := d.Get("account_name").(string)
+
+	_, err := client.AccessRules().Get(path, account)
+	if err == nil {
+		return fmt.Errorf("access rule already exists: %s:%s", path, account)
+	} else if err != api.ErrAccessRuleNotFound {
+		return err
+	}
+
+	_, err = client.AccessRules().Set(path, permission, account)
+
+	d.SetId(path + ":" + account)
+
+	return err
+}
+
+func resourceAccessRuleUpdate(d *schema.ResourceData, m interface{}) error {
 	provider := m.(providerMeta)
 	client := *provider.client
 
