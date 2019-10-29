@@ -32,6 +32,10 @@ func TestAccResourceAccessRule(t *testing.T) {
 					checkAccessRuleExistsRemotely(repoPath, accountName, permission),
 				),
 			},
+			{
+				ImportState:  true,
+				ResourceName: "secrethub_access_rule.test",
+			},
 		},
 	})
 }
@@ -105,4 +109,3 @@ func checkAccessRuleForServiceExistsRemotely(repoPath string, serviceDescription
 		return fmt.Errorf("cannot find service in repo %s with description %s", repoPath, serviceDescription)
 	}
 }
-
