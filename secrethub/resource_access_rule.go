@@ -55,10 +55,13 @@ func resourceAccessRuleCreate(d *schema.ResourceData, m interface{}) error {
 	}
 
 	_, err = client.AccessRules().Set(path, permission, account)
+	if err != nil {
+		return err
+	}
 
 	d.SetId(path + ":" + account)
 
-	return err
+	return nil
 }
 
 func resourceAccessRuleUpdate(d *schema.ResourceData, m interface{}) error {
