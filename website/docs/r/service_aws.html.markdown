@@ -23,7 +23,7 @@ The following arguments are supported:
 
 ## See also
 
-- [SecretHub Amazon Web Services Integration](https://secrethub.io/docs/reference/aws/)
+- [AWS Integration](https://secrethub.io/docs/reference/aws/)
 - [AWS EC2 Guide](https://secrethub.io/docs/guides/aws-ec2/)
 - [AWS ECS Guide](https://secrethub.io/docs/guides/aws-ecs/)
 - [AWS Lambda (Golang) Guide](https://secrethub.io/docs/guides/aws-lambda-go/)
