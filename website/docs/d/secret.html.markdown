@@ -6,22 +6,22 @@ description: |-
   Read a secret
 ---
 
-# Data Source: secrethub_read
+# Data Source: secrethub_secret
 
 Use this data source to read secrets already in SecretHub
 
 ## Example Usage
 
-```hcl
+```terraform
 data "secrethub_secret" "db_password" {
-  path = "db-password"
+  path = "company/repo/db/password"
 }
 ```
 
 ## Argument Reference
 
-* `path` - (Required) "The path where the secret is stored. To use a specific version, append the version number to the path, separated by a colon (path:version). Defaults to the latest version.
-* `path_prefix` - (Optional) Overrides the `path_prefix` defined in the provider.
+* `path` - (Required) The path where the secret is stored. To use a specific version, append the version number to the path, separated by a colon (path:version). Defaults to the latest version.
+* `path_prefix` - **Deprecated** (Optional) Overrides the `path_prefix` defined in the provider.
 
 ## Attributes Reference
 

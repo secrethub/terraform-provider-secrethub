@@ -6,7 +6,7 @@ description: |-
   Writes a secret at a given path.
 ---
 
-# secrethub_secret
+# Resource: secrethub_secret
 
 This resource allows to write secrets at a given path, if the path is exists already then the resource will write a new version of it.
 
@@ -14,18 +14,19 @@ This resource allows to write secrets at a given path, if the path is exists alr
 
 To write a secret:
 
-```hcl
+```terraform
 resource "secrethub_secret" "ssh_key" {
-  path = "my_org/my_repo/ssh_key"
+  path = "company/repo/ssh_key"
   value = "${file("/path/to/ssh/key")}"
 }
 ```
 
 To generate a new secret:
 
-```hcl
+```terraform
 resource "secrethub_secret" "db_password" {
-  path = "my_org/my_repo/db_password"
+  path = "company/repo/db_password"
+
   generate {
     length = 20
     use_symbols = true
@@ -38,7 +39,7 @@ resource "secrethub_secret" "db_password" {
 The following arguments are supported:
 
 * `path` - (Required) The path where the secret will be stored.
-* `path_prefix` - (Optional) Overrides the `path_prefix` defined in the provider.
+* `path_prefix` - **Deprecated** (Optional) Overrides the `path_prefix` defined in the provider.
 * `value` - (Optional) The secret contents. Either `value` or `generate` must be defined.
 * `generate` - (Optional) Settings for autogenerating a secret. Either `value` or `generate` must be defined.
 
