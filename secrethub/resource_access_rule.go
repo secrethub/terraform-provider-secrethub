@@ -10,9 +10,9 @@ import (
 
 func resourceAccessRule() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceAccessRuleSet,
+		Create: resourceAccessRuleCreate,
 		Read:   resourceAccessRuleRead,
-		Update: resourceAccessRuleSet,
+		Update: resourceAccessRuleUpdate,
 		Delete: resourceAccessRuleDelete,
 		Schema: map[string]*schema.Schema{
 			"dir": {
@@ -33,10 +33,13 @@ func resourceAccessRule() *schema.Resource {
 				Description: "The permission that the account has on the given directory: read, write or admin",
 			},
 		},
+		Importer: &schema.ResourceImporter{
+			State: resourceAccessRuleImport,
+		},
 	}
 }
 
-func resourceAccessRuleSet(d *schema.ResourceData, m interface{}) error {
+func resourceAccessRuleCreate(d *schema.ResourceData, m interface{}) error {
 	provider := m.(providerMeta)
 	client := *provider.client
 
@@ -44,10 +47,32 @@ func resourceAccessRuleSet(d *schema.ResourceData, m interface{}) error {
 	permission := d.Get("permission").(string)
 	account := d.Get("account_name").(string)
 
-	_, err := client.AccessRules().Set(path, permission, account)
+	_, err := client.AccessRules().Get(path, account)
+	if err == nil {
+		return fmt.Errorf("access rule already exists: %s:%s", path, account)
+	} else if err != api.ErrAccessRuleNotFound {
+		return err
+	}
+
+	_, err = client.AccessRules().Set(path, permission, account)
+	if err != nil {
+		return err
+	}
 
 	d.SetId(path + ":" + account)
 
+	return nil
+}
+
+func resourceAccessRuleUpdate(d *schema.ResourceData, m interface{}) error {
+	provider := m.(providerMeta)
+	client := *provider.client
+
+	path := d.Get("dir_path").(string)
+	permission := d.Get("permission").(string)
+	account := d.Get("account_name").(string)
+
+	_, err := client.AccessRules().Set(path, permission, account)
 	return err
 }
 
@@ -55,12 +80,10 @@ func resourceAccessRuleRead(d *schema.ResourceData, m interface{}) error {
 	provider := m.(providerMeta)
 	client := *provider.client
 
-	parts := strings.Split(d.Id(), ":")
-	if len(parts) != 2 {
-		return fmt.Errorf("malformed ID: %s is not a valid access rule ID, expected <path>:<account_name>", d.Id())
+	path, account, err := resourceAccessRuleParseID(d.Id())
+	if err != nil {
+		return err
 	}
-	path := parts[0]
-	account := parts[1]
 
 	accessRule, err := client.AccessRules().Get(path, account)
 	if err == api.ErrAccessRuleNotFound {
@@ -87,4 +110,34 @@ func resourceAccessRuleDelete(d *schema.ResourceData, m interface{}) error {
 	account := d.Get("account_name").(string)
 
 	return client.AccessRules().Delete(path, account)
+}
+
+func resourceAccessRuleParseID(id string) (string, string, error) {
+	parts := strings.Split(id, ":")
+	if len(parts) != 2 {
+		return "", "", fmt.Errorf("malformed ID: %s is not a valid access rule ID, expected <path>:<account_name>", id)
+	}
+	path := parts[0]
+	account := parts[1]
+
+	return path, account, nil
+}
+
+func resourceAccessRuleImport(d *schema.ResourceData, m interface{}) ([]*schema.ResourceData, error) {
+	path, account, err := resourceAccessRuleParseID(d.Id())
+	if err != nil {
+		return nil, err
+	}
+
+	err = d.Set("dir_path", path)
+	if err != nil {
+		return nil, err
+	}
+
+	err = d.Set("account_name", account)
+	if err != nil {
+		return nil, err
+	}
+
+	return []*schema.ResourceData{d}, nil
 }
