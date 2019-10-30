@@ -73,9 +73,6 @@ func resourceAccessRuleUpdate(d *schema.ResourceData, m interface{}) error {
 	account := d.Get("account_name").(string)
 
 	_, err := client.AccessRules().Set(path, permission, account)
-
-	d.SetId(path + ":" + account)
-
 	return err
 }
 
