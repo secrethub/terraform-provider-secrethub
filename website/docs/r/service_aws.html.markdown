@@ -21,3 +21,9 @@ The following arguments are supported:
 * `repo` - (Required) The path of the repository on which the service operates.
 * `role` - (Required) The role name or ARN of the IAM role that should have access to this service account.
 
+## See also
+
+- [SecretHub Amazon Web Services Integration](https://secrethub.io/docs/reference/aws/)
+- [AWS EC2 Guide](https://secrethub.io/docs/guides/aws-ec2/)
+- [AWS ECS Guide](https://secrethub.io/docs/guides/aws-ecs/)
+- [AWS Lambda (Golang) Guide](https://secrethub.io/docs/guides/aws-lambda-go/)
