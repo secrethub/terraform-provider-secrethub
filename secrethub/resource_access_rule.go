@@ -68,7 +68,7 @@ func resourceAccessRuleUpdate(d *schema.ResourceData, m interface{}) error {
 	provider := m.(providerMeta)
 	client := *provider.client
 
-	path := d.Get("dir_path").(string)
+	path := d.Get("dir").(string)
 	permission := d.Get("permission").(string)
 	account := d.Get("account_name").(string)
 
@@ -133,7 +133,7 @@ func resourceAccessRuleImport(d *schema.ResourceData, m interface{}) ([]*schema.
 		return nil, err
 	}
 
-	err = d.Set("dir_path", path)
+	err = d.Set("dir", path)
 	if err != nil {
 		return nil, err
 	}
