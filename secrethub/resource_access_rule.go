@@ -61,7 +61,7 @@ func resourceAccessRuleCreate(d *schema.ResourceData, m interface{}) error {
 
 	d.SetId(path + ":" + account)
 
-	return nil
+	return resourceAccessRuleRead(d, m)
 }
 
 func resourceAccessRuleUpdate(d *schema.ResourceData, m interface{}) error {
@@ -73,7 +73,11 @@ func resourceAccessRuleUpdate(d *schema.ResourceData, m interface{}) error {
 	account := d.Get("account_name").(string)
 
 	_, err := client.AccessRules().Set(path, permission, account)
-	return err
+	if err != nil {
+		return err
+	}
+
+	return resourceAccessRuleRead(d, m)
 }
 
 func resourceAccessRuleRead(d *schema.ResourceData, m interface{}) error {

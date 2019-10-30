@@ -61,7 +61,7 @@ func resourceServiceCreate(d *schema.ResourceData, m interface{}) error {
 		return err
 	}
 
-	return nil
+	return resourceServiceRead(d, m)
 }
 
 func resourceServiceRead(d *schema.ResourceData, m interface{}) error {

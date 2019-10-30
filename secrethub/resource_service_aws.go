@@ -68,5 +68,5 @@ func resourceServiceAWSCreate(d *schema.ResourceData, m interface{}) error {
 
 	d.SetId(service.ServiceID)
 
-	return nil
+	return resourceServiceRead(d, m)
 }
