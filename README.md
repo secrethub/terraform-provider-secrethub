@@ -56,7 +56,7 @@ resource "aws_db_instance" "default" {
 }
 ```
 
-Have a look at the [reference docs](/website/docs) for more information on the supported resources and data sources.
+Have a look at the [reference docs](https://secrethub.io/docs/reference/terraform/) for more information on the supported resources and data sources.
 
 ## [Get Started]((https://secrethub.io/docs/terraform/))
 
