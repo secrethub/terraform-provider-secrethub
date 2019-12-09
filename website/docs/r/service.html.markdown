@@ -14,7 +14,7 @@ This resource allows you to manage a service account - an account for machines.
 
 ```terraform
 resource "secrethub_service" "demo_service_account" {
-  repo        = "username/demo"
+  repo = "username/demo"
 }
 ```
 
