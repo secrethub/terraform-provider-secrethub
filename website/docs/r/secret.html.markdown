@@ -8,7 +8,7 @@ description: |-
 
 # Resource: secrethub_secret
 
-This resource allows writing secrets at a given path, if the path already exists then the resource will write a new version of it.
+This resource allows you to write secrets at a given path, if the path already exists then the resource will write a new version of it.
 
 ## Example Usage
 
