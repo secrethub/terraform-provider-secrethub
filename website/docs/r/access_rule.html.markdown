@@ -10,6 +10,16 @@ description: |-
 
 This resource allows you to create and manage access rules, to give users and/or service accounts permissions on directories.
 
+## Example Usage
+
+```terraform
+resource "secrethub_access_rule" "example_app" {
+  account_name = "${secrethub_service_aws.demo_app.id}"
+  dir          = "username/demo"
+  permission   = "read"
+}
+```
+
 ## Argument Reference
 
 The following arguments are supported:
