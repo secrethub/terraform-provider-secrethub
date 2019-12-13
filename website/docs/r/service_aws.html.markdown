@@ -12,6 +12,16 @@ This resource allows you to manage a service account that is tied to an AWS IAM 
 
 The native AWS identity provider uses a combination of AWS IAM and AWS KMS to provide access to SecretHub for any service running on AWS (e.g. EC2, Lambda or ECS) without needing a SecretHub credential.
 
+## Example Usage
+
+```terraform
+resource "secrethub_service_aws" "your_application" {
+  repo        = "workspace/repo"
+  role        = "${aws_iam_role.your_application.name}"
+  kms_key_arn = "${aws_kms_key.secrethub_e2e.arn}"
+}
+```
+
 ## Argument Reference
 
 The following arguments are supported:
