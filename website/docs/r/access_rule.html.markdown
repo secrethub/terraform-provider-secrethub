@@ -13,7 +13,7 @@ This resource allows you to create and manage access rules, to give users and/or
 ## Example Usage
 
 ```terraform
-resource "secrethub_access_rule" "demo_app  " {
+resource "secrethub_access_rule" "demo_app" {
   account_name = "${secrethub_service_aws.demo_app.id}"
   dir          = "workspace/demo"
   permission   = "read"
