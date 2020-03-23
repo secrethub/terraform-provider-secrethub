@@ -2,7 +2,6 @@ package secrethub
 
 import (
 	"fmt"
-	"reflect"
 	"testing"
 
 	"github.com/secrethub/secrethub-go/internals/assert"
@@ -218,41 +217,5 @@ func checkSecretResourceState(values *testAccValues, check func(s *terraform.Ins
 		}
 
 		return check(state)
-	}
-}
-
-func TestMergeSecretPath(t *testing.T) {
-	type args struct {
-		prefix string
-		path   string
-	}
-	cases := []struct {
-		name string
-		args args
-		want string
-	}{
-		{
-			"prefixed path",
-			args{"myorg/db_passwords", "postgres"},
-			"myorg/db_passwords/postgres",
-		},
-		{
-			"abs path",
-			args{"", "myorg2/database/postgres"},
-			"myorg2/database/postgres",
-		},
-		{
-			"path with redundant slashes",
-			args{"myorg/db_passwords/", "/postgres"},
-			"myorg/db_passwords/postgres",
-		},
-	}
-	for _, c := range cases {
-		t.Run(c.name, func(t *testing.T) {
-			got := newCompoundSecretPath(c.args.prefix, c.args.path)
-			if !reflect.DeepEqual(got, c.want) {
-				t.Errorf("newCompoundSecretPath() = %v, want %v", got, c.want)
-			}
-		})
 	}
 }
