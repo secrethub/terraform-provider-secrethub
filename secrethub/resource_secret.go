@@ -7,6 +7,7 @@ import (
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/secrethub/secrethub-go/internals/api"
 	"github.com/secrethub/secrethub-go/pkg/randchar"
+	"github.com/secrethub/secrethub-go/pkg/secretpath"
 )
 
 func resourceSecret() *schema.Resource {
@@ -178,7 +179,7 @@ func resourceSecretImport(d *schema.ResourceData, m interface{}) ([]*schema.Reso
 
 	if provider.pathPrefix != "" {
 		relativePath := strings.TrimPrefix(path, provider.pathPrefix)
-		path = trimPathComponent(relativePath)
+		path = secretpath.Clean(relativePath)
 	}
 
 	err = d.Set("path", path)
@@ -197,23 +198,5 @@ func getSecretPath(d *schema.ResourceData, provider *providerMeta) string {
 		prefix = provider.pathPrefix
 	}
 	pathStr := d.Get("path").(string)
-	return newCompoundSecretPath(prefix, pathStr)
-}
-
-const pathSeparator = "/"
-
-// newCompoundSecretPath returns a SecretPath that combines multiple path components into a single secret path
-func newCompoundSecretPath(components ...string) string {
-	var processed []string
-	for _, c := range components {
-		trimmed := trimPathComponent(c)
-		if trimmed != "" {
-			processed = append(processed, trimmed)
-		}
-	}
-	return strings.Join(processed, pathSeparator)
-}
-
-func trimPathComponent(c string) string {
-	return strings.Trim(c, pathSeparator)
+	return secretpath.Join(prefix, pathStr)
 }
