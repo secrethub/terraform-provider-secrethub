@@ -15,13 +15,13 @@ locals {
 }
 
 provider "aws" {
-  access_key = "${var.aws_access_key}"
-  secret_key = "${var.aws_secret_key}"
-  region     = "${var.aws_region}"
+  access_key = var.aws_access_key
+  secret_key = var.aws_secret_key
+  region     = var.aws_region
 }
 
 provider "secrethub" {
-  credential = "${file("~/.secrethub/credential")}"
+  credential = file("~/.secrethub/credential")
 }
 
 resource "secrethub_secret" "db_password" {
@@ -45,7 +45,7 @@ resource "aws_db_instance" "default" {
   engine_version       = "5.7"
   instance_class       = "db.t2.micro"
   name                 = "mydb"
-  username             = "${secrethub_secret.db_username.value}"
-  password             = "${secrethub_secret.db_password.value}"
+  username             = secrethub_secret.db_username.value
+  password             = secrethub_secret.db_password.value
   parameter_group_name = "default.mysql5.7"
 }

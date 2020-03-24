@@ -17,7 +17,7 @@ To write a secret:
 ```terraform
 resource "secrethub_secret" "ssh_key" {
   path = "company/repo/ssh_key"
-  value = "${file("/path/to/ssh/key")}"
+  value = file("/path/to/ssh/key")
 }
 ```
 

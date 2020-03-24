@@ -19,7 +19,7 @@ Use the navigation to the left to read about the available resources.
 
 ```terraform
 provider "secrethub" {
-  credential = "${file("~/.secrethub/credential")}"
+  credential = file("~/.secrethub/credential")
 }
 ```
 

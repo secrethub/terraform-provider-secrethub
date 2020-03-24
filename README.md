@@ -26,7 +26,7 @@ The Terraform SecretHub Provider lets you manage your secrets using Terraform.
 ```hcl
 provider "secrethub" {
   # pass in credential or set SECRETHUB_CREDENTIAL environment variable
-  credential = "${file("~/.secrethub/credential")}" 
+  credential = file("~/.secrethub/credential")
 }
 
 resource "secrethub_secret" "db_password" {
@@ -39,7 +39,7 @@ resource "secrethub_secret" "db_password" {
 }
 
 resource "secrethub_secret" "db_username" {
-  path = "my-org/my-repo/db/username"
+  path  = "my-org/my-repo/db/username"
   value = "db-user"
 }
 
@@ -50,8 +50,8 @@ resource "aws_db_instance" "default" {
   engine_version       = "5.7"
   instance_class       = "db.t2.micro"
   name                 = "mydb"
-  username             = "${secrethub_secret.db_username.value}"
-  password             = "${secrethub_secret.db_password.value}"
+  username             = secrethub_secret.db_username.value
+  password             = secrethub_secret.db_password.value
   parameter_group_name = "default.mysql5.7"
 }
 ```
