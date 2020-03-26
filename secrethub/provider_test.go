@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/secrethub/secrethub-go/pkg/secrethub"
+	"github.com/secrethub/secrethub-go/pkg/secretpath"
 
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/hashicorp/terraform/terraform"
@@ -57,7 +58,7 @@ func init() {
 		awsRole:           os.Getenv(envAWSRole),
 	}
 
-	testAcc.path = newCompoundSecretPath(testAcc.namespace, testAcc.repository, testAcc.secretName)
+	testAcc.path = secretpath.Join(testAcc.namespace, testAcc.repository, testAcc.secretName)
 }
 
 func client() *secrethub.Client {
