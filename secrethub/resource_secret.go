@@ -94,7 +94,8 @@ func resourceSecretCreate(d *schema.ResourceData, m interface{}) error {
 		settings := generateList[0].(map[string]interface{})
 		useSymbols := settings["use_symbols"].(bool)
 		length := settings["length"].(int)
-		charsets := settings["charsets"].([]string)
+		charsetSet := settings["charsets"].(*schema.Set)
+		charsets := charsetSet.List()
 		charset := randchar.Charset{}
 		if len(charsets) == 0 {
 			charset = randchar.Alphanumeric
@@ -103,7 +104,7 @@ func resourceSecretCreate(d *schema.ResourceData, m interface{}) error {
 			charset = randchar.All
 		}
 		for _, charsetName := range charsets {
-			set, found := randchar.CharsetByName(charsetName)
+			set, found := randchar.CharsetByName(charsetName.(string))
 			if !found {
 				return fmt.Errorf("could not find charset: %s", charsetName)
 			}
