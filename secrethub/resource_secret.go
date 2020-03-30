@@ -69,6 +69,12 @@ func resourceSecret() *schema.Resource {
 							Optional:    true,
 							Description: "Define the set of characters to randomly generate a password from. Options are all, alphanumeric, numeric, lowercase, uppercase, letters, symbols and human-readable.",
 						},
+						"min": {
+							Type:        schema.TypeMap,
+							Optional:    true,
+							Elem:        &schema.Schema{Type: schema.TypeInt},
+							Description: "Ensure that the generated secret contains at least n characters from the given character set. Note that adding constrains reduces the strength of the secret.",
+						},
 					},
 				},
 			},
@@ -111,8 +117,20 @@ func resourceSecretCreate(d *schema.ResourceData, m interface{}) error {
 			}
 			charset = charset.Add(set)
 		}
+
+		minRuleMap := settings["min"].(map[string]interface{})
+		var minRules []randchar.Option
+		for charset, min := range minRuleMap {
+			n := min.(int)
+			set, found := randchar.CharsetByName(charset)
+			if !found {
+				return fmt.Errorf("could not find charset: %s", charset)
+			}
+			minRules = append(minRules, randchar.Min(n, set))
+		}
+
 		var err error
-		rand, err := randchar.NewRand(charset)
+		rand, err := randchar.NewRand(charset, minRules...)
 		if err != nil {
 			return err
 		}
