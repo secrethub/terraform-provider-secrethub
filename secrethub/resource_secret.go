@@ -59,6 +59,7 @@ func resourceSecret() *schema.Resource {
 						},
 						"use_symbols": {
 							Type:        schema.TypeBool,
+							Deprecated:  "use the charsets attribute instead",
 							Optional:    true,
 							Description: "Whether the secret should contain symbols.",
 						},
