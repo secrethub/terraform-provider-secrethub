@@ -62,6 +62,12 @@ func resourceSecret() *schema.Resource {
 							Optional:    true,
 							Description: "Whether the secret should contain symbols.",
 						},
+						"charsets": {
+							Type:        schema.TypeSet,
+							Elem:        &schema.Schema{Type: schema.TypeString},
+							Optional:    true,
+							Description: "Define the set of characters to randomly generate a password from. Options are all, alphanumeric, numeric, lowercase, uppercase, letters, symbols and human-readable.",
+						},
 					},
 				},
 			},
@@ -88,8 +94,27 @@ func resourceSecretCreate(d *schema.ResourceData, m interface{}) error {
 		settings := generateList[0].(map[string]interface{})
 		useSymbols := settings["use_symbols"].(bool)
 		length := settings["length"].(int)
+		charsets := settings["charsets"].([]string)
+		charset := randchar.Charset{}
+		if len(charsets) == 0 {
+			charset = randchar.Alphanumeric
+		}
+		if useSymbols {
+			charset = randchar.All
+		}
+		for _, charsetName := range charsets {
+			set, found := randchar.CharsetByName(charsetName)
+			if !found {
+				return fmt.Errorf("could not find charset: %s", charsetName)
+			}
+			charset = charset.Add(set)
+		}
 		var err error
-		value, err = randchar.NewGenerator(useSymbols).Generate(length)
+		rand, err := randchar.NewRand(charset)
+		if err != nil {
+			return err
+		}
+		value, err = rand.Generate(length)
 		if err != nil {
 			return err
 		}

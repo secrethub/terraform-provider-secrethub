@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/secrethub/secrethub-go/pkg/randchar"
+
 	"github.com/secrethub/secrethub-go/internals/assert"
 
 	"github.com/hashicorp/terraform/helper/resource"
@@ -106,6 +108,16 @@ func TestAccResourceSecret_generate(t *testing.T) {
 		}
 	`, testAcc.secretName, testAcc.path)
 
+	configSpecificCharsets := fmt.Sprintf(`
+		resource "secrethub_secret" "%v" {
+			path = "%v"
+			generate {
+				length = 16
+				charsets = ["numbers", "symbols"]
+			}
+		}
+	`, testAcc.secretName, testAcc.path)
+
 	resource.Test(t, resource.TestCase{
 		Providers: testAccProviders,
 		PreCheck:  testAccPreCheck(t),
@@ -134,8 +146,27 @@ func TestAccResourceSecret_generate(t *testing.T) {
 					checkSecretExistsRemotely(testAcc),
 				),
 			},
+			{
+				Config: configSpecificCharsets,
+				Check: resource.ComposeTestCheckFunc(
+					checkSecretResourceState(testAcc, func(s *terraform.InstanceState) error {
+						if len(s.Attributes["value"]) != 16 {
+							return fmt.Errorf("expected 'value' to contain newly generated 16 char secret")
+						}
+						if !containsOnly(s.Attributes["value"], randchar.Numeric.Add(randchar.Symbols)) {
+							return fmt.Errorf("expected 'value' to only contain numbers and symbols")
+						}
+						return nil
+					}),
+					checkSecretExistsRemotely(testAcc),
+				),
+			},
 		},
 	})
+}
+
+func containsOnly(value string, charset randchar.Charset) bool {
+	return randchar.NewCharset(value).IsSubset(charset)
 }
 
 func TestAccResourceSecret_deleteDetection(t *testing.T) {
