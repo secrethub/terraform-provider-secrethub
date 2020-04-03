@@ -73,7 +73,7 @@ func resourceSecret() *schema.Resource {
 							Type:        schema.TypeMap,
 							Optional:    true,
 							Elem:        &schema.Schema{Type: schema.TypeInt},
-							Description: "Ensure that the generated secret contains at least n characters from the given character set. Note that adding constrains reduces the strength of the secret.",
+							Description: "Ensure that the generated secret contains at least n characters from the given character set. Note that adding constraints reduces the strength of the secret.",
 						},
 					},
 				},
