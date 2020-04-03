@@ -108,7 +108,7 @@ func resourceSecretCreate(d *schema.ResourceData, m interface{}) error {
 			charset = randchar.Alphanumeric
 		}
 		if useSymbols {
-			charset = randchar.All
+			charset = charset.Add(randchar.Symbols)
 		}
 		for _, charsetName := range charsets {
 			set, found := randchar.CharsetByName(charsetName.(string))
