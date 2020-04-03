@@ -113,7 +113,7 @@ func resourceSecretCreate(d *schema.ResourceData, m interface{}) error {
 		for _, charsetName := range charsets {
 			set, found := randchar.CharsetByName(charsetName.(string))
 			if !found {
-				return fmt.Errorf("could not find charset: %s", charsetName)
+				return fmt.Errorf("unknown charset: %s", charsetName)
 			}
 			charset = charset.Add(set)
 		}
@@ -124,7 +124,7 @@ func resourceSecretCreate(d *schema.ResourceData, m interface{}) error {
 			n := min.(int)
 			set, found := randchar.CharsetByName(charset)
 			if !found {
-				return fmt.Errorf("could not find charset: %s", charset)
+				return fmt.Errorf("unknown charset: %s", charset)
 			}
 			minRules = append(minRules, randchar.Min(n, set))
 		}
