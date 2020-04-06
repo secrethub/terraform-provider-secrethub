@@ -21,6 +21,18 @@ resource "secrethub_secret" "ssh_key" {
 }
 ```
 
+To generate a new, 20 characters long secret made of alphanumeric characters:
+
+```terraform
+resource "secrethub_secret" "db_password" {
+  path = "company/repo/db_password"
+
+  generate {
+    length   = 20
+  }
+}
+```
+
 To generate a new secret made of lowercase letters and symbols, with minimum 5 symbols:
 
 ```terraform
