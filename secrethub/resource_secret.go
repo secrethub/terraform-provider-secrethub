@@ -59,8 +59,21 @@ func resourceSecret() *schema.Resource {
 						},
 						"use_symbols": {
 							Type:        schema.TypeBool,
+							Deprecated:  "use the charsets attribute instead",
 							Optional:    true,
 							Description: "Whether the secret should contain symbols.",
+						},
+						"charsets": {
+							Type:        schema.TypeSet,
+							Elem:        &schema.Schema{Type: schema.TypeString},
+							Optional:    true,
+							Description: "Define the set of characters to randomly generate a password from. Options are all, alphanumeric, numeric, lowercase, uppercase, letters, symbols and human-readable.",
+						},
+						"min": {
+							Type:        schema.TypeMap,
+							Optional:    true,
+							Elem:        &schema.Schema{Type: schema.TypeInt},
+							Description: "Ensure that the generated secret contains at least n characters from the given character set. Note that adding constraints reduces the strength of the secret.",
 						},
 					},
 				},
@@ -88,8 +101,40 @@ func resourceSecretCreate(d *schema.ResourceData, m interface{}) error {
 		settings := generateList[0].(map[string]interface{})
 		useSymbols := settings["use_symbols"].(bool)
 		length := settings["length"].(int)
+		charsetSet := settings["charsets"].(*schema.Set)
+		charsets := charsetSet.List()
+		charset := randchar.Charset{}
+		if len(charsets) == 0 {
+			charset = randchar.Alphanumeric
+		}
+		if useSymbols {
+			charset = charset.Add(randchar.Symbols)
+		}
+		for _, charsetName := range charsets {
+			set, found := randchar.CharsetByName(charsetName.(string))
+			if !found {
+				return fmt.Errorf("unknown charset: %s", charsetName)
+			}
+			charset = charset.Add(set)
+		}
+
+		minRuleMap := settings["min"].(map[string]interface{})
+		var minRules []randchar.Option
+		for charset, min := range minRuleMap {
+			n := min.(int)
+			set, found := randchar.CharsetByName(charset)
+			if !found {
+				return fmt.Errorf("unknown charset: %s", charset)
+			}
+			minRules = append(minRules, randchar.Min(n, set))
+		}
+
 		var err error
-		value, err = randchar.NewGenerator(useSymbols).Generate(length)
+		rand, err := randchar.NewRand(charset, minRules...)
+		if err != nil {
+			return err
+		}
+		value, err = rand.Generate(length)
 		if err != nil {
 			return err
 		}
