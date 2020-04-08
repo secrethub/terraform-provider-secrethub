@@ -13,9 +13,6 @@ builds:
 
 archive:
   name_template: "{{ .ProjectName }}-{{ .Os }}-{{ .Arch }}"
-  replacements:
-    amd64: 64-bit
-    darwin: macOS
   format_overrides:
     - goos: windows
       format: zip
