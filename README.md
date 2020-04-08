@@ -1,12 +1,11 @@
 <p align="center">
   <img src="https://secrethub.io/img/integrations/terraform/github-banner.png?v1" alt="Terraform + SecretHub" width="390">
-  </a>
 </p>
 <br/>
 
 <p align="center">
-  <a href="https://secrethub.io/blog/secret-management-for-terraform/"><img alt="Learn More" src="https://secrethub.io/img/buttons/github/learn-more.png?v1" height="28" /></a>
-  <a href="https://secrethub.io/docs/guides/terraform/"><img alt="View Docs" src="https://secrethub.io/img/buttons/github/view-docs.png?v1" height="28" /></a>
+  <a href="https://secrethub.io/blog/secret-management-for-terraform/"><img alt="Read blog post" src="https://secrethub.io/img/buttons/github/read-blog-post.png?v1" height="28" /></a>
+  <a href="https://secrethub.io/docs/guides/terraform/"><img alt="View docs" src="https://secrethub.io/img/buttons/github/view-docs.png?v2" height="28" /></a>
 </p>
 <br/>
 
