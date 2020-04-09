@@ -10,6 +10,14 @@ description: |-
 
 This resource allows you to manage a service account - an account for machines.
 
+## Example Usage
+
+```terraform
+resource "secrethub_service" "demo_service_account" {
+  repo = "workspace/repo"
+}
+```
+
 ## Argument Reference
 
 The following arguments are supported:

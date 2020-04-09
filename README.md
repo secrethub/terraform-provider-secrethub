@@ -1,15 +1,15 @@
 <p align="center">
-  <a href="https://terraform.io">
-    <img src="https://cdn.rawgit.com/hashicorp/terraform-website/master/content/source/assets/images/logo-hashicorp.svg" alt="Terraform" width="330px">
-  </a>
-  <img width="30px"/>
-  <a href="https://secrethub.io">
-    <img src="https://secrethub.io/img/secrethub-logo.svg" alt="SecretHub" width="360px">
-  </a>
+  <img src="https://secrethub.io/img/integrations/terraform/github-banner.png?v1" alt="Terraform + SecretHub" width="390">
 </p>
-<h1 align="center">
-  <i>Provider</i>
-</h1>
+<br/>
+
+<p align="center">
+  <a href="https://secrethub.io/blog/secret-management-for-terraform/"><img alt="Read blog post" src="https://secrethub.io/img/buttons/github/read-blog-post.png?v1" height="28" /></a>
+  <a href="https://secrethub.io/docs/guides/terraform/"><img alt="View docs" src="https://secrethub.io/img/buttons/github/view-docs.png?v2" height="28" /></a>
+</p>
+<br/>
+
+# Terraform Provider
 
 [![GoDoc](https://godoc.org/github.com/secrethub/terraform-provider-secrethub?status.svg)][godoc]
 [![CircleCI](https://circleci.com/gh/secrethub/terraform-provider-secrethub.svg?style=shield)][circleci]
@@ -18,8 +18,6 @@
 [![Discord](https://img.shields.io/badge/chat-on%20discord-7289da.svg?logo=discord)][discord]
 
 The Terraform SecretHub Provider lets you manage your secrets using Terraform.
-
-> [SecretHub][secrethub] is an end-to-end encrypted secret management service that helps developers keep database passwords, API keys, and other secrets out of source code.
 
 ## Usage
 

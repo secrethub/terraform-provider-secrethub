@@ -9,7 +9,7 @@ import (
 
 var version string
 
-// Provider returns the ScretHub Terraform provider
+// Provider returns the SecretHub Terraform provider
 func Provider() terraform.ResourceProvider {
 	return &schema.Provider{
 		Schema: map[string]*schema.Schema{
