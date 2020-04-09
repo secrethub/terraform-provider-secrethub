@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform/helper/resource"
 )
 
-func TestAccDataSourceSecret_absPath(t *testing.T) {
+func TestAccDataSourceSecret_PathUnversioned(t *testing.T) {
 	config := fmt.Sprintf(`
 		resource "secrethub_secret" "%v" {
 			path = "%v"
@@ -42,7 +42,7 @@ func TestAccDataSourceSecret_absPath(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceSecret_absPathVersioned(t *testing.T) {
+func TestAccDataSourceSecret_PathVersioned(t *testing.T) {
 	configInit := fmt.Sprintf(`
 		resource "secrethub_secret" "%v" {
 			path = "%v"

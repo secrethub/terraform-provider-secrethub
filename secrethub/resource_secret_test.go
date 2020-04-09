@@ -12,7 +12,7 @@ import (
 	"github.com/hashicorp/terraform/terraform"
 )
 
-func TestAccResourceSecret_writeAbsPath(t *testing.T) {
+func TestAccResourceSecret_writePath(t *testing.T) {
 	config := fmt.Sprintf(`
 		resource "secrethub_secret" "%v" {
 			path = "%v"
