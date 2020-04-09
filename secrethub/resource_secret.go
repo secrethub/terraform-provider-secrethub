@@ -2,12 +2,10 @@ package secrethub
 
 import (
 	"fmt"
-	"strings"
 
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/secrethub/secrethub-go/internals/api"
 	"github.com/secrethub/secrethub-go/pkg/randchar"
-	"github.com/secrethub/secrethub-go/pkg/secretpath"
 )
 
 func resourceSecret() *schema.Resource {
@@ -24,12 +22,6 @@ func resourceSecret() *schema.Resource {
 				Type:        schema.TypeString,
 				Required:    true,
 				Description: "The path where the secret will be stored.",
-			},
-			"path_prefix": {
-				Type:        schema.TypeString,
-				Optional:    true,
-				Deprecated:  "Deprecated in favor of Terraform's native variables",
-				Description: "Overrides the `path_prefix` defined in the provider.",
 			},
 			"version": {
 				Type:        schema.TypeInt,
@@ -140,7 +132,7 @@ func resourceSecretCreate(d *schema.ResourceData, m interface{}) error {
 		}
 	}
 
-	path := getSecretPath(d, &provider)
+	path := d.Get("path").(string)
 
 	res, err := client.Secrets().Write(path, value)
 	if err != nil {
@@ -212,19 +204,9 @@ func resourceSecretDelete(d *schema.ResourceData, m interface{}) error {
 func resourceSecretImport(d *schema.ResourceData, m interface{}) ([]*schema.ResourceData, error) {
 	path := d.Id()
 
-	provider := m.(providerMeta)
-	if provider.pathPrefix != "" && !strings.HasPrefix(path, provider.pathPrefix) {
-		return nil, fmt.Errorf("secret import path must be absolute")
-	}
-
 	err := api.ValidateSecretPath(path)
 	if err != nil {
 		return nil, err
-	}
-
-	if provider.pathPrefix != "" {
-		relativePath := strings.TrimPrefix(path, provider.pathPrefix)
-		path = secretpath.Clean(relativePath)
 	}
 
 	err = d.Set("path", path)
@@ -233,15 +215,4 @@ func resourceSecretImport(d *schema.ResourceData, m interface{}) ([]*schema.Reso
 	}
 
 	return []*schema.ResourceData{d}, nil
-}
-
-// getSecretPath finds the full path of a secret, combining the specified path with the provider's path prefix
-func getSecretPath(d *schema.ResourceData, provider *providerMeta) string {
-	prefix := d.Get("path_prefix").(string)
-	if prefix == "" {
-		// Fall back to the provider prefix
-		prefix = provider.pathPrefix
-	}
-	pathStr := d.Get("path").(string)
-	return secretpath.Join(prefix, pathStr)
 }
