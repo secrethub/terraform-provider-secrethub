@@ -25,12 +25,6 @@ func Provider() terraform.ResourceProvider {
 				DefaultFunc: schema.EnvDefaultFunc("SECRETHUB_CREDENTIAL_PASSPHRASE", nil),
 				Description: "Passphrase to unlock the authentication passed in `credential`. Can also be sourced from SECRETHUB_CREDENTIAL_PASSPHRASE.",
 			},
-			"path_prefix": {
-				Type:        schema.TypeString,
-				Optional:    true,
-				Description: "The default value to prefix path values with. If set, paths for resources and data sources will be prefixed with the given prefix, allowing you to use relative paths instead. If left blank, every path must be absolute (namespace/repository/[dir/]secret_name).",
-				Deprecated:  "Deprecated in favor of Terraform's native variables",
-			},
 		},
 		ConfigureFunc: configureProvider,
 		ResourcesMap: map[string]*schema.Resource{
@@ -65,11 +59,9 @@ func configureProvider(d *schema.ResourceData) (interface{}, error) {
 		return nil, err
 	}
 
-	pathPrefix := d.Get("path_prefix").(string)
-	return providerMeta{client, pathPrefix}, nil
+	return providerMeta{client}, nil
 }
 
 type providerMeta struct {
-	client     *secrethub.Client
-	pathPrefix string
+	client *secrethub.Client
 }

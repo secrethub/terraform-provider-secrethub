@@ -13,12 +13,6 @@ func dataSourceSecret() *schema.Resource {
 				Required:    true,
 				Description: "The path where the secret is stored. To use a specific version, append the version number to the path, separated by a colon (path:version). Defaults to the latest version.",
 			},
-			"path_prefix": {
-				Type:        schema.TypeString,
-				Optional:    true,
-				Description: "Overrides the `path_prefix` defined in the provider.",
-				Deprecated:  "Deprecated in favor of Terraform's native variables",
-			},
 			"version": {
 				Type:        schema.TypeInt,
 				Computed:    true,
@@ -38,7 +32,7 @@ func dataSourceSecretRead(d *schema.ResourceData, m interface{}) error {
 	provider := m.(providerMeta)
 	client := *provider.client
 
-	path := getSecretPath(d, &provider)
+	path := d.Get("path").(string)
 
 	secret, err := client.Secrets().Versions().GetWithData(path)
 	if err != nil {
@@ -54,7 +48,7 @@ func dataSourceSecretRead(d *schema.ResourceData, m interface{}) error {
 		return err
 	}
 
-	d.SetId(string(path))
+	d.SetId(path)
 
 	return nil
 }

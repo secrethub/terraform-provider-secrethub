@@ -2,7 +2,6 @@ package secrethub
 
 import (
 	"fmt"
-	"strings"
 
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/secrethub/secrethub-go/internals/api"
@@ -23,12 +22,6 @@ func resourceSecret() *schema.Resource {
 				Type:        schema.TypeString,
 				Required:    true,
 				Description: "The path where the secret will be stored.",
-			},
-			"path_prefix": {
-				Type:        schema.TypeString,
-				Optional:    true,
-				Deprecated:  "Deprecated in favor of Terraform's native variables",
-				Description: "Overrides the `path_prefix` defined in the provider.",
 			},
 			"version": {
 				Type:        schema.TypeInt,
@@ -58,8 +51,21 @@ func resourceSecret() *schema.Resource {
 						},
 						"use_symbols": {
 							Type:        schema.TypeBool,
+							Deprecated:  "use the charsets attribute instead",
 							Optional:    true,
 							Description: "Whether the secret should contain symbols.",
+						},
+						"charsets": {
+							Type:        schema.TypeSet,
+							Elem:        &schema.Schema{Type: schema.TypeString},
+							Optional:    true,
+							Description: "Define the set of characters to randomly generate a password from. Options are all, alphanumeric, numeric, lowercase, uppercase, letters, symbols and human-readable.",
+						},
+						"min": {
+							Type:        schema.TypeMap,
+							Optional:    true,
+							Elem:        &schema.Schema{Type: schema.TypeInt},
+							Description: "Ensure that the generated secret contains at least n characters from the given character set. Note that adding constraints reduces the strength of the secret.",
 						},
 					},
 				},
@@ -87,14 +93,46 @@ func resourceSecretCreate(d *schema.ResourceData, m interface{}) error {
 		settings := generateList[0].(map[string]interface{})
 		useSymbols := settings["use_symbols"].(bool)
 		length := settings["length"].(int)
+		charsetSet := settings["charsets"].(*schema.Set)
+		charsets := charsetSet.List()
+		charset := randchar.Charset{}
+		if len(charsets) == 0 {
+			charset = randchar.Alphanumeric
+		}
+		if useSymbols {
+			charset = charset.Add(randchar.Symbols)
+		}
+		for _, charsetName := range charsets {
+			set, found := randchar.CharsetByName(charsetName.(string))
+			if !found {
+				return fmt.Errorf("unknown charset: %s", charsetName)
+			}
+			charset = charset.Add(set)
+		}
+
+		minRuleMap := settings["min"].(map[string]interface{})
+		var minRules []randchar.Option
+		for charset, min := range minRuleMap {
+			n := min.(int)
+			set, found := randchar.CharsetByName(charset)
+			if !found {
+				return fmt.Errorf("unknown charset: %s", charset)
+			}
+			minRules = append(minRules, randchar.Min(n, set))
+		}
+
 		var err error
-		value, err = randchar.NewGenerator(useSymbols).Generate(length)
+		rand, err := randchar.NewRand(charset, minRules...)
+		if err != nil {
+			return err
+		}
+		value, err = rand.Generate(length)
 		if err != nil {
 			return err
 		}
 	}
 
-	path := getSecretPath(d, &provider)
+	path := d.Get("path").(string)
 
 	res, err := client.Secrets().Write(path, value)
 	if err != nil {
@@ -166,19 +204,9 @@ func resourceSecretDelete(d *schema.ResourceData, m interface{}) error {
 func resourceSecretImport(d *schema.ResourceData, m interface{}) ([]*schema.ResourceData, error) {
 	path := d.Id()
 
-	provider := m.(providerMeta)
-	if provider.pathPrefix != "" && !strings.HasPrefix(path, provider.pathPrefix) {
-		return nil, fmt.Errorf("secret import path must be absolute")
-	}
-
 	err := api.ValidateSecretPath(path)
 	if err != nil {
 		return nil, err
-	}
-
-	if provider.pathPrefix != "" {
-		relativePath := strings.TrimPrefix(path, provider.pathPrefix)
-		path = trimPathComponent(relativePath)
 	}
 
 	err = d.Set("path", path)
@@ -187,33 +215,4 @@ func resourceSecretImport(d *schema.ResourceData, m interface{}) ([]*schema.Reso
 	}
 
 	return []*schema.ResourceData{d}, nil
-}
-
-// getSecretPath finds the full path of a secret, combining the specified path with the provider's path prefix
-func getSecretPath(d *schema.ResourceData, provider *providerMeta) string {
-	prefix := d.Get("path_prefix").(string)
-	if prefix == "" {
-		// Fall back to the provider prefix
-		prefix = provider.pathPrefix
-	}
-	pathStr := d.Get("path").(string)
-	return newCompoundSecretPath(prefix, pathStr)
-}
-
-const pathSeparator = "/"
-
-// newCompoundSecretPath returns a SecretPath that combines multiple path components into a single secret path
-func newCompoundSecretPath(components ...string) string {
-	var processed []string
-	for _, c := range components {
-		trimmed := trimPathComponent(c)
-		if trimmed != "" {
-			processed = append(processed, trimmed)
-		}
-	}
-	return strings.Join(processed, pathSeparator)
-}
-
-func trimPathComponent(c string) string {
-	return strings.Trim(c, pathSeparator)
 }

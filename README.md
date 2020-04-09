@@ -11,11 +11,11 @@
 
 # Terraform Provider
 
-[![GoDoc](https://godoc.org/github.com/secrethub/terraform-provider-secrethub?status.svg)][godoc]
-[![CircleCI](https://circleci.com/gh/secrethub/terraform-provider-secrethub.svg?style=shield)][circleci]
-[![Go Report Card](https://goreportcard.com/badge/github.com/secrethub/terraform-provider-secrethub)][goreportcard]
-[![Version]( https://img.shields.io/github/release/secrethub/terraform-provider-secrethub.svg)][latest-version]
-[![Discord](https://img.shields.io/badge/chat-on%20discord-7289da.svg?logo=discord)][discord]
+[![](https://godoc.org/github.com/secrethub/terraform-provider-secrethub?status.svg)][godoc]
+[![](https://circleci.com/gh/secrethub/terraform-provider-secrethub.svg?style=shield)][circleci]
+[![](https://goreportcard.com/badge/github.com/secrethub/terraform-provider-secrethub)][goreportcard]
+[![]( https://img.shields.io/github/release/secrethub/terraform-provider-secrethub.svg)][latest-version]
+[![](https://img.shields.io/badge/chat-on%20discord-7289da.svg?logo=discord)][discord]
 
 The Terraform SecretHub Provider lets you manage your secrets using Terraform.
 
@@ -24,7 +24,7 @@ The Terraform SecretHub Provider lets you manage your secrets using Terraform.
 ```hcl
 provider "secrethub" {
   # pass in credential or set SECRETHUB_CREDENTIAL environment variable
-  credential = "${file("~/.secrethub/credential")}" 
+  credential = file("~/.secrethub/credential")
 }
 
 resource "secrethub_secret" "db_password" {
@@ -37,7 +37,7 @@ resource "secrethub_secret" "db_password" {
 }
 
 resource "secrethub_secret" "db_username" {
-  path = "my-org/my-repo/db/username"
+  path  = "my-org/my-repo/db/username"
   value = "db-user"
 }
 
@@ -48,8 +48,8 @@ resource "aws_db_instance" "default" {
   engine_version       = "5.7"
   instance_class       = "db.t2.micro"
   name                 = "mydb"
-  username             = "${secrethub_secret.db_username.value}"
-  password             = "${secrethub_secret.db_password.value}"
+  username             = secrethub_secret.db_username.value
+  password             = secrethub_secret.db_password.value
   parameter_group_name = "default.mysql5.7"
 }
 ```
@@ -60,16 +60,12 @@ Have a look at the [reference docs](https://secrethub.io/docs/reference/terrafor
 
 Check out the [step-by-step integration guide](https://secrethub.io/docs/terraform/) to get started.
 
-A detailed use case is described in the [beta announcement](https://secrethub.io/blog/secret-management-for-terraform/).
+A detailed use case is described in the [original announcement](https://secrethub.io/blog/secret-management-for-terraform/).
 There are also some [examples](/examples) in this repo.
 
-## BETA
+## Support
 
-This project is [currently in beta](https://secrethub.io/blog/secret-management-for-terraform/) and we'd love your feedback! Check out the [issues](https://github.com/secrethub/terraform-provider-secrethub/issues) and feel free suggest cool ideas, use cases, or improvements.
-
-Because it's still in beta, you can expect to see some changes introduced. Pull requests are very welcome.
-
-For support, send us a message on the `#terraform` channel on [<img src="https://discordapp.com/assets/2c21aeda16de354ba5334551a883b481.png" alt="Discord" width="20px"> Discord](https://discord.gg/wcxV5RD) or send an email to [terraform@secrethub.io](mailto:terraform@secrethub.io)
+If you need help, send us a message on the `#terraform` channel on [<img src="https://discordapp.com/assets/2c21aeda16de354ba5334551a883b481.png" alt="Discord" width="20px"> Discord](https://discord.gg/wcxV5RD) or send an email to [terraform@secrethub.io](mailto:terraform@secrethub.io)
 
 ## Development
 

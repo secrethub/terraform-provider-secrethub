@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform/helper/resource"
 )
 
-func TestAccDataSourceSecret_absPath(t *testing.T) {
+func TestAccDataSourceSecret_PathUnversioned(t *testing.T) {
 	config := fmt.Sprintf(`
 		resource "secrethub_secret" "%v" {
 			path = "%v"
@@ -42,7 +42,7 @@ func TestAccDataSourceSecret_absPath(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceSecret_absPathVersioned(t *testing.T) {
+func TestAccDataSourceSecret_PathVersioned(t *testing.T) {
 	configInit := fmt.Sprintf(`
 		resource "secrethub_secret" "%v" {
 			path = "%v"
@@ -86,40 +86,6 @@ func TestAccDataSourceSecret_absPathVersioned(t *testing.T) {
 						fmt.Sprintf("data.secrethub_secret.%v", testAcc.secretName),
 						"value",
 						"secretpasswordv1",
-					),
-				),
-			},
-		},
-	})
-}
-
-func TestAccDataSourceSecret_prefPath(t *testing.T) {
-	config := fmt.Sprintf(`
-		provider "secrethub" {
-			path_prefix = "%v/%v"
-		}
-
-		resource "secrethub_secret" "%v" {
-			path = "%v"
-			value = "secretpassword"
-		}
-
-		data "secrethub_secret" "%v" {
-			path = secrethub_secret.%v.path
-		}
-	`, testAcc.namespace, testAcc.repository, testAcc.secretName, testAcc.secretName, testAcc.secretName, testAcc.secretName)
-
-	resource.Test(t, resource.TestCase{
-		Providers: testAccProviders,
-		PreCheck:  testAccPreCheck(t),
-		Steps: []resource.TestStep{
-			{
-				Config: config,
-				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr(
-						fmt.Sprintf("data.secrethub_secret.%v", testAcc.secretName),
-						"value",
-						"secretpassword",
 					),
 				),
 			},
