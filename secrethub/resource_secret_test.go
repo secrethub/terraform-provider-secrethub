@@ -12,66 +12,13 @@ import (
 	"github.com/hashicorp/terraform/terraform"
 )
 
-func TestAccResourceSecret_writeAbsPath(t *testing.T) {
+func TestAccResourceSecret_writePath(t *testing.T) {
 	config := fmt.Sprintf(`
 		resource "secrethub_secret" "%v" {
 			path = "%v"
 			value = "secretpassword"
 		}
 	`, testAcc.secretName, testAcc.path)
-
-	resource.Test(t, resource.TestCase{
-		Providers: testAccProviders,
-		PreCheck:  testAccPreCheck(t),
-		Steps: []resource.TestStep{
-			{
-				Config: config,
-				Check: resource.ComposeTestCheckFunc(
-					checkSecretExistsRemotely(testAcc),
-				),
-			},
-		},
-	})
-}
-
-func TestAccResourceSecret_writePrefPath(t *testing.T) {
-	config := fmt.Sprintf(`
-		provider "secrethub" {
-			path_prefix = "%v"
-		}
-
-		resource "secrethub_secret" "%v" {
-			path = "%v/%v"
-			value = "secretpassword"
-		}
-	`, testAcc.namespace, testAcc.secretName, testAcc.repository, testAcc.secretName)
-
-	resource.Test(t, resource.TestCase{
-		Providers: testAccProviders,
-		PreCheck:  testAccPreCheck(t),
-		Steps: []resource.TestStep{
-			{
-				Config: config,
-				Check: resource.ComposeTestCheckFunc(
-					checkSecretExistsRemotely(testAcc),
-				),
-			},
-		},
-	})
-}
-
-func TestAccResourceSecret_writePrefPathOverride(t *testing.T) {
-	config := fmt.Sprintf(`
-		provider "secrethub" {
-			path_prefix = "override_me"
-		}
-		
-		resource "secrethub_secret" "%v" {
-			path_prefix = "%v"
-			path = "%v/%v"
-			value = "secretpassword"
-		}
-	`, testAcc.secretName, testAcc.namespace, testAcc.repository, testAcc.secretName)
 
 	resource.Test(t, resource.TestCase{
 		Providers: testAccProviders,
