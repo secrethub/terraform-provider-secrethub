@@ -11,11 +11,11 @@
 
 # Terraform Provider
 
-[![GoDoc](https://godoc.org/github.com/secrethub/terraform-provider-secrethub?status.svg)][godoc]
-[![CircleCI](https://circleci.com/gh/secrethub/terraform-provider-secrethub.svg?style=shield)][circleci]
-[![Go Report Card](https://goreportcard.com/badge/github.com/secrethub/terraform-provider-secrethub)][goreportcard]
-[![Version]( https://img.shields.io/github/release/secrethub/terraform-provider-secrethub.svg)][latest-version]
-[![Discord](https://img.shields.io/badge/chat-on%20discord-7289da.svg?logo=discord)][discord]
+[![](https://godoc.org/github.com/secrethub/terraform-provider-secrethub?status.svg)][godoc]
+[![](https://circleci.com/gh/secrethub/terraform-provider-secrethub.svg?style=shield)][circleci]
+[![](https://goreportcard.com/badge/github.com/secrethub/terraform-provider-secrethub)][goreportcard]
+[![]( https://img.shields.io/github/release/secrethub/terraform-provider-secrethub.svg)][latest-version]
+[![](https://img.shields.io/badge/chat-on%20discord-7289da.svg?logo=discord)][discord]
 
 The Terraform SecretHub Provider lets you manage your secrets using Terraform.
 
