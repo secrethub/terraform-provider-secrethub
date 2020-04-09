@@ -2,8 +2,9 @@ package secrethub
 
 import (
 	"fmt"
-	"reflect"
 	"testing"
+
+	"github.com/secrethub/secrethub-go/pkg/randchar"
 
 	"github.com/secrethub/secrethub-go/internals/assert"
 
@@ -107,6 +108,41 @@ func TestAccResourceSecret_generate(t *testing.T) {
 		}
 	`, testAcc.secretName, testAcc.path)
 
+	configSpecificCharsets := fmt.Sprintf(`
+		resource "secrethub_secret" "%v" {
+			path = "%v"
+			generate {
+				length = 16
+				charsets = ["numbers", "symbols"]
+			}
+		}
+	`, testAcc.secretName, testAcc.path)
+
+	configOneMinRule := fmt.Sprintf(`
+		resource "secrethub_secret" "%v" {
+			path = "%v"
+			generate {
+				length = 16
+				charsets = ["numbers", "letters"]
+				min = {
+					numbers = 15
+				}
+			}
+		}
+	`, testAcc.secretName, testAcc.path)
+
+	configMinRuleNoCharsets := fmt.Sprintf(`
+		resource "secrethub_secret" "%v" {
+			path = "%v"
+			generate {
+				length = 16
+				min = {
+					letters = 14
+				}
+			}
+		}
+	`, testAcc.secretName, testAcc.path)
+
 	resource.Test(t, resource.TestCase{
 		Providers: testAccProviders,
 		PreCheck:  testAccPreCheck(t),
@@ -135,8 +171,72 @@ func TestAccResourceSecret_generate(t *testing.T) {
 					checkSecretExistsRemotely(testAcc),
 				),
 			},
+			{
+				Config: configSpecificCharsets,
+				Check: resource.ComposeTestCheckFunc(
+					checkSecretResourceState(testAcc, func(s *terraform.InstanceState) error {
+						if len(s.Attributes["value"]) != 16 {
+							return fmt.Errorf("expected 'value' to contain newly generated 16 char secret")
+						}
+						if !containsOnly(s.Attributes["value"], randchar.Numeric.Add(randchar.Symbols)) {
+							return fmt.Errorf("expected 'value' to only contain numbers and symbols")
+						}
+						return nil
+					}),
+					checkSecretExistsRemotely(testAcc),
+				),
+			},
+			{
+				Config: configOneMinRule,
+				Check: resource.ComposeTestCheckFunc(
+					checkSecretResourceState(testAcc, func(s *terraform.InstanceState) error {
+						if len(s.Attributes["value"]) != 16 {
+							return fmt.Errorf("expected 'value' to contain newly generated 16 char secret")
+						}
+						if !containsOnly(s.Attributes["value"], randchar.Numeric.Add(randchar.Letters)) {
+							return fmt.Errorf("expected 'value' to only contain numbers and letters")
+						}
+						if !containsAtLeast(s.Attributes["value"], randchar.Numeric, 15) {
+							return fmt.Errorf("expected 'value' to contain at least 15 numbers")
+						}
+						return nil
+					}),
+					checkSecretExistsRemotely(testAcc),
+				),
+			},
+			{
+				Config: configMinRuleNoCharsets,
+				Check: resource.ComposeTestCheckFunc(
+					checkSecretResourceState(testAcc, func(s *terraform.InstanceState) error {
+						if len(s.Attributes["value"]) != 16 {
+							return fmt.Errorf("expected 'value' to contain newly generated 16 char secret")
+						}
+						if !containsOnly(s.Attributes["value"], randchar.Numeric.Add(randchar.Letters)) {
+							return fmt.Errorf("expected 'value' to only contain numbers and letters")
+						}
+						if !containsAtLeast(s.Attributes["value"], randchar.Letters, 14) {
+							return fmt.Errorf("expected 'value' to contain at least 14 letters")
+						}
+						return nil
+					}),
+					checkSecretExistsRemotely(testAcc),
+				),
+			},
 		},
 	})
+}
+
+func containsOnly(value string, charset randchar.Charset) bool {
+	return randchar.NewCharset(value).IsSubset(charset)
+}
+
+func containsAtLeast(str string, charset randchar.Charset, count int) bool {
+	for _, chr := range str {
+		if randchar.NewCharset(string(chr)).IsSubset(charset) {
+			count--
+		}
+	}
+	return count <= 0
 }
 
 func TestAccResourceSecret_deleteDetection(t *testing.T) {
@@ -218,41 +318,5 @@ func checkSecretResourceState(values *testAccValues, check func(s *terraform.Ins
 		}
 
 		return check(state)
-	}
-}
-
-func TestMergeSecretPath(t *testing.T) {
-	type args struct {
-		prefix string
-		path   string
-	}
-	cases := []struct {
-		name string
-		args args
-		want string
-	}{
-		{
-			"prefixed path",
-			args{"myorg/db_passwords", "postgres"},
-			"myorg/db_passwords/postgres",
-		},
-		{
-			"abs path",
-			args{"", "myorg2/database/postgres"},
-			"myorg2/database/postgres",
-		},
-		{
-			"path with redundant slashes",
-			args{"myorg/db_passwords/", "/postgres"},
-			"myorg/db_passwords/postgres",
-		},
-	}
-	for _, c := range cases {
-		t.Run(c.name, func(t *testing.T) {
-			got := newCompoundSecretPath(c.args.prefix, c.args.path)
-			if !reflect.DeepEqual(got, c.want) {
-				t.Errorf("newCompoundSecretPath() = %v, want %v", got, c.want)
-			}
-		})
 	}
 }
