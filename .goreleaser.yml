@@ -12,11 +12,11 @@ builds:
       - goos: darwin
         goarch: 386
 
-archive:
-  name_template: "{{ .ProjectName }}-{{ .Os }}-{{ .Arch }}"
-  format_overrides:
-    - goos: windows
-      format: zip
-  files:
-    # Only archive the binary
-    - none* 
+archives:
+  - name_template: "{{ .ProjectName }}-{{ .Os }}-{{ .Arch }}"
+    format_overrides:
+      - goos: windows
+        format: zip
+    files:
+      # Only archive the binary
+      - none*
