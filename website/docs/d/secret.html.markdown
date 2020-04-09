@@ -21,7 +21,6 @@ data "secrethub_secret" "db_password" {
 ## Argument Reference
 
 * `path` - (Required) The path where the secret is stored. To use a specific version, append the version number to the path, separated by a colon (path:version). Defaults to the latest version.
-* `path_prefix` - **Deprecated** (Optional) Overrides the `path_prefix` defined in the provider.
 
 ## Attributes Reference
 

@@ -54,7 +54,6 @@ resource "secrethub_secret" "db_password" {
 The following arguments are supported:
 
 * `path` - (Required) The path where the secret will be stored.
-* `path_prefix` - **Deprecated** (Optional) Overrides the `path_prefix` defined in the provider.
 * `value` - (Optional) The secret contents. Either `value` or `generate` must be defined.
 * `generate` - (Optional) Settings for autogenerating a secret. Either `value` or `generate` must be defined.
 
