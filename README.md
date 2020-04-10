@@ -32,7 +32,7 @@ resource "secrethub_secret" "db_password" {
 
   generate {
     length   = 22
-    charsets = ["all"]
+    charsets = ["alphanumeric"]
   }
 }
 
