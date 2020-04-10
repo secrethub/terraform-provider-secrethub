@@ -31,8 +31,8 @@ resource "secrethub_secret" "db_password" {
   path = "my-org/my-repo/db/password"
 
   generate {
-    length      = 22
-    use_symbols = true
+    length   = 22
+    charsets = ["alphanumeric"]
   }
 }
 
