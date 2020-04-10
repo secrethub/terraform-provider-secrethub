@@ -1,5 +1,11 @@
 version: 2.1
 jobs:
+  lint:
+    docker:
+      - image: golangci/golangci-lint:v1.23.8-alpine
+    steps:
+      - checkout
+      - run: golangci-lint run
   build:
     docker:
       - image: circleci/golang:1.13
@@ -16,3 +22,8 @@ jobs:
       - run: make testacc
     environment:
       GOPROXY: "https://proxy.golang.org"
+workflows:
+  version: 2
+  pipeline:
+    jobs:
+      - lint
