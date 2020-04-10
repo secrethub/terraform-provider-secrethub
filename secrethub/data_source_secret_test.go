@@ -29,7 +29,7 @@ func TestAccDataSourceSecret_PathUnversioned(t *testing.T) {
 					resource.TestCheckResourceAttr(
 						fmt.Sprintf("data.secrethub_secret.%v", testAcc.secretName),
 						"path",
-						string(testAcc.path),
+						testAcc.path,
 					),
 					resource.TestCheckResourceAttr(
 						fmt.Sprintf("data.secrethub_secret.%v", testAcc.secretName),

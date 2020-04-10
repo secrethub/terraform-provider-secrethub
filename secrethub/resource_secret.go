@@ -139,7 +139,7 @@ func resourceSecretCreate(d *schema.ResourceData, m interface{}) error {
 		return err
 	}
 
-	d.SetId(string(path))
+	d.SetId(path)
 	err = d.Set("value", string(value))
 	if err != nil {
 		return err
