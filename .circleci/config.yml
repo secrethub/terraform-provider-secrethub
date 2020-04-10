@@ -18,11 +18,13 @@ jobs:
             - /go/pkg/mod
       - secrethub/exec:
           step-name: Run acceptance tests
-          command: make testacc
-          # SecretHub credential to use in the acceptance tests
-          flags: -e SECRETHUB_CREDENTIAL=secrethub/terraform-provider/testacc/secrethub/credential
+          command: |
+            SECRETHUB_CREDENTIAL=$TF_ACC_SECRETHUB_CREDENTIAL
+            make testacc
     environment:
       GOPROXY: "https://proxy.golang.org"
+      # SecretHub credential to use in the acceptance tests
+      TF_ACC_SECRETHUB_CREDENTIAL: secrethub://secrethub/terraform-provider/testacc/secrethub/credential
       # AWS access key id to use in the acceptance tests
       AWS_ACCESS_KEY_ID: secrethub://secrethub/terraform-provider/testacc/aws/access_key_id
       # AWS secret access key to use in the acceptance tests
