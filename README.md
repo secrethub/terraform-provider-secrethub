@@ -18,7 +18,7 @@
 [![](https://img.shields.io/badge/chat-on%20discord-7289da.svg?logo=discord)][discord]
 
 The SecretHub Terraform Provider lets you manage your secrets using Terraform.
-It is officially supported and actively mainainted by SecretHub, but community contributions are very welcome.
+It is officially supported and actively maintained by SecretHub, but community contributions are very welcome.
 
 ## Usage
 
