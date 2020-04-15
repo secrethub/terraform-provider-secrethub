@@ -14,8 +14,5 @@ install:
 
 GOLANGCI_VERSION=v1.23.8
 
-lint-tools:
-	@curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin ${GOLANGCI_VERSION}
-
 lint:
-	@golangci-lint run
+	docker run -t --rm -v ${PWD}:/app -w /app golangci/golangci-lint:v1.23.8-alpine golangci-lint run --timeout 2m0s ./...
