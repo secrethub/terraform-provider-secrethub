@@ -7,8 +7,6 @@ import (
 	"github.com/secrethub/secrethub-go/pkg/secrethub/credentials"
 )
 
-var version string
-
 // Provider returns the SecretHub Terraform provider
 func Provider() terraform.ResourceProvider {
 	return &schema.Provider{
@@ -46,7 +44,7 @@ func configureProvider(d *schema.ResourceData) (interface{}, error) {
 	options := []secrethub.ClientOption{
 		secrethub.WithAppInfo(&secrethub.AppInfo{
 			Name:    "terraform-provider-secrethub",
-			Version: version,
+			Version: ProviderVersion,
 		}),
 	}
 
