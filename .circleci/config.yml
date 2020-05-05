@@ -27,3 +27,4 @@ workflows:
   pipeline:
     jobs:
       - lint
+      - build
