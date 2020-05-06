@@ -16,8 +16,10 @@
 [![](https://goreportcard.com/badge/github.com/secrethub/terraform-provider-secrethub)][goreportcard]
 [![]( https://img.shields.io/github/release/secrethub/terraform-provider-secrethub.svg)][latest-version]
 [![](https://img.shields.io/badge/chat-on%20discord-7289da.svg?logo=discord)][discord]
+[![](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/shuaibiyy/awesome-terraform)
 
-The Terraform SecretHub Provider lets you manage your secrets using Terraform.
+The SecretHub Terraform Provider lets you manage your secrets using Terraform.
+It is officially supported and actively maintained by SecretHub, but community contributions are very welcome.
 
 ## Usage
 
@@ -31,8 +33,8 @@ resource "secrethub_secret" "db_password" {
   path = "my-org/my-repo/db/password"
 
   generate {
-    length      = 22
-    use_symbols = true
+    length   = 22
+    charsets = ["alphanumeric"]
   }
 }
 

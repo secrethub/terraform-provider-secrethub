@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  secrethub: secrethub/cli@1.0.0
 jobs:
   lint:
     docker:
@@ -10,6 +12,7 @@ jobs:
     docker:
       - image: circleci/golang:1.13
     steps:
+      - secrethub/install
       - checkout
       - restore_cache:
           keys:
@@ -19,9 +22,19 @@ jobs:
           key: go-modules-{{ checksum "go.mod" }}
           paths:
             - /go/pkg/mod
-      - run: make testacc
+      - secrethub/exec:
+          step-name: Run acceptance tests
+          command: |
+            SECRETHUB_CREDENTIAL=$TF_ACC_SECRETHUB_CREDENTIAL
+            make testacc
     environment:
       GOPROXY: "https://proxy.golang.org"
+      # SecretHub credential to use in the acceptance tests
+      TF_ACC_SECRETHUB_CREDENTIAL: secrethub://secrethub/terraform-provider/testacc/secrethub/credential
+      # AWS access key id to use in the acceptance tests
+      AWS_ACCESS_KEY_ID: secrethub://secrethub/terraform-provider/testacc/aws/access_key_id
+      # AWS secret access key to use in the acceptance tests
+      AWS_SECRET_ACCESS_KEY: secrethub://secrethub/terraform-provider/testacc/aws/secret_access_key
 workflows:
   version: 2
   pipeline:
