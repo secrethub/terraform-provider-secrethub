@@ -2,6 +2,12 @@ version: 2.1
 orbs:
   secrethub: secrethub/cli@1.0.0
 jobs:
+  lint:
+    docker:
+      - image: golangci/golangci-lint:v1.23.8-alpine
+    steps:
+      - checkout
+      - run: golangci-lint run
   build:
     docker:
       - image: circleci/golang:1.13
@@ -29,3 +35,9 @@ jobs:
       AWS_ACCESS_KEY_ID: secrethub://secrethub/terraform-provider/testacc/aws/access_key_id
       # AWS secret access key to use in the acceptance tests
       AWS_SECRET_ACCESS_KEY: secrethub://secrethub/terraform-provider/testacc/aws/secret_access_key
+workflows:
+  version: 2
+  pipeline:
+    jobs:
+      - lint
+      - build
