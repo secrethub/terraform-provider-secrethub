@@ -16,6 +16,9 @@ jobs:
           key: go-modules-{{ checksum "go.mod" }}
           paths:
             - /go/pkg/mod
+      - run:
+          name: Load GCP credentials
+          command: secrethub read -o $GOOGLE_APPLICATION_CREDENTIALS secrethub/terraform-provider/testacc/gcp/credentials.json
       - secrethub/exec:
           step-name: Run acceptance tests
           command: |
@@ -23,9 +26,13 @@ jobs:
             make testacc
     environment:
       GOPROXY: "https://proxy.golang.org"
+      
       # SecretHub credential to use in the acceptance tests
       TF_ACC_SECRETHUB_CREDENTIAL: secrethub://secrethub/terraform-provider/testacc/secrethub/credential
-      # AWS access key id to use in the acceptance tests
+      
+      # AWS credentials to use in the acceptance tests
       AWS_ACCESS_KEY_ID: secrethub://secrethub/terraform-provider/testacc/aws/access_key_id
-      # AWS secret access key to use in the acceptance tests
       AWS_SECRET_ACCESS_KEY: secrethub://secrethub/terraform-provider/testacc/aws/secret_access_key
+
+      # Location of the Google credentials file to use in the acceptance tests
+      GOOGLE_APPLICATION_CREDENTIALS: /tmp/gcp-credentials.json
