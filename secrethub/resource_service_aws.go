@@ -32,7 +32,7 @@ func resourceServiceAWS() *schema.Resource {
 				Type:        schema.TypeString,
 				Required:    true,
 				ForceNew:    true,
-				Description: "The ARN of the KMS key to use to encrypt and decrypt your SecretHub key material.",
+				Description: "The ARN of the KMS-key to be used for encrypting the service's account key.",
 			},
 			"role": {
 				Type:        schema.TypeString,

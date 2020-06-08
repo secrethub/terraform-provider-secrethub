@@ -25,7 +25,7 @@ func TestAccResourceServiceAWS(t *testing.T) {
 
 	resource.Test(t, resource.TestCase{
 		Providers: testAccProviders,
-		PreCheck:  testAccPreCheckAWS(t),
+		PreCheck:  testAccPreCheck(t),
 		Steps: []resource.TestStep{
 			{
 				Config: config,

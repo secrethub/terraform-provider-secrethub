@@ -92,16 +92,8 @@ To run the [acceptance tests](https://www.terraform.io/docs/extend/testing/accep
 * `SECRETHUB_TF_ACC_NAMESPACE` - a namespace registered on SecretHub. Make sure `SECRETHUB_CREDENTIAL` has admin access.
 * `SECRETHUB_TF_ACC_REPOSITORY` - a repository within `SECRETHUB_TF_ACC_NAMESPACE` to be used in the acceptance tests. Make sure `SECRETHUB_CREDENTIAL` has admin access.
 * `SECRETHUB_TF_ACC_SECOND_ACCOUNT_NAME` - an account other than the authenticated account, that is a member of the repository. It will be used to test access rules.
-
-Only for the AWS acceptance tests:
-
 * `SECRETHUB_TF_ACC_AWS_ROLE` - an AWS IAM role to use for testing AWS service accounts. The role should have decrypt permission on the key in `SECRETHUB_TF_ACC_AWS_KMS_KEY`.
 * `SECRETHUB_TF_ACC_AWS_KMS_KEY` - an AWS KMS key to use for testing AWS service accounts. The authenticated AWS user or role should have encrypt permission on this key and the `SECRETHUB_TF_ACC_AWS_ROLE` should have decrypt permission.
-
-Only for the GCP acceptance tests:
-
-* `SECRETHUB_TF_ACC_GCP_SERVICE_ACCOUNT` - a GCP service account email to use for testing SecretHub GCP service accounts. It should have decrypt permission on the key in `SECRETHUB_TF_ACC_GCP_KMS_KEY`.
-* `SECRETHUB_TF_ACC_GCP_KMS_KEY` - an GCP KMS key to use for testing GCP service accounts. The authenticated GCP user or role should have encrypt permission on this key and the `SECRETHUB_TF_ACC_GCP_SERVICE_ACCOUNT` should have decrypt permission.
 
 With the environment variables properly set up, run:
 
