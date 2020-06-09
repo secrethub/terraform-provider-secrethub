@@ -17,10 +17,8 @@ const (
 	envNamespace         = "SECRETHUB_TF_ACC_NAMESPACE"
 	envRepo              = "SECRETHUB_TF_ACC_REPOSITORY"
 	envSecondAccountName = "SECRETHUB_TF_ACC_SECOND_ACCOUNT_NAME"
-	envAWSRole           = "SECRETHUB_TF_ACC_AWS_ROLE"
 	envAWSKMSKey         = "SECRETHUB_TF_ACC_AWS_KMS_KEY"
-	envGCPServiceAccount = "SECRETHUB_TF_ACC_GCP_SERVICE_ACCOUNT"
-	envGCPKMSKey         = "SECRETHUB_TF_ACC_GCP_KMS_KEY"
+	envAWSRole           = "SECRETHUB_TF_ACC_AWS_ROLE"
 )
 
 var testAccProviders map[string]terraform.ResourceProvider
@@ -33,31 +31,16 @@ type testAccValues struct {
 	secretName        string
 	secondAccountName string
 	path              string
-	awsRole           string
+	pathErr           error
 	awsKmsKey         string
-	gcpServiceAccount string
-	gcpKmsKey         string
+	awsRole           string
 }
 
 func (testAccValues) validate() error {
-	if testAcc.namespace == "" || testAcc.repository == "" || testAcc.secondAccountName == "" {
-		return fmt.Errorf("make sure you set environment variables: %s, %s, %s, %s", envCredential, envNamespace, envRepo, envSecondAccountName)
+	if testAcc.namespace == "" || testAcc.repository == "" || testAcc.secondAccountName == "" || testAcc.awsKmsKey == "" || testAcc.awsRole == "" {
+		return fmt.Errorf("the following environment variables need to be set: %s, %s, %s, %s, %s, %s", envCredential, envNamespace, envRepo, envSecondAccountName, envAWSKMSKey, envAWSRole)
 	}
-	return nil
-}
-
-func (testAccValues) validateAWS() error {
-	if testAcc.awsKmsKey == "" || testAcc.awsRole == "" {
-		return fmt.Errorf("make sure you set environment variables: %s, %s", envAWSKMSKey, envAWSRole)
-	}
-	return nil
-}
-
-func (testAccValues) validateGCP() error {
-	if testAcc.gcpKmsKey == "" || testAcc.gcpServiceAccount == "" {
-		return fmt.Errorf("make sure you set environment variables: %s, %s", envGCPKMSKey, envGCPServiceAccount)
-	}
-	return nil
+	return testAcc.pathErr
 }
 
 func init() {
@@ -73,8 +56,6 @@ func init() {
 		secretName:        "test_acc_secret",
 		awsKmsKey:         os.Getenv(envAWSKMSKey),
 		awsRole:           os.Getenv(envAWSRole),
-		gcpKmsKey:         os.Getenv(envGCPKMSKey),
-		gcpServiceAccount: os.Getenv(envGCPServiceAccount),
 	}
 
 	testAcc.path = secretpath.Join(testAcc.namespace, testAcc.repository, testAcc.secretName)
@@ -87,26 +68,6 @@ func client() *secrethub.Client {
 func testAccPreCheck(t *testing.T) func() {
 	return func() {
 		err := testAcc.validate()
-		if err != nil {
-			t.Fatal(err)
-		}
-	}
-}
-
-func testAccPreCheckAWS(t *testing.T) func() {
-	return func() {
-		testAccPreCheck(t)()
-		err := testAcc.validateAWS()
-		if err != nil {
-			t.Fatal(err)
-		}
-	}
-}
-
-func testAccPreCheckGCP(t *testing.T) func() {
-	return func() {
-		testAccPreCheck(t)()
-		err := testAcc.validateGCP()
 		if err != nil {
 			t.Fatal(err)
 		}

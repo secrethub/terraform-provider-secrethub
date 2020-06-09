@@ -159,7 +159,7 @@ func resourceSecretRead(d *schema.ResourceData, m interface{}) error {
 	path := d.Id()
 
 	remote, err := client.Secrets().Get(path)
-	if api.IsErrNotFound(err) {
+	if err == api.ErrSecretNotFound {
 		// The secret was deleted outside of the current Terraform workspace, so invalidate this resource
 		d.SetId("")
 		return nil
