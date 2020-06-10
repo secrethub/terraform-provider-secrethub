@@ -17,8 +17,8 @@ The native AWS identity provider uses a combination of AWS IAM and AWS KMS to pr
 ```terraform
 resource "secrethub_service_aws" "your_application" {
   repo        = "workspace/repo"
-  role        = "aws_iam_role.your_application.name"
-  kms_key_arn = "aws_kms_key.secrethub_e2e.arn"
+  role        = aws_iam_role.your_application.name
+  kms_key_arn = aws_kms_key.secrethub_e2e.arn
 }
 ```
 
