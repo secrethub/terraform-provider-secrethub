@@ -1,18 +1,13 @@
 package secrethub
 
 import (
-	"fmt"
-
-	"github.com/secrethub/secrethub-go/pkg/secrethub/credentials"
-
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/arn"
 	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/secrethub/secrethub-go/pkg/secrethub/credentials"
 )
 
-func resourceServiceAWS() *schema.Resource {
+func resourceServiceGCP() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceServiceAWSCreate,
+		Create: resourceServiceGCPCreate,
 		Read:   resourceServiceRead,
 		Delete: resourceServiceDelete,
 		Schema: map[string]*schema.Schema{
@@ -28,40 +23,32 @@ func resourceServiceAWS() *schema.Resource {
 				ForceNew:    true,
 				Description: "A description of the service so others will recognize it.",
 			},
-			"kms_key_arn": {
+			"service_account_email": {
 				Type:        schema.TypeString,
 				Required:    true,
 				ForceNew:    true,
-				Description: "The ARN of the KMS key to use to encrypt and decrypt your SecretHub key material.",
+				Description: "The email of the Google Service Account that provides the identity of the SecretHub service account.",
 			},
-			"role": {
+			"kms_key_id": {
 				Type:        schema.TypeString,
 				Required:    true,
 				ForceNew:    true,
-				Description: "The role name or ARN of the IAM role that should have access to this service account.",
+				Description: "The Resource ID of the Cloud KMS key to use to encrypt and decrypt your SecretHub key material.",
 			},
 		},
 	}
 }
 
-func resourceServiceAWSCreate(d *schema.ResourceData, m interface{}) error {
+func resourceServiceGCPCreate(d *schema.ResourceData, m interface{}) error {
 	provider := m.(providerMeta)
 	client := *provider.client
 
 	repo := d.Get("repo").(string)
 	description := d.Get("description").(string)
-	kmsKey := d.Get("kms_key_arn").(string)
-	role := d.Get("role").(string)
+	kmsKey := d.Get("kms_key_id").(string)
+	serviceAccount := d.Get("service_account_email").(string)
 
-	cfg := aws.NewConfig()
-
-	kmsKeyARN, err := arn.Parse(kmsKey)
-	if err != nil {
-		return fmt.Errorf("the provider kms key is not a valid ARN: %s", err)
-	}
-	cfg = cfg.WithRegion(kmsKeyARN.Region)
-
-	service, err := client.Services().Create(repo, description, credentials.CreateAWS(kmsKey, role, cfg))
+	service, err := client.Services().Create(repo, description, credentials.CreateGCPServiceAccount(serviceAccount, kmsKey))
 	if err != nil {
 		return err
 	}

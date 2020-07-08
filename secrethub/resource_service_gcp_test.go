@@ -8,24 +8,24 @@ import (
 	"github.com/hashicorp/terraform/helper/resource"
 )
 
-func TestAccResourceServiceAWS(t *testing.T) {
+func TestAccResourceServiceGCP(t *testing.T) {
 	repoPath := testAcc.namespace + "/" + testAcc.repository
-	kmsKey := testAcc.awsKmsKey
-	role := testAcc.awsRole
-	description := "TestAccResourceServiceAWS " + acctest.RandString(30)
+	kmsKey := testAcc.gcpKmsKey
+	serviceAccount := testAcc.gcpServiceAccount
+	description := "TestAccResourceServiceGCP " + acctest.RandString(30)
 
 	config := fmt.Sprintf(`
-		resource "secrethub_service_aws" "test" {
-			repo    	= "%s"
-			kms_key_arn	= "%s"
-			role    	= "%s"
-			description	= "%s"
+		resource "secrethub_service_gcp" "test" {
+			repo    	          = "%s"
+			description	          = "%s"
+			service_account_email = "%s"
+			kms_key_id	          = "%s"
 		}
-	`, repoPath, kmsKey, role, description)
+	`, repoPath, description, serviceAccount, kmsKey)
 
 	resource.Test(t, resource.TestCase{
 		Providers: testAccProviders,
-		PreCheck:  testAccPreCheckAWS(t),
+		PreCheck:  testAccPreCheckGCP(t),
 		Steps: []resource.TestStep{
 			{
 				Config: config,

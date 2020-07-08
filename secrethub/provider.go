@@ -32,6 +32,7 @@ func Provider() terraform.ResourceProvider {
 			"secrethub_access_rule": resourceAccessRule(),
 			"secrethub_service":     resourceService(),
 			"secrethub_service_aws": resourceServiceAWS(),
+			"secrethub_service_gcp": resourceServiceGCP(),
 		},
 		DataSourcesMap: map[string]*schema.Resource{
 			"secrethub_secret": dataSourceSecret(),
