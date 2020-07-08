@@ -10,7 +10,7 @@ description: |-
 
 This resource allows you to manage a service account that is tied to an AWS IAM role.
 
-The native AWS identity provider uses a combination of AWS IAM and AWS KMS to provide access to SecretHub for any service running on AWS (e.g. EC2, Lambda or ECS) without needing a SecretHub credential.
+The AWS identity provider uses a combination of AWS IAM and AWS KMS to read secrets from SecretHub from any app running on AWS (EC2, ECS, Lambda, etc.) without needing to manage another key.
 
 ## Example Usage
 

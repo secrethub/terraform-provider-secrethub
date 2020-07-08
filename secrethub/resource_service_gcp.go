@@ -27,13 +27,13 @@ func resourceServiceGCP() *schema.Resource {
 				Type:        schema.TypeString,
 				Required:    true,
 				ForceNew:    true,
-				Description: "The role name or ARN of the IAM role that should have access to this service account.",
+				Description: "The email of the Google Service Account that provides the identity of the SecretHub service account.",
 			},
 			"kms_key_id": {
 				Type:        schema.TypeString,
 				Required:    true,
 				ForceNew:    true,
-				Description: "The Resource ID of the KMS key to use to encrypt and decrypt your SecretHub key material.",
+				Description: "The Resource ID of the Cloud KMS key to use to encrypt and decrypt your SecretHub key material.",
 			},
 		},
 	}
