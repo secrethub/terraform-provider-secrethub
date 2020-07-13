@@ -21,6 +21,8 @@
 The SecretHub Terraform Provider lets you manage your secrets using Terraform.
 It is officially supported and actively maintained by SecretHub, but community contributions are very welcome.
 
+> [SecretHub][secrethub] is a secrets management tool that works for every engineer. Securely provision passwords and keys throughout your entire stack with just a few lines of code.
+
 ## Usage
 
 ```hcl
