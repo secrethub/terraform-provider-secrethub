@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://secrethub.io/img/integrations/terraform/github-banner.png?v1" alt="Terraform + SecretHub" width="390">
+  <img src="https://secrethub.io/img/integrations/terraform/github-banner.png?v2" alt="Terraform + SecretHub" width="390">
 </p>
 <br/>
 
