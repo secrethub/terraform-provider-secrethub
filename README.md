@@ -18,10 +18,10 @@
 [![](https://img.shields.io/badge/chat-on%20discord-7289da.svg?logo=discord)][discord]
 [![](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/shuaibiyy/awesome-terraform)
 
+> [SecretHub][secrethub] is a secrets management tool that works for every engineer. Securely provision passwords and keys throughout your entire stack with just a few lines of code.
+
 The SecretHub Terraform Provider lets you manage your secrets using Terraform.
 It is officially supported and actively maintained by SecretHub, but community contributions are very welcome.
-
-> [SecretHub][secrethub] is a secrets management tool that works for every engineer. Securely provision passwords and keys throughout your entire stack with just a few lines of code.
 
 ## Usage
 
