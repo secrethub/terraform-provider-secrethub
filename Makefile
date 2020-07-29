@@ -12,5 +12,6 @@ testacc:
 install:
 	go build ${BUILD_FLAGS} -o ~/.terraform.d/plugins/terraform-provider-secrethub
 
+GOLANGCI_VERSION=v1.27.0
 lint:
-	@docker run --rm -t -v $$(go env GOCACHE):/cache/go -e GOCACHE=/cache/go -e GOLANGCI_LINT_CACHE=/cache/go -v $$(go env GOPATH)/pkg:/go/pkg -v ${PWD}:/app -w /app golangci/golangci-lint:v1.23.8-alpine golangci-lint run ./...
+	@docker run --rm -t --user $$(id -u):$$(id -g) -v $$(go env GOCACHE):/cache/go -e GOCACHE=/cache/go -e GOLANGCI_LINT_CACHE=/cache/go -v $$(go env GOPATH)/pkg:/go/pkg -v ${PWD}:/app -w /app golangci/golangci-lint:${GOLANGCI_VERSION}-alpine golangci-lint run ./...
