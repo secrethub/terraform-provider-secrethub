@@ -27,6 +27,6 @@ PGP_FINGERPRINT=`secrethub read secrethub/logins/${env}/goreleaser/pgp/fingerpri
 
 release:
 	secrethub read secrethub/logins/${env}/goreleaser/pgp/private.pgp | gpg --import --batch
-	PGP_FINGERPRINT=${PGP_FINGERPRINT} goreleaser release --rm-dist --snapshot
+	PGP_FINGERPRINT=${PGP_FINGERPRINT} goreleaser release --rm-dist $(if $(filter ${env},dev),--snapshot,)
 	gpg --yes --batch --delete-secret-key ${PGP_FINGERPRINT}
 	gpg --yes --batch --delete-key ${PGP_FINGERPRINT}
