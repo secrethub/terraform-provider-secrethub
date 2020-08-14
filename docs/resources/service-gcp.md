@@ -1,12 +1,12 @@
 ---
 layout: "secrethub"
-page_title: "Resource: secrethub_service_gcp"
+page_title: "secrethub_service_gcp"
 sidebar_current: "docs-secrethub-resource-service-gcp"
 description: |-
   Creates and manages SecretHub service accounts tied to a GCP Service Account.
 ---
 
-# Resource: secrethub_service_gcp
+# secrethub_service_gcp Resource
 
 This resource allows you to manage a SecretHub service account that is tied to a GCP Service Account.
 

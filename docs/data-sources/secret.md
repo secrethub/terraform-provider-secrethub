@@ -1,12 +1,12 @@
 ---
 layout: "secrethub"
-page_title: "Data Source: secrethub_secret"
+page_title: "secrethub_secret"
 sidebar_current: "docs-secrethub-datasource-secret"
 description: |-
   Read a secret
 ---
 
-# Data Source: secrethub_secret
+# secrethub_secret Data Source
 
 Use this data source to read secrets already in SecretHub
 

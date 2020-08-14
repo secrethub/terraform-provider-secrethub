@@ -1,12 +1,12 @@
 ---
 layout: "secrethub"
-page_title: "Resource: secrethub_service"
+page_title: "secrethub_service"
 sidebar_current: "docs-secrethub-resource-service"
 description: |-
   Creates and manages service accounts
 ---
 
-# Resource: secrethub_service
+# secrethub_service Resource
 
 This resource allows you to manage a service account - an account for machines.
 
