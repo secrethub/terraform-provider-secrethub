@@ -1,12 +1,12 @@
 ---
 layout: "secrethub"
-page_title: "Resource: secrethub_service_aws"
+page_title: "secrethub_service_aws"
 sidebar_current: "docs-secrethub-resource-service-aws"
 description: |-
   Creates and manages service accounts tied to an AWS IAM role.
 ---
 
-# Resource: secrethub_service_aws
+# secrethub_service_aws Resource
 
 This resource allows you to manage a service account that is tied to an AWS IAM role.
 
