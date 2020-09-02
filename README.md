@@ -24,6 +24,15 @@ It is officially supported and actively maintained by SecretHub, but community c
 ## Usage
 
 ```hcl
+terraform {
+  required_providers {
+    secrethub = {
+      source = "secrethub/secrethub"
+      version = ">= 1.2.0"
+    }
+  }
+}
+
 provider "secrethub" {
   # pass in credential or set SECRETHUB_CREDENTIAL environment variable
   credential = file("~/.secrethub/credential")
