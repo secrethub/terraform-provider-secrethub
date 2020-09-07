@@ -5,12 +5,18 @@ builds:
     env:
       - CGO_ENABLED=0
     goos:
+      - freebsd
       - linux
       - darwin
       - windows
+    goarch:
+      - amd64
+      - '386'
+      - arm
+      - arm64
     ignore:
       - goos: darwin
-        goarch: 386
+        goarch: '386'
 
 archives:
   - name_template: "{{ .ProjectName }}-{{ .Os }}-{{ .Arch }}"
