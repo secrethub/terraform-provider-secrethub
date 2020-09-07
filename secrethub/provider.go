@@ -60,12 +60,6 @@ func configureProvider(d *schema.ResourceData) (interface{}, error) {
 		return nil, err
 	}
 
-	credential := client.DefaultCredential()
-	_, err = credential.Read()
-	if err != nil {
-		return nil, err
-	}
-
 	return providerMeta{client}, nil
 }
 
