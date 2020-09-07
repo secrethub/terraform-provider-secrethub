@@ -23,6 +23,7 @@ It is officially supported and actively maintained by SecretHub, but community c
 
 ## Usage
 
+### Terraform v0.13
 ```hcl
 terraform {
   required_providers {
@@ -33,6 +34,45 @@ terraform {
   }
 }
 
+provider "secrethub" {
+  # pass in credential or set SECRETHUB_CREDENTIAL environment variable
+  credential = file("~/.secrethub/credential")
+}
+
+resource "secrethub_secret" "db_password" {
+  path = "my-org/my-repo/db/password"
+
+  generate {
+    length   = 22
+    charsets = ["alphanumeric"]
+  }
+}
+
+resource "secrethub_secret" "db_username" {
+  path  = "my-org/my-repo/db/username"
+  value = "db-user"
+}
+
+resource "aws_db_instance" "default" {
+  allocated_storage    = 10
+  storage_type         = "gp2"
+  engine               = "mysql"
+  engine_version       = "5.7"
+  instance_class       = "db.t2.micro"
+  name                 = "mydb"
+  username             = secrethub_secret.db_username.value
+  password             = secrethub_secret.db_password.value
+  parameter_group_name = "default.mysql5.7"
+}
+```
+
+Have a look at the [reference docs](https://secrethub.io/docs/reference/terraform/) for more information on the supported resources and data sources.
+
+### Terraform v0.12 and below
+Manually install the secrethub provider by downloading the binary for your platform and moving it to `~/.terraform/plugins` or `%APPDATA%\terraform.d\plugins` on Windows.
+
+Afterwards you can run the following example with Terraform.
+```hcl
 provider "secrethub" {
   # pass in credential or set SECRETHUB_CREDENTIAL environment variable
   credential = file("~/.secrethub/credential")
