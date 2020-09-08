@@ -23,10 +23,10 @@ release-dev:
 release-prd:
 	env=prd make release
 
-PGP_FINGERPRINT=`secrethub read secrethub/logins/${env}/goreleaser/pgp/fingerprint.pgp`
+PGP_FINGERPRINT=`secrethub read secrethub/terraform-provider/pgp/fingerprint.pgp`
 
 release:
-	secrethub read secrethub/logins/${env}/goreleaser/pgp/private.pgp | gpg --import --batch
+	secrethub read secrethub/terraform-provider/pgp/private.pgp | gpg --import --batch
 	PGP_FINGERPRINT=${PGP_FINGERPRINT} goreleaser release --rm-dist $(if $(filter ${env},prd),,--snapshot)
 	gpg --yes --batch --delete-secret-key ${PGP_FINGERPRINT}
 	gpg --yes --batch --delete-key ${PGP_FINGERPRINT}
