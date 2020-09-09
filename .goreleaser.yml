@@ -8,7 +8,7 @@ builds:
     flags:
       - -trimpath
     ldflags:
-      - '-s -w'
+      - '-s -w -X github.com/secrethub/terraform-provider-secrethub/secrethub.version=v{{.Version}}'
     goos:
       - freebsd
       - linux
