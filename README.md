@@ -66,7 +66,7 @@ resource "aws_db_instance" "default" {
 }
 ```
 
-Have a look at the [reference docs](https://secrethub.io/docs/reference/terraform/) for more information on the supported resources and data sources.
+Have a look at the [reference docs](https://registry.terraform.io/providers/secrethub/secrethub/latest/docs) for more information on the supported resources and data sources.
 
 ### Terraform v0.12 and below
 Manually install the secrethub provider by downloading the binary for your platform and moving it to `~/.terraform/plugins` or `%APPDATA%\terraform.d\plugins` on Windows.
@@ -105,7 +105,7 @@ resource "aws_db_instance" "default" {
 }
 ```
 
-Have a look at the [reference docs](https://secrethub.io/docs/reference/terraform/) for more information on the supported resources and data sources.
+Have a look at the [reference docs](https://registry.terraform.io/providers/secrethub/secrethub/latest/docs) for more information on the supported resources and data sources.
 
 ## [Get Started]((https://secrethub.io/docs/terraform/))
 
