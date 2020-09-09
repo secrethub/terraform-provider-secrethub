@@ -42,9 +42,18 @@ jobs:
 
       # Location of the Google credentials file to use in the acceptance tests
       GOOGLE_APPLICATION_CREDENTIALS: /tmp/gcp-credentials.json
+  goreleaser-lint:
+    docker:
+      - image: goreleaser/goreleaser:latest
+    steps:
+      - checkout
+      - run:
+          step-name: Lint Goreleaser configuration
+          command: goreleaser lint
 workflows:
   version: 2
   pipeline:
     jobs:
       - lint
       - build
+      - goreleaser-lint
