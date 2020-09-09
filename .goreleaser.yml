@@ -29,7 +29,8 @@ archives:
   - format: zip
     name_template: '{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}'
   # The following archives are deprecated and will be dropped for releases starting April 2021:
-  - name_template: "{{ .ProjectName }}-{{ .Os }}-{{ .Arch }}"
+  - id: backwards-compatibility
+    name_template: "{{ .ProjectName }}-{{ .Os }}-{{ .Arch }}"
     format_overrides:
       - goos: windows
         format: zip
