@@ -1,12 +1,12 @@
 ---
 layout: "secrethub"
-page_title: "Resource: secrethub_access_rule"
+page_title: "secrethub_access_rule"
 sidebar_current: "docs-secrethub-resource-access-rule"
 description: |-
   Creates and manages access rules.
 ---
 
-# Resource: secrethub_access_rule
+# secrethub_access_rule Resource
 
 This resource allows you to create and manage access rules, to give users and/or service accounts permissions on directories.
 

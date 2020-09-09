@@ -4,7 +4,7 @@ orbs:
 jobs:
   lint:
     docker:
-      - image: golangci/golangci-lint:v1.23.8-alpine
+      - image: golangci/golangci-lint:v1.27.0-alpine
     steps:
       - checkout
       - run: golangci-lint run

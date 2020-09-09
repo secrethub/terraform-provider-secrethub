@@ -1,6 +1,6 @@
 ---
 layout: "secrethub"
-page_title: "Provider: SecretHub"
+page_title: "SecretHub Provider"
 sidebar_current: "docs-secrethub-index"
 description: |-
   The SecretHub provider is used to interact with the resources supported by SecretHub. The provider needs to be properly configured before it can be used.
@@ -17,7 +17,7 @@ Use the navigation to the left to read about the available resources.
 
 ## Example Usage
 
-```terraform
+```hcl
 provider "secrethub" {
   credential = file("~/.secrethub/credential")
 }

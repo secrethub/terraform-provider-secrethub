@@ -1,12 +1,12 @@
 ---
 layout: "secrethub"
-page_title: "Resource: secrethub_secret"
+page_title: "secrethub_secret"
 sidebar_current: "docs-secrethub-resource-secret"
 description: |-
   Writes a secret at a given path.
 ---
 
-# Resource: secrethub_secret
+# secrethub_secret Resource
 
 This resource allows you to write secrets at a given path, if the path already exists then the resource will write a new version of it.
 
@@ -63,7 +63,7 @@ Nested `generate` blocks have the following structure:
 * `charsets` - (Optional) List of charset names defining the set of characters to randomly generate a secret from. The supported charsets are: all, alphanumeric, numeric, lowercase, uppercase, letters, symbols and human-readable. Defaults to alphanumeric.
 * `min` - (Optional) A map defining lower bounds on the number of characters to use from any specific charsets.
 
-> Note that adding constraints reduces the strength of the secret. When possible avoid adding any constraints.
+~> Adding constraints reduces the strength of the secret. When possible avoid adding any constraints.
 ## Attributes Reference
 
 In addition to all arguments above, the following attributes are exported:
