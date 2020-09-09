@@ -1,9 +1,14 @@
 project_name: terraform-provider-secrethub
 
 builds:
-  - binary: "{{ .ProjectName }}_{{ .Tag }}"
+  - binary: "{{ .ProjectName }}_v{{ .Version }}"
     env:
       - CGO_ENABLED=0
+    mod_timestamp: '{{ .CommitTimestamp }}'
+    flags:
+      - -trimpath
+    ldflags:
+      - '-s -w -X github.com/secrethub/terraform-provider-secrethub/secrethub.version=v{{.Version}}'
     goos:
       - freebsd
       - linux
@@ -17,9 +22,15 @@ builds:
     ignore:
       - goos: darwin
         goarch: '386'
+      - goos: freebsd
+        goarch: arm64
 
 archives:
-  - name_template: "{{ .ProjectName }}-{{ .Os }}-{{ .Arch }}"
+  - format: zip
+    name_template: '{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}'
+  # The following archives are deprecated and will be dropped for releases starting April 2021:
+  - id: backwards-compatibility
+    name_template: "{{ .ProjectName }}-{{ .Os }}-{{ .Arch }}"
     format_overrides:
       - goos: windows
         format: zip
