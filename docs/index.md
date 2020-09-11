@@ -36,12 +36,7 @@ You can verify the downloaded provider is signed by us by looking if the key ID 
 
 ### Terraform 0.12 and earlier
 
-For Terraform 0.12 and earlier, you have to download the binary for your operating system and architecture from [GitHub releases](https://github.com/secrethub/terraform-provider-secrethub/releases) yourselves and place it in `~/.terraform.d/plugins` (`%APPDATA%\terraform.d\plugins` on Windows).
-
-For linux amd64, you can do so with the following command:
-```sh
-mkdir -p ~/.terraform.d/plugins && curl -SfL https://github.com/secrethub/terraform-provider-secrethub/releases/latest/download/terraform-provider-secrethub-linux-amd64.tar.gz | tar zxf - -C ~/.terraform.d/plugins
-```
+For Terraform 0.12 and earlier, you have to [place the binary in the plugin directory](https://secrethub.io/docs/guides/terraform/#install)
 
 ## Example Usage
 
