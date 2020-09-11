@@ -19,18 +19,7 @@ Use the navigation to the left to read about the available resources.
 
 ### Terraform 0.13 and later
 
-To install this provider, copy and paste this code into your Terraform configuration. Then, run `terraform init`.
-
-```hcl
-terraform {
-  required_providers {
-    secrethub = {
-      source = "secrethub/secrethub"
-      version = "1.2.2"
-    }
-  }
-}
-```
+For Terraform 0.13 and later, click the `USE PROVIDER` button on the top right corner of this page for installation instructions.
 
 You can verify the downloaded provider is signed by us by checking if the key ID in the output of `terraform init` matches `B7F647C8C55CB6D5`.
 
