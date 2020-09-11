@@ -32,7 +32,7 @@ terraform {
 }
 ```
 
-You can verify the downloaded provider is signed by us by looking if the key ID in the output of `terraform init` matches `B7F647C8C55CB6D5`.
+You can verify the downloaded provider is signed by us by checking if the key ID in the output of `terraform init` matches `B7F647C8C55CB6D5`.
 
 ### Terraform 0.12 and earlier
 
