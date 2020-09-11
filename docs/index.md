@@ -15,6 +15,18 @@ You can set environment variable `SECRETHUB_CREDENTIAL` or read it from disk usi
 
 Use the navigation to the left to read about the available resources.
 
+## Installation
+
+### Terraform 0.13 and later
+
+For Terraform 0.13 and later, click the `USE PROVIDER` button on the top right corner of this page for installation instructions.
+
+You can verify the downloaded provider is signed by us by checking if the key ID in the output of `terraform init` matches `B7F647C8C55CB6D5`.
+
+### Terraform 0.12 and earlier
+
+For Terraform 0.12 and earlier, you have to [place the binary in the plugin directory](https://secrethub.io/docs/guides/terraform/#install).
+
 ## Example Usage
 
 ```hcl
