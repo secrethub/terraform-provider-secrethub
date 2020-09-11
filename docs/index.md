@@ -36,7 +36,7 @@ You can verify the downloaded provider is signed by us by looking if the key ID 
 
 ### Terraform 0.12 and earlier
 
-For Terraform 0.12 and earlier, you have to [place the binary in the plugin directory](https://secrethub.io/docs/guides/terraform/#install)
+For Terraform 0.12 and earlier, you have to [place the binary in the plugin directory](https://secrethub.io/docs/guides/terraform/#install).
 
 ## Example Usage
 
