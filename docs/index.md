@@ -32,6 +32,8 @@ terraform {
 }
 ```
 
+You can verify the downloaded provider is signed by us by looking if the key ID in the output of `terraform init` matches `B7F647C8C55CB6D5`.
+
 ### Terraform 0.12 and earlier
 
 For Terraform 0.12 and earlier, you have to download the binary for your operating system and architecture from [GitHub releases](https://github.com/secrethub/terraform-provider-secrethub/releases) yourselves and place it in `~/.terraform.d/plugins` (`%APPDATA%\terraform.d\plugins` on Windows).
