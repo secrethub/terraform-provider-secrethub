@@ -36,11 +36,6 @@ terraform {
   }
 }
 
-provider "secrethub" {
-  # pass in credential or set SECRETHUB_CREDENTIAL environment variable
-  credential = file("~/.secrethub/credential")
-}
-
 resource "secrethub_secret" "db_password" {
   path = "my-org/my-repo/db/password"
 
@@ -75,10 +70,7 @@ Manually install the secrethub provider by downloading the binary for your platf
 
 Afterwards you can run the following example with Terraform.
 ```hcl
-provider "secrethub" {
-  # pass in credential or set SECRETHUB_CREDENTIAL environment variable
-  credential = file("~/.secrethub/credential")
-}
+provider "secrethub" {}
 
 resource "secrethub_secret" "db_password" {
   path = "my-org/my-repo/db/password"
