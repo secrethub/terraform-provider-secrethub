@@ -22,6 +22,12 @@ func resourceDir() *schema.Resource {
 				ForceNew:    true,
 				Description: "The path of the directory.",
 			},
+			"force_destroy": {
+				Type:        schema.TypeBool,
+				Optional:    true,
+				Default:     false,
+				Description: "A boolean that indicates all secrets and directories should be deleted from the directory so that it can be destroyed without error. These secrets and directories are not recoverable.",
+			},
 		},
 	}
 }
@@ -67,18 +73,26 @@ func resourceDirDelete(d *schema.ResourceData, m interface{}) error {
 
 	path := d.Id()
 
-	tree, err := client.Dirs().GetTree(path, 1, false)
+	forceDestroy := d.Get("force_destroy").(bool)
+
+	if !forceDestroy {
+		tree, err := client.Dirs().GetTree(path, 1, false)
+		if api.IsErrNotFound(err) {
+			return nil
+		}
+		if err != nil {
+			return err
+		}
+		if len(tree.Dirs) > 1 || len(tree.Secrets) > 0 {
+			return fmt.Errorf("cannot remove directory %s: it is not empty", path)
+		}
+	}
+
+	err := client.Dirs().Delete(path)
 	if api.IsErrNotFound(err) {
 		return nil
 	}
-	if err != nil {
-		return err
-	}
-	if len(tree.Dirs) > 1 || len(tree.Secrets) > 0 {
-		return fmt.Errorf("cannot remove directory %s: it is not empty", path)
-	}
-
-	return client.Dirs().Delete(path)
+	return err
 }
 
 func resourceDirImport(d *schema.ResourceData, m interface{}) ([]*schema.ResourceData, error) {
