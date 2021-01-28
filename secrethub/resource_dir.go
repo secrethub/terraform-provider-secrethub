@@ -11,6 +11,7 @@ func resourceDir() *schema.Resource {
 	return &schema.Resource{
 		Create: resourceDirCreate,
 		Read:   resourceDirRead,
+		Update: resourceDirUpdate,
 		Delete: resourceDirDelete,
 		Importer: &schema.ResourceImporter{
 			State: resourceDirImport,
@@ -65,6 +66,10 @@ func resourceDirRead(d *schema.ResourceData, m interface{}) error {
 	}
 
 	return nil
+}
+
+func resourceDirUpdate(d *schema.ResourceData, m interface{}) error {
+	return resourceDirRead(d, m)
 }
 
 func resourceDirDelete(d *schema.ResourceData, m interface{}) error {
