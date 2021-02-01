@@ -26,7 +26,8 @@ builds:
         goarch: arm64
 
 archives:
-  - format: zip
+  - id: current
+    format: zip
     name_template: '{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}'
   # The following archives are deprecated and will be dropped for releases starting April 2021:
   - id: backwards-compatibility
@@ -41,6 +42,9 @@ archives:
 checksum:
   name_template: '{{ .ProjectName }}_{{ .Version }}_SHA256SUMS'
   algorithm: sha256
+  ids:
+    - current
+
 signs:
   - artifacts: checksum
     args:
