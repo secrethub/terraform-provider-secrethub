@@ -27,7 +27,7 @@ func resourceDir() *schema.Resource {
 				Type:        schema.TypeBool,
 				Optional:    true,
 				Default:     false,
-				Description: "A boolean that indicates all secrets and directories should be deleted from the directory so that it can be destroyed without error. These secrets and directories are not recoverable.",
+				Description: "Whether to allow deleting this directory if it's not empty. When set to `false`, you'll get an error when trying to delete the directory if it still contains directories or secrets.",
 			},
 		},
 	}
