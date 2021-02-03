@@ -17,7 +17,7 @@ func TestAccDataSourceSecret_PathUnversioned(t *testing.T) {
 		data "secrethub_secret" "%v" {
 			path = secrethub_secret.%v.path
 		}
-	`, testAcc.secretName, testAcc.path, testAcc.secretName, testAcc.secretName)
+	`, testAcc.secretName, testAcc.secretPath, testAcc.secretName, testAcc.secretName)
 
 	resource.Test(t, resource.TestCase{
 		Providers: testAccProviders,
@@ -29,7 +29,7 @@ func TestAccDataSourceSecret_PathUnversioned(t *testing.T) {
 					resource.TestCheckResourceAttr(
 						fmt.Sprintf("data.secrethub_secret.%v", testAcc.secretName),
 						"path",
-						testAcc.path,
+						testAcc.secretPath,
 					),
 					resource.TestCheckResourceAttr(
 						fmt.Sprintf("data.secrethub_secret.%v", testAcc.secretName),
@@ -52,7 +52,7 @@ func TestAccDataSourceSecret_PathVersioned(t *testing.T) {
 		data "secrethub_secret" "%v" {
 			path = "${secrethub_secret.%v.path}:1"
 		}
-	`, testAcc.secretName, testAcc.path, testAcc.secretName, testAcc.secretName)
+	`, testAcc.secretName, testAcc.secretPath, testAcc.secretName, testAcc.secretName)
 
 	configVersioned := fmt.Sprintf(`
 		resource "secrethub_secret" "%v" {
@@ -63,7 +63,7 @@ func TestAccDataSourceSecret_PathVersioned(t *testing.T) {
 		data "secrethub_secret" "%v" {
 			path = "${secrethub_secret.%v.path}:1"
 		}
-	`, testAcc.secretName, testAcc.path, testAcc.secretName, testAcc.secretName)
+	`, testAcc.secretName, testAcc.secretPath, testAcc.secretName, testAcc.secretName)
 
 	resource.Test(t, resource.TestCase{
 		Providers: testAccProviders,
