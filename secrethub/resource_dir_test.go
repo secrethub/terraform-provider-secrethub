@@ -25,6 +25,12 @@ func TestAccResourceDir(t *testing.T) {
 					checkDirExistsRemotely(testAcc.dirPath),
 				),
 			},
+			{
+				ResourceName:            fmt.Sprintf("secrethub_dir.%v", testAcc.dirName),
+				ImportState:             true,
+				ImportStateVerify:       true,
+				ImportStateVerifyIgnore: []string{"force_destroy"},
+			},
 		},
 	})
 }
