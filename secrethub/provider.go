@@ -52,7 +52,12 @@ func configureProvider(d *schema.ResourceData) (interface{}, error) {
 	}
 
 	if credRaw != "" {
-		options = append(options, secrethub.WithCredentials(credentials.UseKey(credentials.FromString(credRaw)).Passphrase(credentials.FromString(passphrase))))
+		keyProvider := credentials.UseKey(credentials.FromString(credRaw))
+		var provider credentials.Provider = keyProvider
+		if passphrase != "" {
+			provider = keyProvider.Passphrase(credentials.FromString(passphrase))
+		}
+		options = append(options, secrethub.WithCredentials(provider))
 	}
 
 	client, err := secrethub.NewClient(options...)
