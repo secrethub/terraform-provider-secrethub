@@ -23,7 +23,7 @@ func Provider() terraform.ResourceProvider {
 				Type:        schema.TypeString,
 				Optional:    true,
 				DefaultFunc: schema.EnvDefaultFunc("SECRETHUB_CREDENTIAL_PASSPHRASE", nil),
-				Description: "Passphrase to unlock the authentication passed in `credential`. Can also be sourced from SECRETHUB_CREDENTIAL_PASSPHRASE.",
+				Description: "Passphrase to unlock the credential. Can also be sourced from SECRETHUB_CREDENTIAL_PASSPHRASE.",
 			},
 		},
 		ConfigureFunc: configureProvider,
@@ -58,6 +58,8 @@ func configureProvider(d *schema.ResourceData) (interface{}, error) {
 			provider = keyProvider.Passphrase(credentials.FromString(passphrase))
 		}
 		options = append(options, secrethub.WithCredentials(provider))
+	} else if passphrase != "" {
+		options = append(options, secrethub.WithDefaultPassphraseReader(credentials.FromString(passphrase)))
 	}
 
 	client, err := secrethub.NewClient(options...)
