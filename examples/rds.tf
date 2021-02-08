@@ -10,10 +10,6 @@ variable "environment" {
   default = "dev"
 }
 
-locals {
-  secrethub_dir = "company/repo/${var.environment}"
-}
-
 provider "aws" {
   access_key = var.aws_access_key
   secret_key = var.aws_secret_key
@@ -24,8 +20,16 @@ provider "secrethub" {
   credential = file("~/.secrethub/credential")
 }
 
+data "secrethub_dir" "repo" {
+    path = "company/repo"
+}
+
+resource "secrethub_dir" "environment" {
+    path = "${data.secrethub_dir.repo.path}/${var.environment}"
+}
+
 resource "secrethub_secret" "db_password" {
-  path = "${local.secrethub_dir}/db/password"
+  path = "${secrethub_dir.environment.path}/db/password"
 
   generate {
     length      = 22
@@ -34,7 +38,7 @@ resource "secrethub_secret" "db_password" {
 }
 
 resource "secrethub_secret" "db_username" {
-  path  = "${local.secrethub_dir}/db/username"
+  path  = "${secrethub_dir.environment.path}/db/username"
   value = "mysqluser"
 }
 
