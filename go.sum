@@ -353,6 +353,8 @@ github.com/secrethub/secrethub-go v0.30.0 h1:Nh1twPDwPbYQj/cYc1NG+j7sv76LZiXLPov
 github.com/secrethub/secrethub-go v0.30.0/go.mod h1:tDeBtyjfFQX3UqgaZfY+H4dYkcGfiVzrwLDf0XtfOrw=
 github.com/secrethub/secrethub-go v0.32.0 h1:hypQsdyCpocd8v9xo3lYvP5viOkjDLKx51z62/obKoU=
 github.com/secrethub/secrethub-go v0.32.0/go.mod h1:ZIco8Y0G0Pi0Vb7pQROjvEKgSreZiRMLhAbzWUneUSQ=
+github.com/secrethub/secrethub-go v0.32.1 h1:5Ux44/0Ey6XKpkmzMOtxzx0T85v30k0bADnAGa27eBY=
+github.com/secrethub/secrethub-go v0.32.1/go.mod h1:ZIco8Y0G0Pi0Vb7pQROjvEKgSreZiRMLhAbzWUneUSQ=
 github.com/sergi/go-diff v1.0.0 h1:Kpca3qRNrduNnOQeazBd0ysaKrUJiIuISHxogkT9RPQ=
 github.com/sergi/go-diff v1.0.0/go.mod h1:0CfEIISq7TuYL3j771MWULgwwjU+GofnZX9QAmXWZgo=
 github.com/shurcooL/component v0.0.0-20170202220835-f88ec8f54cc4/go.mod h1:XhFIlyj5a1fBNx5aJTbKoIq0mNaPvOagO+HjB3EtxrY=
