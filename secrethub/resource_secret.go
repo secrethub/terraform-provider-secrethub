@@ -21,6 +21,7 @@ func resourceSecret() *schema.Resource {
 			"path": {
 				Type:        schema.TypeString,
 				Required:    true,
+				ForceNew:    true,
 				Description: "The path where the secret will be stored.",
 			},
 			"version": {

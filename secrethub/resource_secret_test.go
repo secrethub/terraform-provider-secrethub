@@ -18,7 +18,7 @@ func TestAccResourceSecret_writePath(t *testing.T) {
 			path = "%v"
 			value = "secretpassword"
 		}
-	`, testAcc.secretName, testAcc.path)
+	`, testAcc.secretName, testAcc.secretPath)
 
 	resource.Test(t, resource.TestCase{
 		Providers: testAccProviders,
@@ -43,7 +43,7 @@ func TestAccResourceSecret_generate(t *testing.T) {
 				use_symbols = true
 			}
 		}
-	`, testAcc.secretName, testAcc.path)
+	`, testAcc.secretName, testAcc.secretPath)
 
 	configLengthUpdate := fmt.Sprintf(`
 		resource "secrethub_secret" "%v" {
@@ -53,7 +53,7 @@ func TestAccResourceSecret_generate(t *testing.T) {
 				use_symbols = true
 			}
 		}
-	`, testAcc.secretName, testAcc.path)
+	`, testAcc.secretName, testAcc.secretPath)
 
 	configSpecificCharsets := fmt.Sprintf(`
 		resource "secrethub_secret" "%v" {
@@ -63,7 +63,7 @@ func TestAccResourceSecret_generate(t *testing.T) {
 				charsets = ["numbers", "symbols"]
 			}
 		}
-	`, testAcc.secretName, testAcc.path)
+	`, testAcc.secretName, testAcc.secretPath)
 
 	configOneMinRule := fmt.Sprintf(`
 		resource "secrethub_secret" "%v" {
@@ -76,7 +76,7 @@ func TestAccResourceSecret_generate(t *testing.T) {
 				}
 			}
 		}
-	`, testAcc.secretName, testAcc.path)
+	`, testAcc.secretName, testAcc.secretPath)
 
 	configMinRuleNoCharsets := fmt.Sprintf(`
 		resource "secrethub_secret" "%v" {
@@ -88,7 +88,7 @@ func TestAccResourceSecret_generate(t *testing.T) {
 				}
 			}
 		}
-	`, testAcc.secretName, testAcc.path)
+	`, testAcc.secretName, testAcc.secretPath)
 
 	resource.Test(t, resource.TestCase{
 		Providers: testAccProviders,
@@ -192,7 +192,7 @@ func TestAccResourceSecret_deleteDetection(t *testing.T) {
 			path = "%v"
 			value = "secretpassword"
 		}
-	`, testAcc.secretName, testAcc.path)
+	`, testAcc.secretName, testAcc.secretPath)
 
 	resource.Test(t, resource.TestCase{
 		Providers: testAccProviders,
@@ -204,7 +204,7 @@ func TestAccResourceSecret_deleteDetection(t *testing.T) {
 			{
 				PreConfig: func() {
 					// Delete secret outside of Terraform workspace
-					err := client().Secrets().Delete(testAcc.path)
+					err := client().Secrets().Delete(testAcc.secretPath)
 					assert.OK(t, err)
 				},
 				Config:             config,
@@ -221,7 +221,7 @@ func TestAccResourceSecret_import(t *testing.T) {
 			path = "%v"
 			value = "secretpassword"
 		}
-	`, testAcc.secretName, testAcc.path)
+	`, testAcc.secretName, testAcc.secretPath)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:  testAccPreCheck(t),
@@ -243,7 +243,7 @@ func checkSecretExistsRemotely(values *testAccValues) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		client := *testAccProvider.Meta().(providerMeta).client
 
-		_, err := client.Secrets().Get(values.path)
+		_, err := client.Secrets().Get(values.secretPath)
 		if err != nil {
 			return err
 		}

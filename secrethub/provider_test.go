@@ -32,7 +32,10 @@ type testAccValues struct {
 	repository        string
 	secretName        string
 	secondAccountName string
-	path              string
+	secretPath        string
+	dirName           string
+	dirPath           string
+	repoPath          string
 	awsRole           string
 	awsKmsKey         string
 	gcpServiceAccount string
@@ -71,13 +74,16 @@ func init() {
 		repository:        os.Getenv(envRepo),
 		secondAccountName: os.Getenv(envSecondAccountName),
 		secretName:        "test_acc_secret",
+		dirName:           "test_acc_dir",
 		awsKmsKey:         os.Getenv(envAWSKMSKey),
 		awsRole:           os.Getenv(envAWSRole),
 		gcpKmsKey:         os.Getenv(envGCPKMSKey),
 		gcpServiceAccount: os.Getenv(envGCPServiceAccount),
 	}
 
-	testAcc.path = secretpath.Join(testAcc.namespace, testAcc.repository, testAcc.secretName)
+	testAcc.repoPath = secretpath.Join(testAcc.namespace, testAcc.repository)
+	testAcc.secretPath = secretpath.Join(testAcc.repoPath, testAcc.secretName)
+	testAcc.dirPath = secretpath.Join(testAcc.repoPath, testAcc.dirName)
 }
 
 func client() *secrethub.Client {
