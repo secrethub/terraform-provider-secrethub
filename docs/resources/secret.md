@@ -15,8 +15,12 @@ This resource allows you to write secrets at a given path, if the path already e
 To write a secret:
 
 ```terraform
+resource "secrethub_dir" "repo" {
+    path = "company/repo"
+}
+
 resource "secrethub_secret" "ssh_key" {
-  path  = "company/repo/ssh_key"
+  path  = "${data.secrethub_dir.repo.path}/ssh_key"
   value = file("/path/to/ssh/key")
 }
 ```
@@ -24,8 +28,12 @@ resource "secrethub_secret" "ssh_key" {
 To generate a new, 20 characters long secret made of alphanumeric characters:
 
 ```terraform
+resource "secrethub_dir" "repo" {
+    path = "company/repo"
+}
+
 resource "secrethub_secret" "db_password" {
-  path = "company/repo/db_password"
+  path = "${data.secrethub_dir.repo.path}/db_password"
 
   generate {
     length   = 20
@@ -36,8 +44,12 @@ resource "secrethub_secret" "db_password" {
 To generate a new secret made of lowercase letters and symbols, with minimum 5 symbols:
 
 ```terraform
+resource "secrethub_dir" "repo" {
+    path = "company/repo"
+}
+
 resource "secrethub_secret" "db_password" {
-  path = "company/repo/db_password"
+  path = "${data.secrethub_dir.repo.path}/db_password"
 
   generate {
     length   = 20
